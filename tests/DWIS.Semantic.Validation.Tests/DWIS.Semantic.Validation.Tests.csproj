@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/DWIS.Semantic.Validation/DWIS.Semantic.Validation.csproj" />
+  </ItemGroup>
+
+</Project>

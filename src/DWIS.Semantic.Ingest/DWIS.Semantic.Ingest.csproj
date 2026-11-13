@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>The injection pipeline: prepare, stage, commit, abort, remove, re-derive (specification 4, Appendix C).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../DWIS.Semantic.Manifest/DWIS.Semantic.Manifest.csproj" />
+    <ProjectReference Include="../DWIS.Semantic.Validation/DWIS.Semantic.Validation.csproj" />
+    <ProjectReference Include="../DWIS.Semantic.Store/DWIS.Semantic.Store.csproj" />
+  </ItemGroup>
+
+</Project>

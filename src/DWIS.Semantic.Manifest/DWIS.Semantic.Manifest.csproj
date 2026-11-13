@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Manifest JSON to RDF, namespace translation, validity flag completion, core-versus-rest split (specification 3.2, Appendix C).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dotNetRdf" />
+  </ItemGroup>
+
+</Project>

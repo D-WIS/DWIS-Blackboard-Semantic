@@ -1,0 +1,40 @@
+<Project>
+
+  <!-- Settings shared by every project in the repository (specification 3.2, roadmap F.3 item 1). -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <!-- Version line of the Rig Edition artefacts (decision D-35): 1.0.0, alpha during the project.
+       CI overrides VersionSuffix (edge.<run>) and tags override the whole version. -->
+  <PropertyGroup>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionSuffix Condition="'$(VersionSuffix)' == ''">dev</VersionSuffix>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>D-WIS</Authors>
+    <Company>D-WIS</Company>
+    <Product>DWIS Blackboard Rig Edition</Product>
+    <Copyright>Copyright (c) 2026 D-WIS</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/D-WIS/DWIS-Blackboard-Semantic</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/D-WIS/DWIS-Blackboard-Semantic</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+</Project>

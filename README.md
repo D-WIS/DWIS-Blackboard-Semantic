@@ -8,9 +8,37 @@ Part of DWIS Blackboard Rig Edition (GitHub topic `dwis-blackboard-rig-edition`)
 
 **Depends on:** `DWIS-Blackboard-Contracts`; Apache Jena Fuseki as the store (image built in `DWIS-Blackboard-Tests`).
 
-## Running
+## Layout
 
-Not yet: the solution layout arrives with milestone 1 (issue M1.1). The service is started from the `compose.yaml` in `DWIS-Blackboard-Tests` together with Fuseki.
+One solution, `DWIS.Blackboard.Semantic.slnx`, .NET 10, with the libraries of specification 3.2:
+
+| Project | Responsibility |
+|---|---|
+| `src/DWIS.Semantic.Manifest` | manifest JSON to RDF, namespace translation, validity flag completion, core-versus-rest split |
+| `src/DWIS.Semantic.Validation` | pre-processing pass: term checks, domain and range, SHACL with dotNetRDF, report model |
+| `src/DWIS.Semantic.Store` | store client (Graph Store Protocol, SPARQL, SHACL endpoint, health) behind a store-agnostic interface; Fuseki first |
+| `src/DWIS.Semantic.QueryRegistration` | query registration: ownership, snapshot, diff, re-evaluation (milestone 3) |
+| `src/DWIS.Semantic.Ingest` | the injection pipeline: prepare, stage, commit, abort, remove, re-derive |
+| `src/DWIS.Semantic.Host` | the service: gRPC and HTTP endpoints under `/api/v1`, configuration, health, metrics |
+| `tests/<project>.Tests` | one xUnit project per library; contract tests against a real Fuseki come with the store |
+
+Shared settings live in `Directory.Build.props` (nullable, analyzers, warnings as errors, .NET 10) and `Directory.Packages.props` (central package versions). Tests use xUnit v3 on the Microsoft Testing Platform (opt-in in `global.json`) with FluentAssertions 7.
+
+## Building and running
+
+```bash
+dotnet build DWIS.Blackboard.Semantic.slnx -c Release
+```
+
+```bash
+dotnet test DWIS.Blackboard.Semantic.slnx -c Release --no-build --report-trx --results-directory TestResults
+```
+
+```bash
+docker build -t digiwells/dwis.blackboard.semantic:dev .
+```
+
+The host alone answers `GET /api/v1/health`; the full service is started from the `compose.yaml` in `DWIS-Blackboard-Tests` together with Fuseki.
 
 ## How to work here
 

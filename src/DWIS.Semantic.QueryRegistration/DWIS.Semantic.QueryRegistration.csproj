@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Query registration: ownership, snapshot, diff, re-evaluation; the ported QueryManager (specification 3.5, R-QR-1). Filled in milestone 3.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../DWIS.Semantic.Store/DWIS.Semantic.Store.csproj" />
+  </ItemGroup>
+
+</Project>
