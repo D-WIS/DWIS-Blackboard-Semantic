@@ -1,0 +1,74 @@
+name: Pull request
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pr-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Find the solution
+        id: sln
+        run: |
+          f=$(ls *.sln *.slnx 2>/dev/null | head -1 || true)
+          echo "file=$f" >> "$GITHUB_OUTPUT"
+          if [ -z "$f" ]; then echo "No solution yet; nothing to build."; fi
+      - name: Restore
+        if: steps.sln.outputs.file != ''
+        run: dotnet restore "${{ steps.sln.outputs.file }}"
+      - name: Build
+        if: steps.sln.outputs.file != ''
+        run: dotnet build "${{ steps.sln.outputs.file }}" -c Release --no-restore
+      - name: Test
+        if: steps.sln.outputs.file != ''
+        run: dotnet test "${{ steps.sln.outputs.file }}" -c Release --no-build --logger trx --results-directory TestResults
+      - name: Upload test results
+        if: always() && steps.sln.outputs.file != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: TestResults
+          if-no-files-found: ignore
+
+      - name: Build the image (not pushed)
+        if: hashFiles('Dockerfile') != ''
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          load: true
+          tags: digiwells/dwis.blackboard.semantic:pr-${{ github.run_number }}
+      - name: Scan the image
+        if: hashFiles('Dockerfile') != ''
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: digiwells/dwis.blackboard.semantic:pr-${{ github.run_number }}
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: "1"
+  scan:
+    name: Trivy filesystem scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan dependencies and configuration
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: "1"
+
