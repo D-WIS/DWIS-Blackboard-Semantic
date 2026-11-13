@@ -13,6 +13,11 @@ jobs:
     name: Build, test and push edge image
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      # Set in the organisation secret store; until they exist the image is built but not pushed.
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      DISPATCH_TOKEN: ${{ secrets.RIG_EDITION_DISPATCH_TOKEN }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-dotnet@v6
@@ -41,22 +46,26 @@ jobs:
           path: TestResults
           if-no-files-found: ignore
 
+      - name: Note when the Docker Hub secrets are missing
+        if: hashFiles('Dockerfile') != '' && env.DOCKERHUB_USERNAME == ''
+        run: echo "::notice::DOCKERHUB_USERNAME and DOCKERHUB_TOKEN are not set; the image is built and scanned but not pushed."
       - name: Log in to Docker Hub
-        if: hashFiles('Dockerfile') != ''
+        if: hashFiles('Dockerfile') != '' && env.DOCKERHUB_USERNAME != ''
         uses: docker/login-action@v4
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push sha and edge tags
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ env.DOCKERHUB_TOKEN }}
+      - name: Build the image, push sha and edge tags when logged in
         if: hashFiles('Dockerfile') != ''
         uses: docker/build-push-action@v7
         with:
           context: .
-          push: true
+          push: ${{ env.DOCKERHUB_USERNAME != '' }}
+          load: ${{ env.DOCKERHUB_USERNAME == '' }}
           tags: |
             digiwells/dwis.blackboard.semantic:sha-${{ github.sha }}
             digiwells/dwis.blackboard.semantic:edge
-      - name: Scan the pushed image
+      - name: Scan the image
         if: hashFiles('Dockerfile') != ''
         uses: aquasecurity/trivy-action@v0.36.0
         with:
@@ -65,9 +74,9 @@ jobs:
           ignore-unfixed: true
           exit-code: "1"
       - name: Tell the tests repository
-        if: hashFiles('Dockerfile') != ''
+        if: hashFiles('Dockerfile') != '' && env.DOCKERHUB_USERNAME != '' && env.DISPATCH_TOKEN != ''
         env:
-          GH_TOKEN: ${{ secrets.RIG_EDITION_DISPATCH_TOKEN }}
+          GH_TOKEN: ${{ env.DISPATCH_TOKEN }}
         run: |
           gh api repos/D-WIS/DWIS-Blackboard-Tests/dispatches \
             -f event_type=semantic-edge \
