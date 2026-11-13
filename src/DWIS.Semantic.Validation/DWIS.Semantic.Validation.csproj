@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Pre-processing pass: term checks, domain and range, SHACL on manifest plus vocabulary with dotNetRDF (decision D-29), report model (specification 3.2, Appendix C).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dotNetRdf.Shacl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../DWIS.Semantic.Manifest/DWIS.Semantic.Manifest.csproj" />
+  </ItemGroup>
+
+</Project>

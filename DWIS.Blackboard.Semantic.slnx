@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DWIS.Semantic.Manifest/DWIS.Semantic.Manifest.csproj" />
+    <Project Path="src/DWIS.Semantic.Validation/DWIS.Semantic.Validation.csproj" />
+    <Project Path="src/DWIS.Semantic.Store/DWIS.Semantic.Store.csproj" />
+    <Project Path="src/DWIS.Semantic.QueryRegistration/DWIS.Semantic.QueryRegistration.csproj" />
+    <Project Path="src/DWIS.Semantic.Ingest/DWIS.Semantic.Ingest.csproj" />
+    <Project Path="src/DWIS.Semantic.Host/DWIS.Semantic.Host.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DWIS.Semantic.Manifest.Tests/DWIS.Semantic.Manifest.Tests.csproj" />
+    <Project Path="tests/DWIS.Semantic.Validation.Tests/DWIS.Semantic.Validation.Tests.csproj" />
+    <Project Path="tests/DWIS.Semantic.Store.Tests/DWIS.Semantic.Store.Tests.csproj" />
+    <Project Path="tests/DWIS.Semantic.QueryRegistration.Tests/DWIS.Semantic.QueryRegistration.Tests.csproj" />
+    <Project Path="tests/DWIS.Semantic.Ingest.Tests/DWIS.Semantic.Ingest.Tests.csproj" />
+    <Project Path="tests/DWIS.Semantic.Host.Tests/DWIS.Semantic.Host.Tests.csproj" />
+  </Folder>
+</Solution>

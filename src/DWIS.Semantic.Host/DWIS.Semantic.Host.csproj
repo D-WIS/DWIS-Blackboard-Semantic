@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <Description>The semantic service host: gRPC and HTTP endpoints, configuration, health, metrics (specification 3.2, 3.4).</Description>
+    <IsPackable>false</IsPackable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <AssemblyName>DWIS.Semantic.Host</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../DWIS.Semantic.Ingest/DWIS.Semantic.Ingest.csproj" />
+    <ProjectReference Include="../DWIS.Semantic.QueryRegistration/DWIS.Semantic.QueryRegistration.csproj" />
+  </ItemGroup>
+
+</Project>

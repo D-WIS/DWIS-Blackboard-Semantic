@@ -1,0 +1,26 @@
+<Project>
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <!-- Every test project: xUnit v3 on the Microsoft Testing Platform (opt-in in global.json at the root)
+       with FluentAssertions 7 (test plan, Appendix G). Run with dotnet test; the trx report flag is report-trx. -->
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <OutputType>Exe</OutputType>
+    <NoWarn>$(NoWarn);CA1707</NoWarn> <!-- underscores in test method names -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" /> <!-- Test Explorer in Visual Studio and Rider -->
+    <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" /> <!-- trx files for CI -->
+    <PackageReference Include="FluentAssertions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="FluentAssertions" />
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

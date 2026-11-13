@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Store client: Graph Store Protocol, SPARQL query and update, SHACL endpoint, health, behind a store-agnostic interface; Fuseki first (specification 3.2, 3.7).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dotNetRdf" />
+  </ItemGroup>
+
+</Project>
