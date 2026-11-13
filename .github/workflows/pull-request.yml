@@ -43,7 +43,7 @@ jobs:
 
       - name: Build the image (not pushed)
         if: hashFiles('Dockerfile') != ''
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           push: false
