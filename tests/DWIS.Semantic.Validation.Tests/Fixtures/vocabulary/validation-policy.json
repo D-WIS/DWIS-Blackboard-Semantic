@@ -1,0 +1,28 @@
+{
+  // Validation policy of the pre-processing pass for milestone 1 (decision D-45). One entry per rule;
+  // the key is a finding code or a SHACL shape IRI, the level is "error", "warning", "info" or "off".
+  // A rule that is not listed keeps its designed level. The catalogue of rules, with what each one
+  // checks and where it is defined, is src/DWIS.Semantic.Validation/README.md in DWIS-Blackboard-Semantic.
+  //
+  // Each entry below softens a check or a shape that the vocabulary of 14 October 2026 and the advanced
+  // definitions of 2026 make too strict for real manifests. Remove the entry when the vocabulary project
+  // settles the point named in its reason.
+  "rules": {
+    "domain-mismatch": {
+      "level": "warning",
+      "reason": "In RDFS a domain is an entailment, not a constraint; a mismatch is a hint. The SmartConnect manifest has 4 (IsSubPartOf on a Liner, not DrillingEquipment)."
+    },
+    "range-mismatch": {
+      "level": "warning",
+      "reason": "Same as domain-mismatch. The SmartConnect manifest has 22 (IsAHydraulicRepresentationFor to a StorageTank, which the vocabulary does not count as DrillingEquipment)."
+    },
+    "disjoint-classes": {
+      "level": "warning",
+      "reason": "The Noun definitions declare DataType and DrillingDataPoint disjoint, but every SmartConnect data point is typed ContinuousDataType as well as Measurement (254 of them); the base vocabulary keeps that axiom commented out."
+    },
+    "http://d-wis.org/shapes/DrillingSignalShape": {
+      "level": "warning",
+      "reason": "The shape requires a unit on every DrillingSignal; the 254 validity flags are booleans without a unit, and 49 SmartConnect variables have none."
+    }
+  }
+}

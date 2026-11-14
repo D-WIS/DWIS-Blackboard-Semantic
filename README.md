@@ -15,7 +15,7 @@ One solution, `DWIS.Blackboard.Semantic.slnx`, .NET 10, with the libraries of sp
 | Project | Responsibility |
 |---|---|
 | `src/DWIS.Semantic.Manifest` | manifest JSON to RDF, namespace translation, validity flag completion, core-versus-rest split |
-| `src/DWIS.Semantic.Validation` | pre-processing pass: term checks, domain and range, SHACL with dotNetRDF, report model |
+| `src/DWIS.Semantic.Validation` | pre-processing pass: term checks, domain and range, SHACL with dotNetRDF, unit dimensions, the validation policy; the rule catalogue is its [README](src/DWIS.Semantic.Validation/README.md) |
 | `src/DWIS.Semantic.Store` | store client (Graph Store Protocol, SPARQL, SHACL endpoint, health) behind a store-agnostic interface; Fuseki first |
 | `src/DWIS.Semantic.QueryRegistration` | query registration: ownership, snapshot, diff, re-evaluation (milestone 3) |
 | `src/DWIS.Semantic.Ingest` | the injection pipeline: prepare, stage, commit, abort, remove, re-derive |
