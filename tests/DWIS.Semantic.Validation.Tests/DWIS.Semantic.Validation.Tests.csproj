@@ -4,4 +4,8 @@
     <ProjectReference Include="../../src/DWIS.Semantic.Validation/DWIS.Semantic.Validation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Fixtures/**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

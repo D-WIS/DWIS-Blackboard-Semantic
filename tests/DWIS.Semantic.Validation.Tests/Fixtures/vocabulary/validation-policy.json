@@ -1,0 +1,20 @@
+{
+  // Severity overrides of the pre-processing pass (DWIS.Semantic.Validation.SeverityPolicy), milestone 1.
+  // Each entry softens a check or a shape that the vocabulary of 14 October 2026 and the advanced
+  // definitions of 2026 make too strict for real manifests. Remove an entry when the vocabulary project
+  // settles the point. Decision D-45.
+  "byCode": {
+    "domain-mismatch": "warning",
+    "range-mismatch": "warning",
+    "disjoint-classes": "warning"
+  },
+  "byShape": {
+    "http://d-wis.org/shapes/DrillingSignalShape": "warning"
+  },
+  "reasons": {
+    "domain-mismatch": "In RDFS a domain is an entailment, not a constraint; a mismatch is a hint. The SmartConnect manifest has 4 (IsSubPartOf on a Liner, not DrillingEquipment).",
+    "range-mismatch": "Same as domain-mismatch. The SmartConnect manifest has 22 (IsAHydraulicRepresentationFor to a StorageTank, which the vocabulary does not count as DrillingEquipment).",
+    "disjoint-classes": "The Noun definitions declare DataType and DrillingDataPoint disjoint, but every SmartConnect data point is typed ContinuousDataType as well as Measurement (254 of them); the base vocabulary keeps that axiom commented out.",
+    "http://d-wis.org/shapes/DrillingSignalShape": "The shape requires a unit on every DrillingSignal; the 254 validity flags are booleans without a unit, and 49 SmartConnect variables have none."
+  }
+}
