@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup Label="RDF">
-    <PackageVersion Include="DWIS.Blackboard.Contracts" Version="1.0.0-dev" />
+    <PackageVersion Include="DWIS.Blackboard.Contracts" Version="1.0.0-edge.6" />
     <PackageVersion Include="dotNetRdf" Version="3.5.2" />
     <PackageVersion Include="dotNetRdf.Shacl" Version="3.5.2" />
     <!-- Pulled in by dotNetRdf (1.4.0, GHSA-pgww-w46g-26qg, patched in 1.5.0); pinned to the current release. -->
