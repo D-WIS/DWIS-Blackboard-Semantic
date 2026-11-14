@@ -1,0 +1,43 @@
+# Copy of fuseki/config/dwis.ttl in DWIS-Blackboard-Tests (commit 3d9e381, 14 November 2026) for the throwaway test image.
+# Keep it identical to the source; the real image is what CI tests against.
+# Fuseki server configuration for DWIS Blackboard Rig Edition (specification 3.7, Appendix C.8).
+#
+# /dwis             TDB2, union default graph: a plain query sees every named graph together,
+#                   GRAPH still separates them. Holds the vocabulary graph and, per manifest,
+#                   the asserted, inferred and provenance graphs, plus the endpoints graph.
+# /dwis-quarantine  TDB2, no union: the whole manifest graph of a rejected injection, invisible
+#                   to /dwis queries (Appendix C.5).
+# /dwis-inf         the inference view over /dwis, added in milestone 2 (decision D-15).
+
+@prefix :       <#> .
+@prefix fuseki: <http://jena.apache.org/fuseki#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tdb2:   <http://jena.apache.org/2016/tdb#> .
+@prefix ja:     <http://jena.hpl.hp.com/2005/11/Assembler#> .
+
+[] rdf:type fuseki:Server ;
+   fuseki:services ( :dwis :quarantine ) .
+
+:dwis rdf:type fuseki:Service ;
+    fuseki:name "dwis" ;
+    fuseki:endpoint [ fuseki:operation fuseki:query ;  fuseki:name "sparql" ] ;
+    fuseki:endpoint [ fuseki:operation fuseki:query ;  fuseki:name "query" ] ;
+    fuseki:endpoint [ fuseki:operation fuseki:update ; fuseki:name "update" ] ;
+    fuseki:endpoint [ fuseki:operation fuseki:gsp-rw ; fuseki:name "data" ] ;
+    fuseki:endpoint [ fuseki:operation fuseki:shacl ;  fuseki:name "shacl" ] ;
+    fuseki:dataset :dwisDataset .
+
+:dwisDataset rdf:type tdb2:DatasetTDB2 ;
+    tdb2:location "/fuseki/databases/dwis" ;
+    tdb2:unionDefaultGraph true .
+
+:quarantine rdf:type fuseki:Service ;
+    fuseki:name "dwis-quarantine" ;
+    fuseki:endpoint [ fuseki:operation fuseki:query ;  fuseki:name "sparql" ] ;
+    fuseki:endpoint [ fuseki:operation fuseki:update ; fuseki:name "update" ] ;
+    fuseki:endpoint [ fuseki:operation fuseki:gsp-rw ; fuseki:name "data" ] ;
+    fuseki:dataset :quarantineDataset .
+
+:quarantineDataset rdf:type tdb2:DatasetTDB2 ;
+    tdb2:location "/fuseki/databases/dwis-quarantine" .

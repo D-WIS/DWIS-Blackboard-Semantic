@@ -16,7 +16,7 @@ One solution, `DWIS.Blackboard.Semantic.slnx`, .NET 10, with the libraries of sp
 |---|---|
 | `src/DWIS.Semantic.Manifest` | manifest JSON to RDF, namespace translation, validity flag completion, core-versus-rest split |
 | `src/DWIS.Semantic.Validation` | pre-processing pass: term checks, domain and range, SHACL with dotNetRDF, unit dimensions, the validation policy; the rule catalogue is its [README](src/DWIS.Semantic.Validation/README.md) |
-| `src/DWIS.Semantic.Store` | store client (Graph Store Protocol, SPARQL, SHACL endpoint, health) behind a store-agnostic interface; Fuseki first |
+| `src/DWIS.Semantic.Store` | store client (`ITripleStore`: named graphs, SPARQL query with time and row limits, update, SHACL endpoint, health) behind a store-agnostic interface; `FusekiStore` first |
 | `src/DWIS.Semantic.QueryRegistration` | query registration: ownership, snapshot, diff, re-evaluation (milestone 3) |
 | `src/DWIS.Semantic.Ingest` | the injection pipeline: prepare, stage, commit, abort, remove, re-derive |
 | `src/DWIS.Semantic.Host` | the service: gRPC and HTTP endpoints under `/api/v1`, configuration, health, metrics |
@@ -37,6 +37,16 @@ dotnet test DWIS.Blackboard.Semantic.slnx -c Release --no-build --report-trx --r
 ```bash
 docker build -t digiwells/dwis.blackboard.semantic:dev .
 ```
+
+### Contract tests
+
+`tests/DWIS.Semantic.Store.Tests` runs against a real Fuseki with the Rig Edition datasets (Appendix G.1). The fixture looks, in this order, for:
+
+1. `DWIS_FUSEKI_URL`: a running Fuseki, for example the compose stack of `DWIS-Blackboard-Tests` (`http://localhost:3030`). The tests write only graphs under `http://d-wis.org/test/` and delete them.
+2. `DWIS_FUSEKI_IMAGE`: an image to start with Testcontainers. CI builds `digiwells/dwis.blackboard.fuseki` from `DWIS-Blackboard-Tests` and sets this, so the real image is what gets tested.
+3. Otherwise a throwaway image built from `tests/DWIS.Semantic.Store.Tests/Fixtures/fuseki` (the Fuseki jar from Maven Central on the stock Temurin runtime, with a copy of the dataset configuration), started with Testcontainers. Needs Docker and network access.
+
+Without any of these the contract tests are skipped with the reason in the test output; set `DWIS_FUSEKI_REQUIRED=true` to make them fail instead (CI does).
 
 The host alone answers `GET /api/v1/health`; the full service is started from the `compose.yaml` in `DWIS-Blackboard-Tests` together with Fuseki.
 
