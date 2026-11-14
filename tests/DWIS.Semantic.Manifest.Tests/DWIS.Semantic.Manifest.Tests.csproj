@@ -4,4 +4,8 @@
     <ProjectReference Include="../../src/DWIS.Semantic.Manifest/DWIS.Semantic.Manifest.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Fixtures/**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
