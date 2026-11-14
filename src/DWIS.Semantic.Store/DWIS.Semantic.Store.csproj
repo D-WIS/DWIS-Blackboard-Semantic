@@ -8,4 +8,8 @@
     <PackageReference Include="dotNetRdf" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="DWIS.Semantic.Store.Tests" />
+  </ItemGroup>
+
 </Project>

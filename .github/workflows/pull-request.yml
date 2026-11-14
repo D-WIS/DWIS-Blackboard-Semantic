@@ -30,8 +30,22 @@ jobs:
       - name: Build
         if: steps.sln.outputs.file != ''
         run: dotnet build "${{ steps.sln.outputs.file }}" -c Release --no-restore
+      - name: Check out the Fuseki image sources (DWIS-Blackboard-Tests)
+        if: steps.sln.outputs.file != ''
+        uses: actions/checkout@v7
+        with:
+          repository: D-WIS/DWIS-Blackboard-Tests
+          ref: main
+          path: fuseki-image
+      - name: Build the Fuseki image for the contract tests
+        if: steps.sln.outputs.file != ''
+        run: docker build --build-arg JENA_VERSION=6.2.0 --build-arg ALPINE_VERSION=3.24 -t digiwells/dwis.blackboard.fuseki:ci fuseki-image/fuseki
       - name: Test
         if: steps.sln.outputs.file != ''
+        env:
+          # The contract tests run against the image built above and fail, rather than skip, without it.
+          DWIS_FUSEKI_IMAGE: digiwells/dwis.blackboard.fuseki:ci
+          DWIS_FUSEKI_REQUIRED: "true"
         run: dotnet test "${{ steps.sln.outputs.file }}" -c Release --no-build --report-trx --results-directory TestResults
       - name: Upload test results
         if: always() && steps.sln.outputs.file != ''

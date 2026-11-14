@@ -5,3 +5,4 @@
 .github/
 tests/
 *.md
+fuseki-image/

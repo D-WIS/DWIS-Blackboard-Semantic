@@ -23,6 +23,8 @@
     <!-- FluentAssertions 8 and later need a paid licence for commercial use; 7.x stays Apache 2.0. -->
     <PackageVersion Include="FluentAssertions" Version="7.2.2" />
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.15" />
+    <!-- Contract tests against a real Fuseki in Docker (Appendix G.1). -->
+    <PackageVersion Include="Testcontainers" Version="4.16.0" />
   </ItemGroup>
 
 </Project>
