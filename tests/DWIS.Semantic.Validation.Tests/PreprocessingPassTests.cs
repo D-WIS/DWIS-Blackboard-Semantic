@@ -134,7 +134,7 @@ public sealed class PreprocessingPassTests : IClassFixture<VocabularyFixture>
             ],
         };
         var prepared = Manifest.ManifestPreparation.Prepare(manifest);
-        var result = PreprocessingPass.Run(prepared, Manifest.ManifestGraphBuilder.Build(prepared), _vocabulary, new PreprocessingOptions { RunShacl = false });
+        var result = PreprocessingPass.Run(prepared, Manifest.ManifestGraphBuilder.Build(prepared), _vocabulary, new PreprocessingOptions { Policy = ValidationPolicy.Parse("""{ "rules": { "shacl": { "level": "off" } } }""") });
         _output.WriteLine(Manifests.Summary(result));
 
         var codes = Manifests.Errors(result).Select(f => f.Code).ToList();

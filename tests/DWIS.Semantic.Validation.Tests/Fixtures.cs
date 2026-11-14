@@ -22,14 +22,14 @@ public sealed class VocabularyFixture
                 Path.Combine(advanced, "DWISVocabularyLogicalDefinitions.Prototypes.ttl"),
                 Path.Combine(advanced, "DWISVocabularyLogicalDefinitions.Units.ttl"),
             ],
-            Path.Combine(advanced, "DWISVocabularyShapes.ttl"),
+            [Path.Combine(advanced, "DWISVocabularyShapes.ttl")],
             [Path.Combine(root, "unit-and-quantity-individuals.ttl")]);
     }
 
     public VocabularyModel Model { get; }
 
-    /// <summary>The milestone 1 severity policy of the Tests repository (copy).</summary>
-    public SeverityPolicy Policy { get; } = SeverityPolicy.Load(Path.Combine(AppContext.BaseDirectory, "Fixtures", "vocabulary", "validation-policy.json"));
+    /// <summary>The milestone 1 validation policy of the Tests repository (copy).</summary>
+    public ValidationPolicy Policy { get; } = ValidationPolicy.Load(Path.Combine(AppContext.BaseDirectory, "Fixtures", "vocabulary", "validation-policy.json"));
 }
 
 internal static class Manifests

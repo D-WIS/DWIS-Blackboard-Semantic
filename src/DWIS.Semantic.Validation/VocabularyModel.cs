@@ -63,8 +63,11 @@ public sealed class VocabularyModel
     /// <summary>Properties declared functional.</summary>
     public IReadOnlySet<string> FunctionalProperties { get; private set; } = new HashSet<string>();
 
-    /// <summary>Loads vocabulary files, optional shapes and optional reference data, translating the legacy namespace on the way.</summary>
-    public static VocabularyModel Load(string version, IEnumerable<string> vocabularyFiles, string? shapesFile = null, IEnumerable<string>? referenceDataFiles = null)
+    /// <summary>
+    /// Loads vocabulary files, optional shape files and optional reference data, translating the legacy
+    /// namespace on the way. Several shape files are merged: the vocabulary project's and the project's own.
+    /// </summary>
+    public static VocabularyModel Load(string version, IEnumerable<string> vocabularyFiles, IEnumerable<string>? shapesFiles = null, IEnumerable<string>? referenceDataFiles = null)
     {
         ArgumentNullException.ThrowIfNull(version);
         ArgumentNullException.ThrowIfNull(vocabularyFiles);
@@ -82,10 +85,10 @@ public sealed class VocabularyModel
         }
 
         Graph? shapes = null;
-        if (shapesFile is not null)
+        foreach (var file in shapesFiles ?? [])
         {
-            shapes = new Graph();
-            ParseInto(shapes, shapesFile);
+            shapes ??= new Graph();
+            ParseInto(shapes, file);
         }
 
         return new VocabularyModel(version, vocabulary, reference, shapes);

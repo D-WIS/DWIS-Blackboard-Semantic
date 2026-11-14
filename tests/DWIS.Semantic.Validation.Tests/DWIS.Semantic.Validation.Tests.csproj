@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <Content Include="Fixtures/**" CopyToOutputDirectory="PreserveNewest" />
+    <!-- The rule catalogue, so that a test can check it names every finding code. -->
+    <Content Include="../../src/DWIS.Semantic.Validation/README.md" Link="Fixtures/validation-rules.md" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

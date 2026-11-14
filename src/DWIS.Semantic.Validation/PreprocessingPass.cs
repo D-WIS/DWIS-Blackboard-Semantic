@@ -6,7 +6,7 @@ using VDS.RDF;
 
 namespace DWIS.Semantic.Validation;
 
-/// <summary>What the pass can ask about the rest of the store (Appendix C.4: "exists in neither this manifest nor the store").</summary>
+/// <summary>What the pass can ask about the rest of the store (Appendix C.4: "exists in neither this manifest nor the store"), and the policy.</summary>
 public sealed class PreprocessingOptions
 {
     /// <summary>Tells whether an IRI exists in the store, for references that leave the manifest. Default: nothing exists.</summary>
@@ -15,14 +15,8 @@ public sealed class PreprocessingOptions
     /// <summary>Gives the types of an IRI in the store, or null when unknown. Default: unknown.</summary>
     public Func<string, IReadOnlySet<string>?> TypesInStore { get; init; } = _ => null;
 
-    /// <summary>Run the SHACL shapes when the vocabulary has some. Default: true.</summary>
-    public bool RunShacl { get; init; } = true;
-
-    /// <summary>Run the unit against quantity dimension check when the reference data allows it. Default: true.</summary>
-    public bool CheckUnitDimensions { get; init; } = true;
-
-    /// <summary>Severity overrides applied to the findings. Default: none.</summary>
-    public SeverityPolicy Policy { get; init; } = SeverityPolicy.None;
+    /// <summary>The policy (README.md, "Changing a rule"): a level per rule, off included. Default: none.</summary>
+    public ValidationPolicy Policy { get; init; } = ValidationPolicy.None;
 }
 
 /// <summary>The outcome of the pass.</summary>
@@ -68,12 +62,12 @@ public static class PreprocessingPass
         CheckTermsDomainsRangesAndReferences(graph, types, subjects, vocabulary, options, injectedTermPrefix, findings);
         CheckFunctional(graph, vocabulary, findings);
         CheckDisjointness(types, vocabulary, findings);
-        if (options.RunShacl && vocabulary.Shapes is not null)
+        if (vocabulary.Shapes is not null && !options.Policy.IsOff(FindingCodes.Shacl))
         {
             findings.AddRange(ShaclCheck.Run(graph, vocabulary));
         }
 
-        if (options.CheckUnitDimensions)
+        if (!options.Policy.IsOff(FindingCodes.UnitQuantityDimension))
         {
             findings.AddRange(UnitQuantityCheck.Run(graph, vocabulary));
         }

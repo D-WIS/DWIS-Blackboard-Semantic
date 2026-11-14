@@ -35,4 +35,11 @@ public static class FindingCodes
 
     /// <summary>The manifest uses BelongsToClass, the deprecated form of a class assertion.</summary>
     public const string BelongsToClassUsed = "belongs-to-class-used";
+
+    /// <summary>Every code above, for the policy and the catalogue test.</summary>
+    public static IReadOnlyList<string> All { get; } =
+    [
+        UnknownClass, UnknownVerb, UnknownAttribute, DomainMismatch, RangeMismatch, FunctionalConflict,
+        DanglingReference, DisjointClasses, Shacl, UnitQuantityDimension, BelongsToClassUsed,
+    ];
 }
