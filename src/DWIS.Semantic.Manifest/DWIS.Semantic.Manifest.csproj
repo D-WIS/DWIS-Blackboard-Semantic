@@ -1,10 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Manifest JSON to RDF, namespace translation, validity flag completion, core-versus-rest split (specification 3.2, Appendix C).</Description>
+    <Description>Manifest to RDF: validity flag completion, injected variables dropped, the IRI scheme of Appendix C.3, namespace translation on ingress (specification 3.6, Appendix C.2 and C.3).</Description>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DWIS.Blackboard.Contracts" />
     <PackageReference Include="dotNetRdf" />
   </ItemGroup>
 
