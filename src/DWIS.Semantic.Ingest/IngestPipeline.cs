@@ -21,6 +21,7 @@ namespace DWIS.Semantic.Ingest;
 /// <param name="Graph">The asserted graph.</param>
 /// <param name="Split">Its core and its rest.</param>
 /// <param name="Report">The report of the pre-processing pass; the commit adds the statistics.</param>
+/// <param name="InferencePredicates">The predicates the commit asks the inference view for (<see cref="Inference.PredicatesOf"/>).</param>
 public sealed record StagedManifest(
     ManifestId Id,
     string ManifestName,
@@ -28,17 +29,19 @@ public sealed record StagedManifest(
     string ManifestJson,
     ManifestGraph Graph,
     SplitGraph Split,
-    IngestionReport Report)
+    IngestionReport Report,
+    IReadOnlyList<string> InferencePredicates)
 {
     /// <summary>True when the whole manifest may go live.</summary>
     public bool Accepted => Report.Accepted;
 }
 
 /// <summary>
-/// The injection pipeline of specification 4 and Appendix C, milestone 1 shape: prepare (C.2 to C.5, pure)
-/// and commit (C.6 steps 1 and 4: the asserted and provenance graphs in one update, the quarantine graph
-/// when rejected). The inferred graph, the endpoints and the registered queries come with milestones 2 and 3.
-/// Injecting the same manifest twice returns the stored report without re-processing (C.5).
+/// The injection pipeline of specification 4 and Appendix C: prepare (C.2 to C.5, pure) and commit
+/// (C.6 steps 1, 2 and 4: the asserted graph, then the inferred graph read from the inference view, then
+/// the provenance; the quarantine graph when rejected). The re-check after reasoning (step 3), the
+/// endpoints and the registered queries come with M2.3, M3 and M4. Injecting the same manifest twice
+/// returns the stored report without re-processing (C.5).
 /// </summary>
 public sealed class IngestPipeline
 {
@@ -78,14 +81,15 @@ public sealed class IngestPipeline
         var pass = PreprocessingPass.Run(prepared, graph, vocabulary, new PreprocessingOptions { Policy = policy ?? ValidationPolicy.None });
         var split = CoreSplit.Split(graph);
         var report = pass.ToReport(id.Value, vocabulary.Version);
-        return new StagedManifest(id, manifest.ManifestName, hash, json, graph, split, report);
+        return new StagedManifest(id, manifest.ManifestName, hash, json, graph, split, report, Inference.PredicatesOf(vocabulary));
     }
 
     /// <summary>
-    /// Writes the staged manifest: the asserted graph (whole when accepted, core only when not) and the
-    /// provenance graph in one update to the live dataset; the whole manifest graph to the quarantine
-    /// dataset when not accepted, else no quarantine graph. Replaces what a previous injection of the same
-    /// id left (C.7, update).
+    /// Writes the staged manifest in three updates to the live dataset: the asserted graph (whole when
+    /// accepted, core only when not) after dropping what a previous injection of the same id left (C.7);
+    /// the inferred graph, read from the inference view once the asserted triples are visible there, with
+    /// the provenance; the commit time. The whole manifest graph goes to the quarantine dataset when not
+    /// accepted, else no quarantine graph.
     /// </summary>
     public async Task<IngestionReport> CommitAsync(StagedManifest staged, CancellationToken cancellationToken = default)
     {
@@ -104,20 +108,30 @@ public sealed class IngestPipeline
             await _store.PutGraphAsync(Dataset.Quarantine, id.QuarantineGraph, staged.Graph.Graph, cancellationToken).ConfigureAwait(false);
         }
 
-        var report = staged.Report with
-        {
-            Statistics = staged.Report.Statistics with { Asserted = asserted.Triples.Count, CommitMs = watch.ElapsedMilliseconds },
-        };
-        var provenance = Provenance.Build(id, staged.ManifestName, staged.ContentHash, staged.ManifestJson, report, _clock.GetUtcNow(), asserted.Triples.Count, quarantined);
-
-        var update = new StringBuilder()
+        // Step 1: the asserted graph, in place of whatever the previous injection of this id left.
+        var assertedUpdate = new StringBuilder()
             .Append("DROP SILENT GRAPH <").Append(id.AssertedGraph).Append("> ;\n")
             .Append("DROP SILENT GRAPH <").Append(id.InferredGraph).Append("> ;\n")
             .Append("DROP SILENT GRAPH <").Append(id.ProvenanceGraph).Append("> ;\n")
-            .Append("INSERT DATA { GRAPH <").Append(id.AssertedGraph).Append("> {\n").Append(NTriples(asserted)).Append("} } ;\n")
+            .Append("INSERT DATA { GRAPH <").Append(id.AssertedGraph).Append("> {\n").Append(NTriples(asserted)).Append("} }\n")
+            .ToString();
+        await _store.UpdateAsync(Dataset.Live, assertedUpdate, cancellationToken).ConfigureAwait(false);
+
+        // Step 2: what the reasoner adds about this provider's resources, now that the asserted triples are
+        // in the union the view reasons over (C.6 step 2; the view stores nothing, the graph here does).
+        var inferred = await Inference.ConsequencesAsync(_store, Inference.SubjectsOf(asserted), staged.InferencePredicates, cancellationToken).ConfigureAwait(false);
+
+        // Step 4: provenance, with the sizes known.
+        var report = staged.Report with
+        {
+            Statistics = staged.Report.Statistics with { Asserted = asserted.Triples.Count, Inferred = inferred.Triples.Count, CommitMs = watch.ElapsedMilliseconds },
+        };
+        var provenance = Provenance.Build(id, staged.ManifestName, staged.ContentHash, staged.ManifestJson, report, _clock.GetUtcNow(), asserted.Triples.Count, inferred.Triples.Count, quarantined);
+        var inferredUpdate = new StringBuilder()
+            .Append("INSERT DATA { GRAPH <").Append(id.InferredGraph).Append("> {\n").Append(NTriples(inferred)).Append("} } ;\n")
             .Append("INSERT DATA { GRAPH <").Append(id.ProvenanceGraph).Append("> {\n").Append(NTriples(provenance)).Append("} }\n")
             .ToString();
-        await _store.UpdateAsync(Dataset.Live, update, cancellationToken).ConfigureAwait(false);
+        await _store.UpdateAsync(Dataset.Live, inferredUpdate, cancellationToken).ConfigureAwait(false);
 
         // The write is the bulk of the commit, so its time is recorded after it, as one triple of the provenance.
         var commitMs = watch.ElapsedMilliseconds;

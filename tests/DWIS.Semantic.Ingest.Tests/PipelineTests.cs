@@ -27,6 +27,7 @@ public sealed class PipelineTests : IClassFixture<VocabularyFixture>
         staged.Report.VocabularyVersion.Should().Be("2026-10-14");
         staged.ContentHash.Should().MatchRegex("^sha256:[0-9a-f]{64}$");
         staged.Split.Core.Triples.Count.Should().BeLessThan(staged.Graph.Graph.Triples.Count);
+        staged.InferencePredicates.Should().Contain("http://d-wis.org/IsProvidedBy");
     }
 
     [Fact]
@@ -57,7 +58,7 @@ public sealed class PipelineTests : IClassFixture<VocabularyFixture>
         var id = ManifestId.Of("SmartConnect", "SmartConnect rig signals");
         var report = IngestionReport.From(id.Value, "2026-10-14", [new Finding { Severity = Severity.Warning, Message = "w" }], new IngestionStatistics { Asserted = 10 });
         var at = new DateTimeOffset(2026, 11, 16, 9, 30, 0, TimeSpan.Zero);
-        var provenance = Provenance.Build(id, "SmartConnect rig signals", "sha256:abc", "{}", report, at, 10, 0);
+        var provenance = Provenance.Build(id, "SmartConnect rig signals", "sha256:abc", "{}", report, at, 10, 4, 0);
         var named = new Graph(new UriNode(new Uri(id.ProvenanceGraph)));
         named.Merge(provenance);
         var store = new TripleStore();
@@ -66,7 +67,7 @@ public sealed class PipelineTests : IClassFixture<VocabularyFixture>
         var rows = (SparqlResultSet)new LeviathanQueryProcessor(store).ProcessQuery(new SparqlQueryParser().ParseFromString(Provenance.ListQuery));
         var summary = Provenance.Read(rows.Results.Should().ContainSingle().Subject);
 
-        summary.Should().BeEquivalentTo(new ManifestSummary(id, "SmartConnect rig signals", "sha256:abc", "2026-10-14", at, true, new FindingCounts(0, 1, 0), 10, 0));
+        summary.Should().BeEquivalentTo(new ManifestSummary(id, "SmartConnect rig signals", "sha256:abc", "2026-10-14", at, true, new FindingCounts(0, 1, 0), 10, 4, 0));
         provenance.GetTriplesWithPredicate(provenance.CreateUriNode(new Uri(Provenance.QuarantineGraphProperty))).Should().BeEmpty("an accepted manifest has no quarantine graph");
 
         var reportRows = (SparqlResultSet)new LeviathanQueryProcessor(store).ProcessQuery(new SparqlQueryParser().ParseFromString(Provenance.ReportQuery(id)));
@@ -75,12 +76,33 @@ public sealed class PipelineTests : IClassFixture<VocabularyFixture>
     }
 
     [Fact]
+    public void The_subtraction_keeps_what_the_live_data_lacks_and_drops_the_trivia()
+    {
+        var view = new VDS.RDF.Graph();
+        var live = new VDS.RDF.Graph();
+        var s = view.CreateUriNode(new Uri("http://d-wis.org/P/x"));
+        var a = view.CreateUriNode(new Uri("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"));
+        view.Assert(new VDS.RDF.Triple(s, a, view.CreateUriNode(new Uri("http://d-wis.org/SPP"))));
+        view.Assert(new VDS.RDF.Triple(s, a, view.CreateUriNode(new Uri("http://d-wis.org/PrototypeData"))));
+        view.Assert(new VDS.RDF.Triple(s, a, view.CreateUriNode(new Uri("http://www.w3.org/2000/01/rdf-schema#Resource"))));
+        view.Assert(new VDS.RDF.Triple(s, a, view.CreateUriNode(new Uri("http://www.w3.org/2002/07/owl#Thing"))));
+        view.Assert(new VDS.RDF.Triple(s, a, view.CreateBlankNode()));
+        live.Assert(new VDS.RDF.Triple(s, a, live.CreateUriNode(new Uri("http://d-wis.org/SPP"))));
+
+        var inferred = Inference.Subtract(view, live);
+
+        inferred.Triples.Should().ContainSingle().Which.Object.ToString().Should().Be("http://d-wis.org/PrototypeData");
+        Inference.SubjectsQuery(["http://d-wis.org/P/x", "http://d-wis.org/P/y"], ["http://d-wis.org/p"]).Should().Contain("VALUES ?s { <http://d-wis.org/P/x> <http://d-wis.org/P/y> } VALUES ?p { <http://d-wis.org/p> }");
+        Inference.PredicatesOf(_fixture.Model).Should().HaveCountGreaterThan(200).And.Contain("http://d-wis.org/HasDynamicValue").And.HaveElementAt(0, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
+    }
+
+    [Fact]
     public void A_rejected_manifest_names_its_quarantine_graph()
     {
         var id = ManifestId.Of("SmartConnect", "x");
         var report = IngestionReport.From(id.Value, "v", [new Finding { Severity = Severity.Error, Message = "e" }]);
 
-        var provenance = Provenance.Build(id, "x", "sha256:0", "{}", report, DateTimeOffset.UnixEpoch, 5, 50);
+        var provenance = Provenance.Build(id, "x", "sha256:0", "{}", report, DateTimeOffset.UnixEpoch, 5, 0, 50);
 
         provenance.GetTriplesWithPredicate(provenance.CreateUriNode(new Uri(Provenance.QuarantineGraphProperty)))
             .Should().ContainSingle().Which.Object.ToString().Should().Be(id.QuarantineGraph);
