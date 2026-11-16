@@ -26,4 +26,7 @@ internal static partial class Log
 
     [LoggerMessage(8, LogLevel.Information, "Manifest {Id} removed")]
     public static partial void ManifestRemoved(ILogger logger, string id);
+
+    [LoggerMessage(9, LogLevel.Information, "Vocabulary changed to {Version} from {Previous}: {Manifests} manifests re-derived, {CoreOnly} became core-only")]
+    public static partial void VocabularyChanged(ILogger logger, string version, string previous, int manifests, int coreOnly);
 }

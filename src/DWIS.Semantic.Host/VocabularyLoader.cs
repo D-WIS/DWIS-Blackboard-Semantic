@@ -6,11 +6,32 @@ using ITripleStore = DWIS.Semantic.Store.ITripleStore;
 
 namespace DWIS.Semantic.Host;
 
-/// <summary>What the service knows about its vocabulary: loaded or not, and why not.</summary>
+/// <summary>What the service knows about its vocabulary: which version, loaded or not, and why not.</summary>
 public sealed class VocabularyState
 {
     private readonly object _gate = new();
     private VocabularyModel? _model;
+    private string _version;
+
+    /// <summary>Starts on the configured version.</summary>
+    public VocabularyState(Microsoft.Extensions.Options.IOptions<VocabularyOptions> options)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+        _version = options.Value.Version;
+    }
+
+    /// <summary>The version in force: the graphs <c>http://d-wis.org/vocabulary/{version}</c> and <c>http://d-wis.org/units/{version}</c>.</summary>
+    public string Version
+    {
+        get { lock (_gate) { return _version; } }
+        internal set { lock (_gate) { _version = value; } }
+    }
+
+    /// <summary>The vocabulary graph IRI of the version in force.</summary>
+    public string Graph => VocabularyOptions.GraphOf(Version);
+
+    /// <summary>The units graph IRI of the version in force.</summary>
+    public string UnitsGraph => VocabularyOptions.UnitsGraphOf(Version);
 
     /// <summary>The model, or null until the vocabulary is read from the store.</summary>
     public VocabularyModel? Model
@@ -87,28 +108,44 @@ public sealed class VocabularyLoader : BackgroundService
         _logger = logger;
     }
 
-    /// <summary>One attempt: true when the model is now loaded.</summary>
-    public async Task<bool> TryLoadAsync(CancellationToken cancellationToken)
+    /// <summary>One attempt at the version in force: true when the model is now loaded.</summary>
+    public Task<bool> TryLoadAsync(CancellationToken cancellationToken) => TryLoadAsync(_state.Version, cancellationToken);
+
+    /// <summary>
+    /// Switches to another version (<c>PUT /vocabulary</c>): the model is built from that version's graphs
+    /// first, and only then does the state change, so a failed switch leaves the service on the version it
+    /// had. True when the switch happened.
+    /// </summary>
+    public async Task<bool> SwitchAsync(string version, CancellationToken cancellationToken)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(version);
+        return await TryLoadAsync(version, cancellationToken).ConfigureAwait(false);
+    }
+
+    private async Task<bool> TryLoadAsync(string version, CancellationToken cancellationToken)
+    {
+        var graph = VocabularyOptions.GraphOf(version);
+        var unitsGraph = VocabularyOptions.UnitsGraphOf(version);
         try
         {
-            var vocabulary = await _store.GetGraphAsync(Dataset.Live, _options.Graph, cancellationToken).ConfigureAwait(false);
+            var vocabulary = await _store.GetGraphAsync(Dataset.Live, graph, cancellationToken).ConfigureAwait(false);
             if (vocabulary is null || vocabulary.IsEmpty)
             {
-                _state.Fail($"The vocabulary graph <{_options.Graph}> is not in the store yet.");
+                _state.Fail($"The vocabulary graph <{graph}> is not in the store yet.");
                 return false;
             }
 
-            var units = await _store.GetGraphAsync(Dataset.Live, _options.UnitsGraph, cancellationToken).ConfigureAwait(false);
+            var units = await _store.GetGraphAsync(Dataset.Live, unitsGraph, cancellationToken).ConfigureAwait(false);
             if (units is null || units.IsEmpty)
             {
-                _state.Fail($"The units graph <{_options.UnitsGraph}> is not in the store yet.");
+                _state.Fail($"The units graph <{unitsGraph}> is not in the store yet.");
                 return false;
             }
 
-            var model = VocabularyModel.FromGraphs(_options.Version, AsGraph(vocabulary), AsGraph(vocabulary), AsGraph(units));
+            var model = VocabularyModel.FromGraphs(version, AsGraph(vocabulary), AsGraph(vocabulary), AsGraph(units));
+            _state.Version = version;
             _state.Set(model, vocabulary.Triples.Count, units.Triples.Count, _clock.GetUtcNow());
-            Log.VocabularyLoaded(_logger, _options.Version, vocabulary.Triples.Count, units.Triples.Count, model.Classes.Count, model.Shapes is null ? "none" : "loaded");
+            Log.VocabularyLoaded(_logger, version, vocabulary.Triples.Count, units.Triples.Count, model.Classes.Count, model.Shapes is null ? "none" : "loaded");
             return true;
         }
         catch (Exception e) when (e is StoreException or HttpRequestException or OperationCanceledException && !cancellationToken.IsCancellationRequested)
