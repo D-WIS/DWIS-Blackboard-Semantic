@@ -5,6 +5,8 @@ using DWIS.Blackboard.Contracts.Manifests;
 using DWIS.Blackboard.Contracts.Reports;
 using DWIS.Semantic.Ingest;
 using DWIS.Semantic.Store;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DWIS.Semantic.Host.Tests;
 
@@ -153,6 +155,48 @@ public sealed class ManifestEndpointTests
         var graph = new VDS.RDF.Graph();
         graph.Assert(new VDS.RDF.Triple(graph.CreateUriNode(new Uri("http://d-wis.org/test/s")), graph.CreateUriNode(new Uri("http://d-wis.org/test/p")), graph.CreateLiteralNode("stale")));
         return graph;
+    }
+
+    [Fact]
+    public async Task A_shape_that_fires_only_after_reasoning_downgrades_the_manifest_to_core_only()
+    {
+        _host.SkipUnlessAvailable();
+        // A vocabulary of its own: the same files plus a project shape on the inferred property HasValue
+        // (Fixtures/shapes/after-reasoning.ttl), under a version of its own, and a host configured for it.
+        var version = _host.Version + "-reasoning";
+        var vocabularyGraph = "http://d-wis.org/vocabulary/" + version;
+        var unitsGraph = "http://d-wis.org/units/" + version;
+        var id = ManifestId.Of("SmartConnect", "SmartConnect rig signals");
+        try
+        {
+            var (vocabulary, units) = HostFixture.LoadVocabularyFiles(version, Path.Combine(AppContext.BaseDirectory, "Fixtures", "shapes", "after-reasoning.ttl"));
+            await _host.Store.PutGraphAsync(Dataset.Live, vocabularyGraph, vocabulary);
+            await _host.Store.PutGraphAsync(Dataset.Live, unitsGraph, units);
+            using var factory = _host.Factory.WithWebHostBuilder(b => b.ConfigureServices(s => s.PostConfigure<VocabularyOptions>(o => o.Version = version)));
+            using var client = factory.CreateClient();
+            await HostFixture.WaitUntilLoadedAsync(client);
+
+            var (status, report) = await PostAsync(client, "smartconnect.manifest.json");
+
+            status.Should().Be(HttpStatusCode.OK);
+            report.Accepted.Should().BeFalse("the shape fires on the inferred HasValue triples");
+            report.Live.Should().Be(new LiveParts(true, false));
+            var afterReasoning = report.Findings.Where(f => f.Stage == Stage.Commit).ToList();
+            afterReasoning.Should().HaveCount(15).And.OnlyContain(f => f.Severity == Severity.Error && f.Source == "http://d-wis.org/shapes/ValueNeedsQuantityShape");
+            report.Findings.Where(f => f.Stage == Stage.Preprocessing && f.Severity == Severity.Error).Should().BeEmpty("the pass alone accepted the manifest");
+            report.Statistics.Asserted.Should().BeLessThan(3593, "the core replaced the whole graph");
+            report.Statistics.Inferred.Should().BeGreaterThan(0, "the core is reasoned over again");
+            (await _host.Store.GetGraphAsync(Dataset.Quarantine, id.QuarantineGraph)).Should().NotBeNull();
+            (await AskAsync(client, $"ASK {{ GRAPH <{id.AssertedGraph}> {{ ?s <http://d-wis.org/HasUnitOfMeasure> ?o }} }}")).Should().BeFalse("units are not core");
+            (await SelectAsync(client, SppByClass)).Should().ContainSingle();
+        }
+        finally
+        {
+            await RemoveAsync(id);
+            await _host.Store.DeleteGraphAsync(Dataset.Quarantine, id.QuarantineGraph);
+            await _host.Store.DeleteGraphAsync(Dataset.Live, vocabularyGraph);
+            await _host.Store.DeleteGraphAsync(Dataset.Live, unitsGraph);
+        }
     }
 
     [Fact]

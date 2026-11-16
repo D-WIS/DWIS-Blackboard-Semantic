@@ -49,6 +49,30 @@ public sealed class HostFixture : IAsyncLifetime
     /// <summary>The policy file the host reads.</summary>
     public static string PolicyPath => Path.Combine(AppContext.BaseDirectory, "Fixtures", "vocabulary", "validation-policy.json");
 
+    /// <summary>
+    /// The vocabulary graph (vocabulary, advanced definitions and shapes, plus any extra shape files) and
+    /// the units graph as the compose loader writes them, from the fixture files.
+    /// </summary>
+    public static (Graph Vocabulary, Graph Units) LoadVocabularyFiles(string version, params string[] extraShapeFiles)
+    {
+        var root = Path.Combine(AppContext.BaseDirectory, "Fixtures", "vocabulary");
+        var advanced = Path.Combine(root, "advancedDefinitions");
+        var model = VocabularyModel.Load(
+            version,
+            [
+                Path.Combine(root, "DWISVocabulary.ttl"),
+                Path.Combine(advanced, "DWISVocabularyLogicalDefinitions.Noun.ttl"),
+                Path.Combine(advanced, "DWISVocabularyLogicalDefinitions.Prototypes.ttl"),
+                Path.Combine(advanced, "DWISVocabularyLogicalDefinitions.Units.ttl"),
+            ],
+            [Path.Combine(advanced, "DWISVocabularyShapes.ttl"), .. extraShapeFiles],
+            [Path.Combine(root, "unit-and-quantity-individuals.ttl")]);
+        var vocabulary = new Graph();
+        vocabulary.Merge(model.Graph);
+        vocabulary.Merge(model.ShapesGraph!);
+        return (vocabulary, model.ReferenceData);
+    }
+
     /// <summary>Skips the calling test when no Fuseki is available.</summary>
     public void SkipUnlessAvailable() => _fuseki.SkipUnlessAvailable();
 
@@ -82,23 +106,9 @@ public sealed class HostFixture : IAsyncLifetime
         }
 
         // The same files the validation tests use, translated to the canonical namespace on the way in.
-        var root = Path.Combine(AppContext.BaseDirectory, "Fixtures", "vocabulary");
-        var advanced = Path.Combine(root, "advancedDefinitions");
-        var model = VocabularyModel.Load(
-            Version,
-            [
-                Path.Combine(root, "DWISVocabulary.ttl"),
-                Path.Combine(advanced, "DWISVocabularyLogicalDefinitions.Noun.ttl"),
-                Path.Combine(advanced, "DWISVocabularyLogicalDefinitions.Prototypes.ttl"),
-                Path.Combine(advanced, "DWISVocabularyLogicalDefinitions.Units.ttl"),
-            ],
-            [Path.Combine(advanced, "DWISVocabularyShapes.ttl")],
-            [Path.Combine(root, "unit-and-quantity-individuals.ttl")]);
-        var vocabulary = new Graph();
-        vocabulary.Merge(model.Graph);
-        vocabulary.Merge(model.ShapesGraph!);
+        var (vocabulary, units) = LoadVocabularyFiles(Version);
         await Store.PutGraphAsync(Dataset.Live, VocabularyGraph, vocabulary);
-        await Store.PutGraphAsync(Dataset.Live, UnitsGraph, model.ReferenceData);
+        await Store.PutGraphAsync(Dataset.Live, UnitsGraph, units);
 
         Environment.SetEnvironmentVariable("DWIS__Store__BaseUrl", _fuseki.BaseUrl.ToString());
         Environment.SetEnvironmentVariable("DWIS__Vocabulary__Version", Version);

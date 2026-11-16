@@ -1,0 +1,16 @@
+# A project shape that can only fire after reasoning (test material for Appendix C.6 step 3): it targets
+# the subjects of dwis:HasValue, a super-property of HasDynamicValue that no manifest asserts and that the
+# reasoner adds, and asks each of them for a measurable quantity. In the SmartConnect manifest, 15 of the
+# 254 data points with a signal name no quantity, so the manifest is accepted by the pre-processing pass
+# and downgraded to core-only by the re-check.
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix dwis: <http://d-wis.org/> .
+
+<http://d-wis.org/shapes/ValueNeedsQuantityShape>
+    a sh:NodeShape ;
+    sh:targetSubjectsOf dwis:HasValue ;
+    sh:property [
+        sh:path dwis:IsOfMeasurableQuantity ;
+        sh:minCount 1 ;
+        sh:message "A data point that carries a value names its measurable quantity." ;
+    ] .

@@ -95,6 +95,10 @@ dwissh:OneUnitPerSignalShape a sh:NodeShape ;
 
 **To change a built-in check**, edit the file named in the catalogue and the test that covers it in `tests/DWIS.Semantic.Validation.Tests/PreprocessingPassTests.cs`. Add the code to `FindingCodes.cs` and a row to this file if the check is new; the test `Every_finding_code_is_in_the_catalogue` fails otherwise.
 
+## After reasoning
+
+The disjointness check and the SHACL shapes run a second time at commit, on the asserted graph plus the inferred graph (Appendix C.6 step 3, `ReasoningCheck`). The same policy applies, so a rule has the same level before and after reasoning. Only what is new is reported, at stage `commit`; a new error downgrades the manifest to core-only. A shape that targets an inferred type or an inferred property (for example `sh:targetSubjectsOf` on a super-property that no manifest asserts) fires here and not in the pass; the test shape `Fixtures/shapes/after-reasoning.ttl` of the tests is one.
+
 ## Trying a change
 
 `dotnet test` runs the pass on the SmartConnect fixture and its edited copies (Appendix C.10: kilogram unit, dangling reference, unknown class, injected variables) with the milestone 1 policy, and prints a summary per code and shape in the test output. The test `The_SmartConnect_manifest_is_accepted_under_the_M1_policy_and_its_warnings_are_known` pins the exact warning counts, so a change to a rule, a shape or the policy shows up as a changed count.
