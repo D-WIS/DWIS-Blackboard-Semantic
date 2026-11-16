@@ -18,7 +18,7 @@ One solution, `DWIS.Blackboard.Semantic.slnx`, .NET 10, with the libraries of sp
 | `src/DWIS.Semantic.Validation` | pre-processing pass: term checks, domain and range, SHACL with dotNetRDF, unit dimensions, the validation policy; the rule catalogue is its [README](src/DWIS.Semantic.Validation/README.md) |
 | `src/DWIS.Semantic.Store` | store client (`ITripleStore`: named graphs, SPARQL query with time and row limits, update, SHACL endpoint, health) behind a store-agnostic interface; `FusekiStore` first |
 | `src/DWIS.Semantic.QueryRegistration` | query registration: ownership, snapshot, diff, re-evaluation (milestone 3) |
-| `src/DWIS.Semantic.Ingest` | the injection pipeline (`IngestPipeline`): prepare (names, triples, pre-processing pass, core-versus-rest split) and commit (asserted and provenance graphs in one update, quarantine when rejected); manifest ids `{provider}/{name}` and the graph names of Appendix C.8 |
+| `src/DWIS.Semantic.Ingest` | the injection pipeline (`IngestPipeline`): prepare (names, triples, pre-processing pass, core-versus-rest split) and commit (the asserted graph; then the inferred graph, read from the inference view `/dwis-inf` for the manifest's subjects and the vocabulary's predicates and reduced to what the live data lacks; then the provenance; quarantine when rejected); manifest ids `{provider}/{name}` and the graph names of Appendix C.8 |
 | `src/DWIS.Semantic.Host` | the service: HTTP routes under `/api/v1` (below), the five configuration layers of specification section 8 through `DWIS.Blackboard.Configuration`, the vocabulary read from the store at start-up, health |
 | `tests/<project>.Tests` | one xUnit project per library; the store's and the host's tests run against a real Fuseki |
 

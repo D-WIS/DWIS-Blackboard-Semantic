@@ -120,6 +120,7 @@ public sealed class HostFixture : IAsyncLifetime
             foreach (var id in TestManifests.Select(f => ManifestId.Of(Blackboard.Contracts.Manifests.ManifestJson.Parse(File.ReadAllText(ManifestPath(f))))))
             {
                 await Store.DeleteGraphAsync(Dataset.Live, id.AssertedGraph);
+                await Store.DeleteGraphAsync(Dataset.Live, id.InferredGraph);
                 await Store.DeleteGraphAsync(Dataset.Live, id.ProvenanceGraph);
                 await Store.DeleteGraphAsync(Dataset.Quarantine, id.QuarantineGraph);
             }

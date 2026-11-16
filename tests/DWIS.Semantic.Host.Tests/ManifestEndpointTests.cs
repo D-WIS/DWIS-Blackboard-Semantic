@@ -65,7 +65,17 @@ public sealed class ManifestEndpointTests
         entry.GetProperty("contentHash").GetString().Should().StartWith("sha256:");
         entry.GetProperty("vocabularyVersion").GetString().Should().Be(_host.Version);
         entry.GetProperty("assertedTriples").GetInt32().Should().Be(report.Statistics.Asserted);
+        entry.GetProperty("inferredTriples").GetInt32().Should().Be(report.Statistics.Inferred);
         entry.GetProperty("quarantinedTriples").GetInt32().Should().Be(0);
+
+        // 2b. The inferred graph (C.6 step 2): non-empty, disjoint from the asserted graph (T-SEM-5), separated by GRAPH (T-SEM-6).
+        report.Statistics.Inferred.Should().BeGreaterThan(0);
+        (await AskAsync(client, $"ASK {{ GRAPH <{SmartConnect.InferredGraph}> {{ ?s ?p ?o }} }}")).Should().BeTrue();
+        (await AskAsync(client, $"ASK {{ GRAPH <{SmartConnect.InferredGraph}> {{ ?s ?p ?o }} GRAPH <{SmartConnect.AssertedGraph}> {{ ?s ?p ?o }} }}")).Should().BeFalse("no triple is both asserted and inferred");
+        const string sppDataPoint = "<http://d-wis.org/SmartConnect/mainwellCirculationCommon_pressureStandPipe#01>";
+        (await AskAsync(client, $"PREFIX dwis: <http://d-wis.org/> ASK {{ GRAPH <{SmartConnect.InferredGraph}> {{ {sppDataPoint} a dwis:PrototypeData }} }}")).Should().BeTrue("SPP is a subclass of PrototypeData in the vocabulary");
+        (await AskAsync(client, $"PREFIX dwis: <http://d-wis.org/> ASK {{ GRAPH <{SmartConnect.AssertedGraph}> {{ {sppDataPoint} a dwis:PrototypeData }} }}")).Should().BeFalse();
+        (await AskAsync(client, $"PREFIX dwis: <http://d-wis.org/> ASK {{ {sppDataPoint} a dwis:PrototypeData }}")).Should().BeTrue("the union default graph sees the inferred graph");
 
         using var stored = await client.GetAsync(new Uri($"/api/v1/manifests/{SmartConnect.Value}", UriKind.Relative));
         stored.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -86,13 +96,20 @@ public sealed class ManifestEndpointTests
         again.Status.Should().Be(HttpStatusCode.OK);
         again.Report.Should().BeEquivalentTo(report, "the content hash matches the live one");
 
+        // 4b. A second manifest that shares the subjects gets its own inferred graph (R-SEM-3): the first one's
+        // inferred graph is not asserted, so it is not subtracted.
+        var kilogram = ManifestId.Of(ManifestJson.Parse(await File.ReadAllTextAsync(HostFixture.ManifestPath("smartconnect-kilogram.manifest.json"))));
+        var (sharedStatus, shared) = await PostAsync(client, "smartconnect-kilogram.manifest.json");
+        sharedStatus.Should().Be(HttpStatusCode.OK);
+        shared.Statistics.Inferred.Should().BeGreaterThan(0, "what another manifest inferred is that manifest's, not this one's");
+        await RemoveAsync(kilogram);
+
         // 5. Removing a manifest is a milestone 3 route; until then the store does it (C.7: drop its graphs).
         await RemoveAsync(SmartConnect);
         (await ListAsync(client)).Should().NotContain(e => e.GetProperty("id").GetProperty("value").GetString() == SmartConnect.Value);
         (await SelectAsync(client, SppByClass)).Should().BeEmpty();
 
         // 6. The kilogram copy (one wrong unit) goes live core-only: one error, the whole manifest in quarantine (T-SEM-9).
-        var kilogram = ManifestId.Of(ManifestJson.Parse(await File.ReadAllTextAsync(HostFixture.ManifestPath("smartconnect-kilogram.manifest.json"))));
         var (kiloStatus, kilo) = await PostAsync(client, "smartconnect-kilogram.manifest.json");
         kiloStatus.Should().Be(HttpStatusCode.OK);
         kilo.ManifestId.Should().Be(kilogram.Value);
@@ -105,6 +122,8 @@ public sealed class ManifestEndpointTests
         var kiloEntry = (await ListAsync(client)).Single(e => e.GetProperty("id").GetProperty("value").GetString() == kilogram.Value);
         kiloEntry.GetProperty("accepted").GetBoolean().Should().BeFalse();
         kiloEntry.GetProperty("quarantinedTriples").GetInt32().Should().BeGreaterThan(kilo.Statistics.Asserted);
+        kilo.Statistics.Inferred.Should().BeGreaterThan(0, "the core is reasoned over too");
+        kilo.Statistics.Inferred.Should().BeLessThan(report.Statistics.Inferred, "less is asserted, so less is inferred");
 
         (await SelectAsync(client, SppByClass)).Should().Equal(byClass, "the data point and its signal are core");
         (await SelectAsync(client, SppByQuantityAndPlace)).Should().BeEmpty("the quantity and the location are not core");
@@ -112,6 +131,7 @@ public sealed class ManifestEndpointTests
         (await AskAsync(client, $"ASK {{ GRAPH <{kilogram.QuarantineGraph}> {{ ?s ?p ?o }} }}")).Should().BeFalse("the quarantine dataset is invisible to live queries (T-SEM-10)");
 
         // 7. The good manifest comes back whole, and an accepted commit clears a stale quarantine graph of its own id.
+        (await AskAsync(client, $"ASK {{ GRAPH <{kilogram.InferredGraph}> {{ ?s ?p ?o }} }}")).Should().BeTrue();
         await RemoveAsync(kilogram);
         await _host.Store.PutGraphAsync(Dataset.Quarantine, SmartConnect.QuarantineGraph, kilo.Accepted ? new VDS.RDF.Graph() : StaleGraph());
         var (restoredStatus, restored) = await PostAsync(client, "smartconnect.manifest.json");
@@ -124,6 +144,7 @@ public sealed class ManifestEndpointTests
     private async Task RemoveAsync(ManifestId id)
     {
         await _host.Store.DeleteGraphAsync(Dataset.Live, id.AssertedGraph);
+        await _host.Store.DeleteGraphAsync(Dataset.Live, id.InferredGraph);
         await _host.Store.DeleteGraphAsync(Dataset.Live, id.ProvenanceGraph);
     }
 

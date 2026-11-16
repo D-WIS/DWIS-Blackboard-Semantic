@@ -15,6 +15,7 @@ namespace DWIS.Semantic.Ingest;
 /// <param name="Accepted">True when the whole manifest went live.</param>
 /// <param name="Counts">The finding counts of the report.</param>
 /// <param name="AssertedTriples">Triples in the asserted graph.</param>
+/// <param name="InferredTriples">Triples in the inferred graph.</param>
 /// <param name="QuarantinedTriples">Triples in the quarantine graph (zero when accepted).</param>
 public sealed record ManifestSummary(
     ManifestId Id,
@@ -25,6 +26,7 @@ public sealed record ManifestSummary(
     bool Accepted,
     FindingCounts Counts,
     int AssertedTriples,
+    int InferredTriples,
     int QuarantinedTriples);
 
 /// <summary>
@@ -75,6 +77,9 @@ public static class Provenance
     /// <summary>Property: triples in the asserted graph.</summary>
     public const string AssertedTriplesProperty = Namespace + "assertedTriples";
 
+    /// <summary>Property: triples in the inferred graph.</summary>
+    public const string InferredTriplesProperty = Namespace + "inferredTriples";
+
     /// <summary>Property: triples in the quarantine graph.</summary>
     public const string QuarantinedTriplesProperty = Namespace + "quarantinedTriples";
 
@@ -91,7 +96,7 @@ public static class Provenance
     public const string ManifestProperty = Namespace + "manifest";
 
     /// <summary>Builds the provenance graph of one injection.</summary>
-    public static Graph Build(ManifestId id, string manifestName, string contentHash, string manifestJson, IngestionReport report, DateTimeOffset injectedAt, int assertedTriples, int quarantinedTriples)
+    public static Graph Build(ManifestId id, string manifestName, string contentHash, string manifestJson, IngestionReport report, DateTimeOffset injectedAt, int assertedTriples, int inferredTriples, int quarantinedTriples)
     {
         ArgumentNullException.ThrowIfNull(id);
         ArgumentNullException.ThrowIfNull(report);
@@ -110,6 +115,7 @@ public static class Provenance
         graph.Assert(subject, Iri(graph, WarningsProperty), Integer(graph, report.Counts.Warnings));
         graph.Assert(subject, Iri(graph, InfosProperty), Integer(graph, report.Counts.Infos));
         graph.Assert(subject, Iri(graph, AssertedTriplesProperty), Integer(graph, assertedTriples));
+        graph.Assert(subject, Iri(graph, InferredTriplesProperty), Integer(graph, inferredTriples));
         graph.Assert(subject, Iri(graph, QuarantinedTriplesProperty), Integer(graph, quarantinedTriples));
         if (!report.Accepted)
         {
@@ -123,7 +129,7 @@ public static class Provenance
 
     /// <summary>The SPARQL that lists every live manifest, one row each, ordered by id.</summary>
     public static string ListQuery { get; } = $$"""
-        SELECT ?id ?name ?hash ?version ?at ?accepted ?errors ?warnings ?infos ?asserted ?quarantined
+        SELECT ?id ?name ?hash ?version ?at ?accepted ?errors ?warnings ?infos ?asserted ?inferred ?quarantined
         WHERE {
           GRAPH ?g {
             ?m a <{{Injection}}> ;
@@ -137,6 +143,7 @@ public static class Provenance
                <{{WarningsProperty}}> ?warnings ;
                <{{InfosProperty}}> ?infos ;
                <{{AssertedTriplesProperty}}> ?asserted ;
+               <{{InferredTriplesProperty}}> ?inferred ;
                <{{QuarantinedTriplesProperty}}> ?quarantined .
           }
         }
@@ -176,6 +183,7 @@ public static class Provenance
             string.Equals(Text(row, "accepted"), "true", StringComparison.OrdinalIgnoreCase),
             new FindingCounts(Int(row, "errors"), Int(row, "warnings"), Int(row, "infos")),
             Int(row, "asserted"),
+            Int(row, "inferred"),
             Int(row, "quarantined"));
     }
 
