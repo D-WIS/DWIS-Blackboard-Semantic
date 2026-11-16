@@ -1,4 +1,4 @@
-# Copy of fuseki/config/dwis.ttl in DWIS-Blackboard-Tests (commit 3d9e381, 14 November 2026) for the throwaway test image.
+# Copy of fuseki/config/dwis.ttl in DWIS-Blackboard-Tests (pull request 11, M2.1, 16 November 2026) for the throwaway test image.
 # Keep it identical to the source; the real image is what CI tests against.
 # Fuseki server configuration for DWIS Blackboard Rig Edition (specification 3.7, Appendix C.8).
 #
@@ -7,7 +7,13 @@
 #                   the asserted, inferred and provenance graphs, plus the endpoints graph.
 # /dwis-quarantine  TDB2, no union: the whole manifest graph of a rejected injection, invisible
 #                   to /dwis queries (Appendix C.5).
-# /dwis-inf         the inference view over /dwis, added in milestone 2 (decision D-15).
+# /dwis-inf         the inference view (milestone 2, issue M2.1): a Jena InfModel over the union
+#                   graph of the same TDB2 store as /dwis, with the OWL micro rule reasoner
+#                   (subclass, subproperty, domain, range, inverse, transitive, equivalent class,
+#                   hasValue; Appendix B.2). Query only. Used by the ingest step of the semantic
+#                   service to compute the inferred graph of one manifest (Appendix C.6 step 2);
+#                   nothing is stored here. Decision D-15 chooses between this view and SPARQL
+#                   INSERT rules once milestone 2 has the evidence.
 
 @prefix :       <#> .
 @prefix fuseki: <http://jena.apache.org/fuseki#> .
@@ -17,7 +23,7 @@
 @prefix ja:     <http://jena.hpl.hp.com/2005/11/Assembler#> .
 
 [] rdf:type fuseki:Server ;
-   fuseki:services ( :dwis :quarantine ) .
+   fuseki:services ( :dwis :quarantine :inference ) .
 
 :dwis rdf:type fuseki:Service ;
     fuseki:name "dwis" ;
@@ -41,3 +47,22 @@
 
 :quarantineDataset rdf:type tdb2:DatasetTDB2 ;
     tdb2:location "/fuseki/databases/dwis-quarantine" .
+
+# The inference view: the same TDB2 dataset as /dwis (one store object, shared by both services),
+# seen as its union graph, under a rule reasoner. Query endpoint only; writes go through /dwis.
+:inference rdf:type fuseki:Service ;
+    fuseki:name "dwis-inf" ;
+    fuseki:endpoint [ fuseki:operation fuseki:query ;  fuseki:name "sparql" ] ;
+    fuseki:endpoint [ fuseki:operation fuseki:query ;  fuseki:name "query" ] ;
+    fuseki:dataset :inferenceDataset .
+
+:inferenceDataset rdf:type ja:RDFDataset ;
+    ja:defaultGraph :inferenceModel .
+
+:inferenceModel rdf:type ja:InfModel ;
+    ja:baseModel :dwisUnionGraph ;
+    ja:reasoner [ ja:reasonerURL <http://jena.hpl.hp.com/2003/OWLMicroFBRuleReasoner> ] .
+
+:dwisUnionGraph rdf:type tdb2:GraphTDB2 ;
+    tdb2:dataset :dwisDataset ;
+    tdb2:graphName <urn:x-arq:UnionGraph> .
