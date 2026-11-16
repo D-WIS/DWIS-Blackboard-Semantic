@@ -41,6 +41,20 @@ public static class Inference
         return $"CONSTRUCT {{ ?s ?p ?o }} WHERE {{ VALUES ?s {{ {s} }} VALUES ?p {{ {p} }} ?s ?p ?o }}";
     }
 
+    /// <summary>
+    /// Every triple asserted about the given subjects with one of the given predicates, in any graph but
+    /// an inferred one: what another manifest's inferred graph says is that manifest's, not this one's
+    /// (R-SEM-3), so it is not subtracted.
+    /// </summary>
+    public static string AssertedQuery(IEnumerable<string> subjects, IEnumerable<string> predicates)
+    {
+        ArgumentNullException.ThrowIfNull(subjects);
+        ArgumentNullException.ThrowIfNull(predicates);
+        var s = string.Join(" ", subjects.Select(x => "<" + x + ">"));
+        var p = string.Join(" ", predicates.Select(x => "<" + x + ">"));
+        return $"CONSTRUCT {{ ?s ?p ?o }} WHERE {{ VALUES ?s {{ {s} }} VALUES ?p {{ {p} }} GRAPH ?g {{ ?s ?p ?o }} FILTER (!STRENDS(STR(?g), \"/inferred\")) }}";
+    }
+
     /// <summary>The IRI subjects of a graph, each once.</summary>
     public static IReadOnlyList<string> SubjectsOf(IGraph graph)
     {
@@ -78,7 +92,7 @@ public static class Inference
         return inferred;
     }
 
-    /// <summary>Reads what the view says about the subjects, in batches, and subtracts what the live data holds about them.</summary>
+    /// <summary>Reads what the view says about the subjects, in batches, and subtracts what is asserted about them in the live data.</summary>
     public static async Task<Graph> ConsequencesAsync(ITripleStore store, IReadOnlyList<string> subjects, IReadOnlyList<string> predicates, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(store);
@@ -87,9 +101,9 @@ public static class Inference
         var inferred = new Graph();
         for (var start = 0; start < subjects.Count; start += BatchSize)
         {
-            var query = SubjectsQuery(subjects.Skip(start).Take(BatchSize), predicates);
-            var view = await store.QueryAsync(Dataset.Inference, query, Options, cancellationToken).ConfigureAwait(false);
-            var live = await store.QueryAsync(Dataset.Live, query, Options, cancellationToken).ConfigureAwait(false);
+            var batch = subjects.Skip(start).Take(BatchSize).ToList();
+            var view = await store.QueryAsync(Dataset.Inference, SubjectsQuery(batch, predicates), Options, cancellationToken).ConfigureAwait(false);
+            var live = await store.QueryAsync(Dataset.Live, AssertedQuery(batch, predicates), Options, cancellationToken).ConfigureAwait(false);
             if (view.Graph is null || live.Graph is null)
             {
                 throw new StoreException("The subjects query did not return a graph.");

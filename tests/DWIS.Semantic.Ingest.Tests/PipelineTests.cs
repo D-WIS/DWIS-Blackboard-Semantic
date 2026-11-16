@@ -93,6 +93,7 @@ public sealed class PipelineTests : IClassFixture<VocabularyFixture>
 
         inferred.Triples.Should().ContainSingle().Which.Object.ToString().Should().Be("http://d-wis.org/PrototypeData");
         Inference.SubjectsQuery(["http://d-wis.org/P/x", "http://d-wis.org/P/y"], ["http://d-wis.org/p"]).Should().Contain("VALUES ?s { <http://d-wis.org/P/x> <http://d-wis.org/P/y> } VALUES ?p { <http://d-wis.org/p> }");
+        Inference.AssertedQuery(["http://d-wis.org/P/x"], ["http://d-wis.org/p"]).Should().Contain("GRAPH ?g { ?s ?p ?o } FILTER (!STRENDS(STR(?g), \"/inferred\"))");
         Inference.PredicatesOf(_fixture.Model).Should().HaveCountGreaterThan(200).And.Contain("http://d-wis.org/HasDynamicValue").And.HaveElementAt(0, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
     }
 

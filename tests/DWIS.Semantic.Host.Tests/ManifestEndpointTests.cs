@@ -96,13 +96,20 @@ public sealed class ManifestEndpointTests
         again.Status.Should().Be(HttpStatusCode.OK);
         again.Report.Should().BeEquivalentTo(report, "the content hash matches the live one");
 
+        // 4b. A second manifest that shares the subjects gets its own inferred graph (R-SEM-3): the first one's
+        // inferred graph is not asserted, so it is not subtracted.
+        var kilogram = ManifestId.Of(ManifestJson.Parse(await File.ReadAllTextAsync(HostFixture.ManifestPath("smartconnect-kilogram.manifest.json"))));
+        var (sharedStatus, shared) = await PostAsync(client, "smartconnect-kilogram.manifest.json");
+        sharedStatus.Should().Be(HttpStatusCode.OK);
+        shared.Statistics.Inferred.Should().BeGreaterThan(0, "what another manifest inferred is that manifest's, not this one's");
+        await RemoveAsync(kilogram);
+
         // 5. Removing a manifest is a milestone 3 route; until then the store does it (C.7: drop its graphs).
         await RemoveAsync(SmartConnect);
         (await ListAsync(client)).Should().NotContain(e => e.GetProperty("id").GetProperty("value").GetString() == SmartConnect.Value);
         (await SelectAsync(client, SppByClass)).Should().BeEmpty();
 
         // 6. The kilogram copy (one wrong unit) goes live core-only: one error, the whole manifest in quarantine (T-SEM-9).
-        var kilogram = ManifestId.Of(ManifestJson.Parse(await File.ReadAllTextAsync(HostFixture.ManifestPath("smartconnect-kilogram.manifest.json"))));
         var (kiloStatus, kilo) = await PostAsync(client, "smartconnect-kilogram.manifest.json");
         kiloStatus.Should().Be(HttpStatusCode.OK);
         kilo.ManifestId.Should().Be(kilogram.Value);
