@@ -18,9 +18,9 @@ One solution, `DWIS.Blackboard.Semantic.slnx`, .NET 10, with the libraries of sp
 | `src/DWIS.Semantic.Validation` | pre-processing pass: term checks, domain and range, SHACL with dotNetRDF, unit dimensions, the validation policy; the rule catalogue is its [README](src/DWIS.Semantic.Validation/README.md) |
 | `src/DWIS.Semantic.Store` | store client (`ITripleStore`: named graphs, SPARQL query with time and row limits, update, SHACL endpoint, health) behind a store-agnostic interface; `FusekiStore` first |
 | `src/DWIS.Semantic.QueryRegistration` | query registration: ownership, snapshot, diff, re-evaluation (milestone 3) |
-| `src/DWIS.Semantic.Ingest` | the injection pipeline: prepare, stage, commit, abort, remove, re-derive |
-| `src/DWIS.Semantic.Host` | the service: gRPC and HTTP endpoints under `/api/v1`, configuration, health, metrics |
-| `tests/<project>.Tests` | one xUnit project per library; contract tests against a real Fuseki come with the store |
+| `src/DWIS.Semantic.Ingest` | the injection pipeline (`IngestPipeline`): prepare (names, triples, pre-processing pass, core-versus-rest split) and commit (asserted and provenance graphs in one update, quarantine when rejected); manifest ids `{provider}/{name}` and the graph names of Appendix C.8 |
+| `src/DWIS.Semantic.Host` | the service: HTTP routes under `/api/v1` (below), the five configuration layers of specification section 8 through `DWIS.Blackboard.Configuration`, the vocabulary read from the store at start-up, health |
+| `tests/<project>.Tests` | one xUnit project per library; the store's and the host's tests run against a real Fuseki |
 
 Shared settings live in `Directory.Build.props` (nullable, analyzers, warnings as errors, .NET 10) and `Directory.Packages.props` (central package versions). Tests use xUnit v3 on the Microsoft Testing Platform (opt-in in `global.json`) with FluentAssertions 7.
 
@@ -38,17 +38,35 @@ dotnet test DWIS.Blackboard.Semantic.slnx -c Release --no-build --report-trx --r
 docker build -t digiwells/dwis.blackboard.semantic:dev .
 ```
 
+### The host
+
+Routes of milestone 1 (specification 3.4), all under `/api/v1`:
+
+| Route | What it does |
+|---|---|
+| `POST /manifests` | takes a manifest JSON (the `DWIS.API.DTO` shape, either namespace), runs the pipeline and writes the asserted and provenance graphs; answers with the report of Appendix C.9 (`accepted`, findings, `live`, statistics). Same manifest again: the stored report, nothing written |
+| `GET /manifests`, `GET /manifests/{provider}/{name}` | the live manifests from their provenance; one stored report |
+| `GET /sparql?query=`, `POST /sparql` | SPARQL 1.1 protocol, read-only, with the time and row limits of `Query:TimeoutSeconds` and `Query:RowLimit`; `http://ddhub.no/` IRIs in the query are read as `http://d-wis.org/`; results JSON, CSV or XML for tables, Turtle or N-Triples for graphs by `Accept`; `DWIS-Truncated: true` when a limit cut the answer |
+| `GET /vocabulary` | the version, the two graph IRIs, sizes, the policy in force |
+| `GET /health` | 200 when the store answers and the vocabulary is loaded, else 503 with the reason per check |
+
+Settings (defaults in code, then `appsettings.json`, the shared file `DWIS_CONFIG_FILE`, environment variables `DWIS__Section__Key`, command line `--Section:Key=`): `Store:BaseUrl` (`http://localhost:3030/`), `Store:LiveDataset`, `Store:QuarantineDataset`, `Store:InferenceDataset`, `Vocabulary:Version` (`2026-10-14`: the graphs `http://d-wis.org/vocabulary/{version}` and `http://d-wis.org/units/{version}`, put there by the loader of the compose stack in `DWIS-Blackboard-Tests`), `Vocabulary:RetrySeconds`, `Validation:PolicyFile` (the policy of decisions D-45 and D-46; empty means every rule at its designed level), `Query:TimeoutSeconds`, `Query:RowLimit`. The effective configuration with the source of each value is logged at start-up.
+
+Run it against the compose stack of `DWIS-Blackboard-Tests` (Fuseki on `localhost:3030`, vocabulary loaded):
+
+```bash
+dotnet run --project src/DWIS.Semantic.Host -- --Validation:PolicyFile=../DWIS-Blackboard-Tests/fixtures/vocabulary/validation-policy.json
+```
+
 ### Contract tests
 
-`tests/DWIS.Semantic.Store.Tests` runs against a real Fuseki with the Rig Edition datasets (Appendix G.1). The fixture looks, in this order, for:
+`tests/DWIS.Semantic.Store.Tests` and `tests/DWIS.Semantic.Host.Tests` run against a real Fuseki with the Rig Edition datasets (Appendix G.1). The fixture looks, in this order, for:
 
 1. `DWIS_FUSEKI_URL`: a running Fuseki, for example the compose stack of `DWIS-Blackboard-Tests` (`http://localhost:3030`). The tests write only graphs under `http://d-wis.org/test/` and delete them.
 2. `DWIS_FUSEKI_IMAGE`: an image to start with Testcontainers. CI builds `digiwells/dwis.blackboard.fuseki` from `DWIS-Blackboard-Tests` and sets this, so the real image is what gets tested.
 3. Otherwise a throwaway image built from `tests/DWIS.Semantic.Store.Tests/Fixtures/fuseki` (the Fuseki jar from Maven Central on the stock Temurin runtime, with a copy of the dataset configuration), started with Testcontainers. Needs Docker and network access.
 
-Without any of these the contract tests are skipped with the reason in the test output; set `DWIS_FUSEKI_REQUIRED=true` to make them fail instead (CI does).
-
-The host alone answers `GET /api/v1/health`; the full service is started from the `compose.yaml` in `DWIS-Blackboard-Tests` together with Fuseki.
+Without any of these the contract tests are skipped with the reason in the test output; set `DWIS_FUSEKI_REQUIRED=true` to make them fail instead (CI does). The host tests load the vocabulary fixtures under a version of their own, start the host through the test server and run the milestone 1 acceptance of roadmap F.3 (the SmartConnect manifest accepted, the two queries with either prefix returning the same signal, the kilogram copy core-only with one error).
 
 ## How to work here
 

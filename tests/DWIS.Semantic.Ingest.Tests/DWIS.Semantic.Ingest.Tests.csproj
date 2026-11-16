@@ -4,4 +4,9 @@
     <ProjectReference Include="../../src/DWIS.Semantic.Ingest/DWIS.Semantic.Ingest.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- The vocabulary, the policy and the manifests of the validation tests, linked rather than copied a third time. -->
+    <Content Include="../DWIS.Semantic.Validation.Tests/Fixtures/**" LinkBase="Fixtures" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
