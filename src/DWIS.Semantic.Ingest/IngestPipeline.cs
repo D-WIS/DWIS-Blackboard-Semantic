@@ -40,6 +40,16 @@ public sealed record StagedManifest(
     public bool Accepted => Report.Accepted;
 }
 
+/// <summary>What re-deriving did to one manifest (Appendix C.7).</summary>
+/// <param name="Id">The manifest.</param>
+/// <param name="AcceptedBefore">Whether the whole manifest was live before.</param>
+/// <param name="Report">The new report; its <see cref="IngestionReport.Accepted"/> says whether the whole manifest is live now.</param>
+public sealed record RederivedManifest(ManifestId Id, bool AcceptedBefore, IngestionReport Report)
+{
+    /// <summary>True when the manifest was live whole and is core-only now: the reason to roll a vocabulary version back.</summary>
+    public bool BecameCoreOnly => AcceptedBefore && !Report.Accepted;
+}
+
 /// <summary>
 /// The injection pipeline of specification 4 and Appendix C: prepare (C.2 to C.5, pure) and commit
 /// (C.6 steps 1 to 4: the asserted graph, then the inferred graph read from the inference view, then the
@@ -191,6 +201,40 @@ public sealed class IngestPipeline
         await _store.UpdateAsync(Dataset.Live, DropAll(id), cancellationToken).ConfigureAwait(false);
         await _store.DeleteGraphAsync(Dataset.Quarantine, id.QuarantineGraph, cancellationToken).ConfigureAwait(false);
         return true;
+    }
+
+    /// <summary>The manifest as it was received, from its provenance; null when the id is not live.</summary>
+    public async Task<Blackboard.Contracts.Manifests.Manifest?> GetStoredManifestAsync(ManifestId id, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(id);
+        var result = await _store.QueryAsync(Dataset.Live, Provenance.ManifestQuery(id), QueryOptions.Default, cancellationToken).ConfigureAwait(false);
+        var row = result.Table?.Results.FirstOrDefault();
+        return row is not null && row["manifest"] is ILiteralNode json ? ManifestJson.Parse(json.Value) : null;
+    }
+
+    /// <summary>
+    /// Re-derives every live manifest against a vocabulary (Appendix C.7, the vocabulary replaced): each is
+    /// prepared and committed again from the manifest JSON kept with its provenance, so the pre-processing
+    /// findings, the inferred graph and the re-check all follow the new vocabulary and shapes. Returns one
+    /// entry per manifest, in id order, saying whether it became core-only. Manifests are done one at a time.
+    /// </summary>
+    public async Task<IReadOnlyList<RederivedManifest>> RederiveAsync(VocabularyModel vocabulary, ValidationPolicy? policy = null, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(vocabulary);
+        var result = new List<RederivedManifest>();
+        foreach (var live in await ListAsync(cancellationToken).ConfigureAwait(false))
+        {
+            var manifest = await GetStoredManifestAsync(live.Id, cancellationToken).ConfigureAwait(false);
+            if (manifest is null)
+            {
+                continue;
+            }
+
+            var report = await CommitAsync(Prepare(manifest, vocabulary, policy), cancellationToken).ConfigureAwait(false);
+            result.Add(new RederivedManifest(live.Id, live.Accepted, report));
+        }
+
+        return result;
     }
 
     /// <summary>Every live manifest, from the provenance graphs, ordered by id.</summary>

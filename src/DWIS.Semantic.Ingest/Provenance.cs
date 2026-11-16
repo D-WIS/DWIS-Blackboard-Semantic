@@ -157,6 +157,13 @@ public static class Provenance
         return $"SELECT ?hash ?report ?commitMs WHERE {{ GRAPH <{id.ProvenanceGraph}> {{ <{id.AssertedGraph}> <{ContentHashProperty}> ?hash ; <{ReportProperty}> ?report . OPTIONAL {{ <{id.AssertedGraph}> <{CommitMsProperty}> ?commitMs }} }} }}";
     }
 
+    /// <summary>The SPARQL that reads the manifest JSON kept with the provenance of one manifest.</summary>
+    public static string ManifestQuery(ManifestId id)
+    {
+        ArgumentNullException.ThrowIfNull(id);
+        return $"SELECT ?manifest WHERE {{ GRAPH <{id.ProvenanceGraph}> {{ <{id.AssertedGraph}> <{ManifestProperty}> ?manifest . }} }}";
+    }
+
     /// <summary>The SPARQL update that records the commit time once the write is done.</summary>
     public static string CommitTimeUpdate(ManifestId id, long commitMs)
     {

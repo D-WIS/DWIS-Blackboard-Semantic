@@ -49,11 +49,17 @@ public sealed class VocabularyOptions
     /// <summary>Seconds between two attempts to read the vocabulary from the store at start-up.</summary>
     public int RetrySeconds { get; set; } = 5;
 
-    /// <summary>The vocabulary graph IRI.</summary>
-    public string Graph => $"{Namespaces.Canonical}vocabulary/{Version}";
+    /// <summary>The vocabulary graph IRI of the configured version.</summary>
+    public string Graph => GraphOf(Version);
 
-    /// <summary>The graph of the unit and quantity individuals (decision D-44).</summary>
-    public string UnitsGraph => $"{Namespaces.Canonical}units/{Version}";
+    /// <summary>The graph of the unit and quantity individuals (decision D-44) of the configured version.</summary>
+    public string UnitsGraph => UnitsGraphOf(Version);
+
+    /// <summary>The vocabulary graph IRI of a version.</summary>
+    public static string GraphOf(string version) => $"{Namespaces.Canonical}vocabulary/{version}";
+
+    /// <summary>The units graph IRI of a version.</summary>
+    public static string UnitsGraphOf(string version) => $"{Namespaces.Canonical}units/{version}";
 }
 
 /// <summary>How manifests are validated.</summary>
