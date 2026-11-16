@@ -9,9 +9,10 @@ namespace DWIS.Semantic.Host.Endpoints;
 
 /// <summary>
 /// <c>/api/v1/manifests</c> (specification 3.4): <c>POST</c> runs the whole pipeline with no OPC UA
-/// endpoints and answers with the report of Appendix C.9; <c>GET</c> lists the live manifests from their
-/// provenance; <c>GET {provider}/{name}</c> returns a stored report. <c>PUT</c> and <c>DELETE</c> come
-/// with milestone 3.
+/// endpoints and answers with the report of Appendix C.9 (a manifest whose id is live is replaced);
+/// <c>PUT {provider}/{name}</c> does the same for a manifest whose id must match the route (C.7, update);
+/// <c>DELETE {provider}/{name}</c> drops its graphs (C.7, remove); <c>GET</c> lists the live manifests
+/// from their provenance; <c>GET {provider}/{name}</c> returns a stored report.
 /// </summary>
 public static class ManifestEndpoints
 {
@@ -19,13 +20,17 @@ public static class ManifestEndpoints
     public static RouteGroupBuilder MapManifests(this RouteGroupBuilder api)
     {
         var group = api.MapGroup("/manifests");
-        group.MapPost("/", InjectAsync);
+        group.MapPost("/", (HttpRequest request, IngestPipeline pipeline, VocabularyState vocabulary, ILogger<IngestPipeline> logger, CancellationToken cancellationToken) =>
+            InjectAsync(request, null, pipeline, vocabulary, logger, cancellationToken));
+        group.MapPut("/{provider}/{name}", (string provider, string name, HttpRequest request, IngestPipeline pipeline, VocabularyState vocabulary, ILogger<IngestPipeline> logger, CancellationToken cancellationToken) =>
+            InjectAsync(request, $"{provider}/{name}", pipeline, vocabulary, logger, cancellationToken));
+        group.MapDelete("/{provider}/{name}", RemoveAsync);
         group.MapGet("/", ListAsync);
         group.MapGet("/{provider}/{name}", GetAsync);
         return group;
     }
 
-    private static async Task<Results<JsonHttpResult<IngestionReport>, ProblemHttpResult>> InjectAsync(HttpRequest request, IngestPipeline pipeline, VocabularyState vocabulary, ILogger<IngestPipeline> logger, CancellationToken cancellationToken)
+    private static async Task<Results<JsonHttpResult<IngestionReport>, ProblemHttpResult>> InjectAsync(HttpRequest request, string? routeId, IngestPipeline pipeline, VocabularyState vocabulary, ILogger<IngestPipeline> logger, CancellationToken cancellationToken)
     {
         var model = vocabulary.Model;
         if (model is null)
@@ -58,6 +63,11 @@ public static class ManifestEndpoints
             return TypedResults.Problem(e.Message, statusCode: StatusCodes.Status400BadRequest, title: "Not a manifest");
         }
 
+        if (routeId is not null && routeId != id.Value)
+        {
+            return TypedResults.Problem($"The manifest's id is '{id.Value}', the route says '{routeId}'. A manifest is updated under its own id; use POST or the matching route.", statusCode: StatusCodes.Status400BadRequest, title: "Id mismatch");
+        }
+
         try
         {
             var report = await pipeline.InjectAsync(manifest, model, vocabulary.Policy, cancellationToken).ConfigureAwait(false);
@@ -67,6 +77,30 @@ public static class ManifestEndpoints
         catch (StoreException e)
         {
             Log.StoreRefusedWrite(logger, e, id.Value);
+            return TypedResults.Problem(e.Message, statusCode: StatusCodes.Status502BadGateway, title: "Store error");
+        }
+    }
+
+    private static async Task<Results<NoContent, NotFound, ProblemHttpResult>> RemoveAsync(string provider, string name, IngestPipeline pipeline, ILogger<IngestPipeline> logger, CancellationToken cancellationToken)
+    {
+        var id = ManifestId.Parse($"{provider}/{name}");
+        if (id is null)
+        {
+            return TypedResults.NotFound();
+        }
+
+        try
+        {
+            if (!await pipeline.RemoveAsync(id, cancellationToken).ConfigureAwait(false))
+            {
+                return TypedResults.NotFound();
+            }
+
+            Log.ManifestRemoved(logger, id.Value);
+            return TypedResults.NoContent();
+        }
+        catch (StoreException e)
+        {
             return TypedResults.Problem(e.Message, statusCode: StatusCodes.Status502BadGateway, title: "Store error");
         }
     }

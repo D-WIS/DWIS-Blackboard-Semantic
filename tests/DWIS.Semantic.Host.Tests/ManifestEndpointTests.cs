@@ -104,12 +104,19 @@ public sealed class ManifestEndpointTests
         var (sharedStatus, shared) = await PostAsync(client, "smartconnect-kilogram.manifest.json");
         sharedStatus.Should().Be(HttpStatusCode.OK);
         shared.Statistics.Inferred.Should().BeGreaterThan(0, "what another manifest inferred is that manifest's, not this one's");
-        await RemoveAsync(kilogram);
+        await RemoveAsync(client, kilogram);
 
-        // 5. Removing a manifest is a milestone 3 route; until then the store does it (C.7: drop its graphs).
-        await RemoveAsync(SmartConnect);
+        // 5. DELETE removes the four graphs (T-SEM-12, the semantic side); a second DELETE is a 404.
+        await RemoveAsync(client, SmartConnect);
         (await ListAsync(client)).Should().NotContain(e => e.GetProperty("id").GetProperty("value").GetString() == SmartConnect.Value);
         (await SelectAsync(client, SppByClass)).Should().BeEmpty();
+        foreach (var graph in new[] { SmartConnect.AssertedGraph, SmartConnect.InferredGraph, SmartConnect.ProvenanceGraph, SmartConnect.StagingGraph })
+        {
+            (await AskAsync(client, $"ASK {{ GRAPH <{graph}> {{ ?s ?p ?o }} }}")).Should().BeFalse(graph);
+        }
+
+        using var again404 = await client.DeleteAsync(new Uri($"/api/v1/manifests/{SmartConnect.Value}", UriKind.Relative));
+        again404.StatusCode.Should().Be(HttpStatusCode.NotFound);
 
         // 6. The kilogram copy (one wrong unit) goes live core-only: one error, the whole manifest in quarantine (T-SEM-9).
         var (kiloStatus, kilo) = await PostAsync(client, "smartconnect-kilogram.manifest.json");
@@ -134,7 +141,8 @@ public sealed class ManifestEndpointTests
 
         // 7. The good manifest comes back whole, and an accepted commit clears a stale quarantine graph of its own id.
         (await AskAsync(client, $"ASK {{ GRAPH <{kilogram.InferredGraph}> {{ ?s ?p ?o }} }}")).Should().BeTrue();
-        await RemoveAsync(kilogram);
+        await RemoveAsync(client, kilogram);
+        (await _host.Store.GetGraphAsync(Dataset.Quarantine, kilogram.QuarantineGraph)).Should().BeNull("DELETE drops the quarantine graph too");
         await _host.Store.PutGraphAsync(Dataset.Quarantine, SmartConnect.QuarantineGraph, kilo.Accepted ? new VDS.RDF.Graph() : StaleGraph());
         var (restoredStatus, restored) = await PostAsync(client, "smartconnect.manifest.json");
         restoredStatus.Should().Be(HttpStatusCode.OK);
@@ -143,11 +151,71 @@ public sealed class ManifestEndpointTests
         (await _host.Store.GetGraphAsync(Dataset.Quarantine, SmartConnect.QuarantineGraph)).Should().BeNull();
     }
 
-    private async Task RemoveAsync(ManifestId id)
+    private static async Task RemoveAsync(HttpClient client, ManifestId id)
     {
-        await _host.Store.DeleteGraphAsync(Dataset.Live, id.AssertedGraph);
-        await _host.Store.DeleteGraphAsync(Dataset.Live, id.InferredGraph);
-        await _host.Store.DeleteGraphAsync(Dataset.Live, id.ProvenanceGraph);
+        using var response = await client.DeleteAsync(new Uri($"/api/v1/manifests/{id.Value}", UriKind.Relative));
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+    }
+
+    [Fact]
+    public async Task Update_replaces_the_graphs_without_a_reader_ever_seeing_a_mix()
+    {
+        _host.SkipUnlessAvailable();
+        using var client = _host.CreateClient();
+        await HostFixture.WaitUntilLoadedAsync(client);
+        const string dataPoint = "<http://d-wis.org/SmartConnect/mainwellCirculationCommon_pressureStandPipe#01>";
+        const string where = "PREFIX dwis: <http://d-wis.org/> SELECT ?e WHERE { " + dataPoint + " dwis:IsLocatedAtEquipment ?e }";
+        var original = ManifestJson.Parse(await File.ReadAllTextAsync(HostFixture.ManifestPath("smartconnect.manifest.json")));
+        // The same manifest with the standpipe pressure moved to a second standpipe node: same id, another graph.
+        var moved = original with
+        {
+            InjectedNodes = [.. original.InjectedNodes, new InjectedNode { TypeDictionaryURI = "MudStandpipe", BrowseName = "standpipe2", UniqueName = "standpipe2", DisplayName = "standpipe2" }],
+            InjectedReferences = original.InjectedReferences.Select(r =>
+                r.Subject.ID == "mainwellCirculationCommon_pressureStandPipe#01" && r.VerbURI.EndsWith("IsLocatedAtEquipment", StringComparison.Ordinal)
+                    ? r with { Object = r.Object with { ID = "standpipe2" } }
+                    : r).ToList(),
+        };
+        ManifestId.Of(moved).Should().Be(SmartConnect);
+        try
+        {
+            (await PostAsync(client, "smartconnect.manifest.json")).Report.Accepted.Should().BeTrue();
+            (await SelectAsync(client, where)).Should().Equal("http://d-wis.org/SmartConnect/standpipe");
+
+            // A reader keeps asking where the data point is while the update runs.
+            using var stop = new CancellationTokenSource();
+            var seen = new List<string>();
+            var reader = Task.Run(async () =>
+            {
+                while (!stop.IsCancellationRequested)
+                {
+                    seen.Add(string.Join("|", await SelectAsync(client, where)));
+                }
+            });
+
+            using var put = await client.PutAsync(new Uri($"/api/v1/manifests/{SmartConnect.Value}", UriKind.Relative),
+                new StringContent(ManifestJson.Serialize(moved), Encoding.UTF8, "application/json"));
+            var body = await put.Content.ReadAsStringAsync();
+            put.StatusCode.Should().Be(HttpStatusCode.OK, body);
+            ReportJson.Parse(body).Accepted.Should().BeTrue(body);
+            stop.Cancel();
+            await reader;
+
+            seen.Should().NotBeEmpty();
+            seen.Distinct().Should().BeSubsetOf(["http://d-wis.org/SmartConnect/standpipe", "http://d-wis.org/SmartConnect/standpipe2", ""],
+                "a reader sees the old graph, the new graph or no manifest, never a mix (T-SEM-11)");
+            (await SelectAsync(client, where)).Should().Equal("http://d-wis.org/SmartConnect/standpipe2");
+            (await ListAsync(client)).Should().ContainSingle(e => e.GetProperty("id").GetProperty("value").GetString() == SmartConnect.Value);
+
+            // PUT under another id than the manifest's own is refused.
+            using var mismatch = await client.PutAsync(new Uri("/api/v1/manifests/SmartConnect/another-name", UriKind.Relative),
+                new StringContent(ManifestJson.Serialize(moved), Encoding.UTF8, "application/json"));
+            mismatch.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            (await mismatch.Content.ReadAsStringAsync()).Should().Contain("Id mismatch");
+        }
+        finally
+        {
+            using var cleanup = await client.DeleteAsync(new Uri($"/api/v1/manifests/{SmartConnect.Value}", UriKind.Relative));
+        }
     }
 
     private static VDS.RDF.Graph StaleGraph()
@@ -192,8 +260,7 @@ public sealed class ManifestEndpointTests
         }
         finally
         {
-            await RemoveAsync(id);
-            await _host.Store.DeleteGraphAsync(Dataset.Quarantine, id.QuarantineGraph);
+            using var removed = await _host.CreateClient().DeleteAsync(new Uri($"/api/v1/manifests/{id.Value}", UriKind.Relative));
             await _host.Store.DeleteGraphAsync(Dataset.Live, vocabularyGraph);
             await _host.Store.DeleteGraphAsync(Dataset.Live, unitsGraph);
         }

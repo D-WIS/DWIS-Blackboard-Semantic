@@ -44,7 +44,9 @@ Routes of milestone 1 (specification 3.4), all under `/api/v1`:
 
 | Route | What it does |
 |---|---|
-| `POST /manifests` | takes a manifest JSON (the `DWIS.API.DTO` shape, either namespace), runs the pipeline and writes the asserted and provenance graphs; answers with the report of Appendix C.9 (`accepted`, findings, `live`, statistics). Same manifest again: the stored report, nothing written |
+| `POST /manifests` | takes a manifest JSON (the `DWIS.API.DTO` shape, either namespace), runs the pipeline and writes the asserted, inferred and provenance graphs; answers with the report of Appendix C.9 (`accepted`, findings, `live`, statistics). Same manifest again: the stored report, nothing written; a live id with other content: replaced |
+| `PUT /manifests/{provider}/{name}` | the same for a manifest whose own id must match the route (C.7, update); the graphs are replaced in one update once the new ones are computed, so a reader sees the old manifest, the new one or none, never a mix |
+| `DELETE /manifests/{provider}/{name}` | drops the manifest's graphs, quarantine included (C.7, remove); 204, or 404 when the id is not live |
 | `GET /manifests`, `GET /manifests/{provider}/{name}` | the live manifests from their provenance; one stored report |
 | `GET /sparql?query=`, `POST /sparql` | SPARQL 1.1 protocol, read-only, with the time and row limits of `Query:TimeoutSeconds` and `Query:RowLimit`; `http://ddhub.no/` IRIs in the query are read as `http://d-wis.org/`; results JSON, CSV or XML for tables, Turtle or N-Triples for graphs by `Accept`; `DWIS-Truncated: true` when a limit cut the answer |
 | `GET /vocabulary` | the version, the two graph IRIs, sizes, the policy in force |

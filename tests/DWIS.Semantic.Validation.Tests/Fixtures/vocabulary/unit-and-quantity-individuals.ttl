@@ -5123,7 +5123,7 @@ uq:RandomWalkQuantity a dwis:RandomWalkQuantity ;
     dwis:M "0"^^xsd:integer ;
     dwis:N "0"^^xsd:integer ;
     dwis:Omega "0"^^xsd:integer ;
-    dwis:T "-0.5"^^xsd:integer ;
+    dwis:T "-0.5"^^xsd:double ;
     dwis:ThT "0"^^xsd:integer ;
     dwis:Theta "1"^^xsd:integer .
 uq:Rankine a dwis:Rankine ;

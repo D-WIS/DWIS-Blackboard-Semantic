@@ -40,6 +40,9 @@ public sealed record ManifestId
     /// <summary>The quarantine graph, in the quarantine dataset.</summary>
     public string QuarantineGraph => AssertedGraph + "/quarantine";
 
+    /// <summary>The staging graph: the new asserted triples during a commit, for the inference view to reason over before the manifest's graphs are replaced in one update.</summary>
+    public string StagingGraph => AssertedGraph + "/staging";
+
     /// <summary>The id of a manifest.</summary>
     public static ManifestId Of(Blackboard.Contracts.Manifests.Manifest manifest)
     {

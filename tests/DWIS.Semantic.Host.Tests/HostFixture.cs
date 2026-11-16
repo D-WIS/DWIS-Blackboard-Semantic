@@ -132,6 +132,7 @@ public sealed class HostFixture : IAsyncLifetime
                 await Store.DeleteGraphAsync(Dataset.Live, id.AssertedGraph);
                 await Store.DeleteGraphAsync(Dataset.Live, id.InferredGraph);
                 await Store.DeleteGraphAsync(Dataset.Live, id.ProvenanceGraph);
+                await Store.DeleteGraphAsync(Dataset.Live, id.StagingGraph);
                 await Store.DeleteGraphAsync(Dataset.Quarantine, id.QuarantineGraph);
             }
 
