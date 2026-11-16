@@ -25,6 +25,7 @@ public sealed class ManifestIdTests
         id.InferredGraph.Should().Be(id.AssertedGraph + "/inferred");
         id.ProvenanceGraph.Should().Be(id.AssertedGraph + "/provenance");
         id.QuarantineGraph.Should().Be(id.AssertedGraph + "/quarantine");
+        id.StagingGraph.Should().Be(id.AssertedGraph + "/staging");
     }
 
     [Fact]

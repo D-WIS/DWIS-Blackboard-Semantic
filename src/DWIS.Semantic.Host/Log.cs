@@ -23,4 +23,7 @@ internal static partial class Log
 
     [LoggerMessage(7, LogLevel.Error, "Manifest {Id} not committed: the store refused the write")]
     public static partial void StoreRefusedWrite(ILogger logger, Exception exception, string id);
+
+    [LoggerMessage(8, LogLevel.Information, "Manifest {Id} removed")]
+    public static partial void ManifestRemoved(ILogger logger, string id);
 }
