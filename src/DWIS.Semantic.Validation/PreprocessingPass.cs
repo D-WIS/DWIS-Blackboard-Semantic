@@ -96,7 +96,7 @@ public static class PreprocessingPass
         Focus = note.Subject,
     };
 
-    private static Dictionary<string, HashSet<string>> AssertedTypes(IGraph graph)
+    internal static Dictionary<string, HashSet<string>> AssertedTypes(IGraph graph)
     {
         var rdfType = graph.CreateUriNode(UriFactory.Create(RdfType));
         var result = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
@@ -270,7 +270,7 @@ public static class PreprocessingPass
         }
     }
 
-    private static void CheckDisjointness(Dictionary<string, HashSet<string>> types, VocabularyModel vocabulary, List<Finding> findings)
+    internal static void CheckDisjointness(Dictionary<string, HashSet<string>> types, VocabularyModel vocabulary, List<Finding> findings)
     {
         foreach (var (subject, set) in types.Where(t => t.Value.Count > 1))
         {
