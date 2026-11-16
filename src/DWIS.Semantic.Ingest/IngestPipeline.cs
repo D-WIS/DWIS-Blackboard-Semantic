@@ -1,0 +1,187 @@
+using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
+using DWIS.Blackboard.Contracts.Manifests;
+using DWIS.Blackboard.Contracts.Reports;
+using DWIS.Semantic.Manifest;
+using DWIS.Semantic.Store;
+using DWIS.Semantic.Validation;
+using VDS.RDF;
+using ITripleStore = DWIS.Semantic.Store.ITripleStore;
+using VDS.RDF.Parsing;
+using VDS.RDF.Writing;
+
+namespace DWIS.Semantic.Ingest;
+
+/// <summary>A manifest that went through the pure part of the pipeline (C.2 to C.5) and waits for its commit.</summary>
+/// <param name="Id">The manifest id.</param>
+/// <param name="ManifestName">The manifest name as written.</param>
+/// <param name="ContentHash">SHA-256 of the manifest JSON in its canonical form.</param>
+/// <param name="ManifestJson">The manifest in its canonical JSON form, kept in the provenance.</param>
+/// <param name="Graph">The asserted graph.</param>
+/// <param name="Split">Its core and its rest.</param>
+/// <param name="Report">The report of the pre-processing pass; the commit adds the statistics.</param>
+public sealed record StagedManifest(
+    ManifestId Id,
+    string ManifestName,
+    string ContentHash,
+    string ManifestJson,
+    ManifestGraph Graph,
+    SplitGraph Split,
+    IngestionReport Report)
+{
+    /// <summary>True when the whole manifest may go live.</summary>
+    public bool Accepted => Report.Accepted;
+}
+
+/// <summary>
+/// The injection pipeline of specification 4 and Appendix C, milestone 1 shape: prepare (C.2 to C.5, pure)
+/// and commit (C.6 steps 1 and 4: the asserted and provenance graphs in one update, the quarantine graph
+/// when rejected). The inferred graph, the endpoints and the registered queries come with milestones 2 and 3.
+/// Injecting the same manifest twice returns the stored report without re-processing (C.5).
+/// </summary>
+public sealed class IngestPipeline
+{
+    private readonly ITripleStore _store;
+    private readonly TimeProvider _clock;
+
+    /// <summary>Creates the pipeline over a store.</summary>
+    public IngestPipeline(ITripleStore store, TimeProvider? clock = null)
+    {
+        ArgumentNullException.ThrowIfNull(store);
+        _store = store;
+        _clock = clock ?? TimeProvider.System;
+    }
+
+    /// <summary>The canonical JSON of a manifest and its hash, <c>sha256:</c> and 64 hex digits.</summary>
+    public static (string Json, string Hash) Canonical(Blackboard.Contracts.Manifests.Manifest manifest)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        var json = ManifestJson.Serialize(manifest);
+        var hash = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(json)));
+        return (json, "sha256:" + hash);
+    }
+
+    /// <summary>
+    /// The pure part: names and validity flags (C.2), triples (C.3), the pre-processing pass (C.4) and the
+    /// split (C.5). Same manifest, same vocabulary, same policy: same result. Nothing is written.
+    /// </summary>
+    public static StagedManifest Prepare(Blackboard.Contracts.Manifests.Manifest manifest, VocabularyModel vocabulary, ValidationPolicy? policy = null)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        ArgumentNullException.ThrowIfNull(vocabulary);
+        var id = ManifestId.Of(manifest);
+        var (json, hash) = Canonical(manifest);
+
+        var prepared = ManifestPreparation.Prepare(manifest);
+        var graph = ManifestGraphBuilder.Build(prepared);
+        var pass = PreprocessingPass.Run(prepared, graph, vocabulary, new PreprocessingOptions { Policy = policy ?? ValidationPolicy.None });
+        var split = CoreSplit.Split(graph);
+        var report = pass.ToReport(id.Value, vocabulary.Version);
+        return new StagedManifest(id, manifest.ManifestName, hash, json, graph, split, report);
+    }
+
+    /// <summary>
+    /// Writes the staged manifest: the asserted graph (whole when accepted, core only when not) and the
+    /// provenance graph in one update to the live dataset; the whole manifest graph to the quarantine
+    /// dataset when not accepted, else no quarantine graph. Replaces what a previous injection of the same
+    /// id left (C.7, update).
+    /// </summary>
+    public async Task<IngestionReport> CommitAsync(StagedManifest staged, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(staged);
+        var watch = Stopwatch.StartNew();
+        var id = staged.Id;
+        var asserted = staged.Accepted ? staged.Graph.Graph : staged.Split.Core;
+        var quarantined = staged.Accepted ? 0 : staged.Graph.Graph.Triples.Count;
+
+        if (staged.Accepted)
+        {
+            await _store.DeleteGraphAsync(Dataset.Quarantine, id.QuarantineGraph, cancellationToken).ConfigureAwait(false);
+        }
+        else
+        {
+            await _store.PutGraphAsync(Dataset.Quarantine, id.QuarantineGraph, staged.Graph.Graph, cancellationToken).ConfigureAwait(false);
+        }
+
+        var report = staged.Report with
+        {
+            Statistics = staged.Report.Statistics with { Asserted = asserted.Triples.Count, CommitMs = watch.ElapsedMilliseconds },
+        };
+        var provenance = Provenance.Build(id, staged.ManifestName, staged.ContentHash, staged.ManifestJson, report, _clock.GetUtcNow(), asserted.Triples.Count, quarantined);
+
+        var update = new StringBuilder()
+            .Append("DROP SILENT GRAPH <").Append(id.AssertedGraph).Append("> ;\n")
+            .Append("DROP SILENT GRAPH <").Append(id.InferredGraph).Append("> ;\n")
+            .Append("DROP SILENT GRAPH <").Append(id.ProvenanceGraph).Append("> ;\n")
+            .Append("INSERT DATA { GRAPH <").Append(id.AssertedGraph).Append("> {\n").Append(NTriples(asserted)).Append("} } ;\n")
+            .Append("INSERT DATA { GRAPH <").Append(id.ProvenanceGraph).Append("> {\n").Append(NTriples(provenance)).Append("} }\n")
+            .ToString();
+        await _store.UpdateAsync(Dataset.Live, update, cancellationToken).ConfigureAwait(false);
+
+        // The write is the bulk of the commit, so its time is recorded after it, as one triple of the provenance.
+        var commitMs = watch.ElapsedMilliseconds;
+        await _store.UpdateAsync(Dataset.Live, Provenance.CommitTimeUpdate(id, commitMs), cancellationToken).ConfigureAwait(false);
+        return report with { Statistics = report.Statistics with { CommitMs = commitMs } };
+    }
+
+    /// <summary>
+    /// Prepare and commit in one go (the <c>POST /manifests</c> path, specification 3.4). When the manifest
+    /// is identical to the live one of the same id, the stored report comes back and nothing is written.
+    /// </summary>
+    public async Task<IngestionReport> InjectAsync(Blackboard.Contracts.Manifests.Manifest manifest, VocabularyModel vocabulary, ValidationPolicy? policy = null, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        var id = ManifestId.Of(manifest);
+        var (_, hash) = Canonical(manifest);
+        var live = await ReadStoredAsync(id, cancellationToken).ConfigureAwait(false);
+        if (live is not null && live.Value.Hash == hash)
+        {
+            return live.Value.Report;
+        }
+
+        var staged = Prepare(manifest, vocabulary, policy);
+        return await CommitAsync(staged, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>Every live manifest, from the provenance graphs, ordered by id.</summary>
+    public async Task<IReadOnlyList<ManifestSummary>> ListAsync(CancellationToken cancellationToken = default)
+    {
+        var result = await _store.QueryAsync(Dataset.Live, Provenance.ListQuery, QueryOptions.Default, cancellationToken).ConfigureAwait(false);
+        return result.Table is null ? [] : result.Table.Results.Select(Provenance.Read).OfType<ManifestSummary>().ToList();
+    }
+
+    /// <summary>The stored report of a manifest, or null when the id is not live.</summary>
+    public async Task<IngestionReport?> GetReportAsync(ManifestId id, CancellationToken cancellationToken = default)
+    {
+        var stored = await ReadStoredAsync(id, cancellationToken).ConfigureAwait(false);
+        return stored?.Report;
+    }
+
+    private async Task<(string Hash, IngestionReport Report)?> ReadStoredAsync(ManifestId id, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(id);
+        var result = await _store.QueryAsync(Dataset.Live, Provenance.ReportQuery(id), QueryOptions.Default, cancellationToken).ConfigureAwait(false);
+        var row = result.Table?.Results.FirstOrDefault();
+        if (row is null || row["hash"] is not ILiteralNode hash || row["report"] is not ILiteralNode report)
+        {
+            return null;
+        }
+
+        var stored = ReportJson.Parse(report.Value);
+        if (row.HasBoundValue("commitMs") && row["commitMs"] is ILiteralNode commit && long.TryParse(commit.Value, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var commitMs))
+        {
+            stored = stored with { Statistics = stored.Statistics with { CommitMs = commitMs } };
+        }
+
+        return (hash.Value, stored);
+    }
+
+    private static string NTriples(IGraph graph)
+    {
+        var writer = new NTriplesWriter(NTriplesSyntax.Rdf11);
+        using var text = new System.IO.StringWriter();
+        writer.Save(graph, text);
+        return text.ToString();
+    }
+}

@@ -110,7 +110,15 @@ public sealed class FusekiFixture : IAsyncLifetime
                 .WithName("dwis-blackboard-fuseki-test:6.2.0")
                 .WithCleanUp(false)
                 .Build();
-            await throwaway.CreateAsync().ConfigureAwait(false);
+
+            // Several test assemblies (the store's and the host's) may build this image at the same time
+            // when the whole solution runs; one build at a time keeps Docker from tripping over itself.
+            // A lock file, because a mutex is bound to a thread and the build is awaited.
+            using (await LockFileAsync(Path.Combine(Path.GetTempPath(), "dwis-blackboard-fuseki-test-image.lock")).ConfigureAwait(false))
+            {
+                await throwaway.CreateAsync().ConfigureAwait(false);
+            }
+
             image = throwaway;
             Source = "throwaway image built from Fixtures/fuseki";
         }
@@ -123,5 +131,21 @@ public sealed class FusekiFixture : IAsyncLifetime
             .Build();
         await _container.StartAsync().ConfigureAwait(false);
         BaseUrl = new UriBuilder("http", _container.Hostname, _container.GetMappedPublicPort(Port)).Uri;
+    }
+
+    private static async Task<FileStream> LockFileAsync(string path)
+    {
+        var deadline = DateTime.UtcNow.AddMinutes(10);
+        while (true)
+        {
+            try
+            {
+                return new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None, 1, FileOptions.DeleteOnClose);
+            }
+            catch (IOException) when (DateTime.UtcNow < deadline)
+            {
+                await Task.Delay(500).ConfigureAwait(false);
+            }
+        }
     }
 }

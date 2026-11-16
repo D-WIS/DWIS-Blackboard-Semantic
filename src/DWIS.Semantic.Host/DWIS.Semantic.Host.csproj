@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="../DWIS.Semantic.Ingest/DWIS.Semantic.Ingest.csproj" />
     <ProjectReference Include="../DWIS.Semantic.QueryRegistration/DWIS.Semantic.QueryRegistration.csproj" />
+    <PackageReference Include="DWIS.Blackboard.Configuration" />
   </ItemGroup>
 
 </Project>

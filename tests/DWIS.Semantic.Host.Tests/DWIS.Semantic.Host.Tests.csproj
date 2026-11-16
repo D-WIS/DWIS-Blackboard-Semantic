@@ -1,11 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <!-- xUnit1051 asks for the test cancellation token on every call; the fixture stops the server and the container. -->
+    <NoWarn>$(NoWarn);xUnit1051</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="../../src/DWIS.Semantic.Host/DWIS.Semantic.Host.csproj" />
+    <!-- The Fuseki fixture of the store's contract tests (a running one, the Rig Edition image, or a throwaway image). -->
+    <ProjectReference Include="../DWIS.Semantic.Store.Tests/DWIS.Semantic.Store.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The vocabulary, the policy and the manifests of the validation tests, linked rather than copied. -->
+    <Content Include="../DWIS.Semantic.Validation.Tests/Fixtures/**" LinkBase="Fixtures" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

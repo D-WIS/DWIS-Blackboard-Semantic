@@ -1,0 +1,26 @@
+namespace DWIS.Semantic.Host;
+
+/// <summary>The log messages of the host (source-generated, CA1848).</summary>
+internal static partial class Log
+{
+    [LoggerMessage(1, LogLevel.Information, "Effective configuration ({Count} values, secrets shown as {Mask}):\n{Values}")]
+    public static partial void EffectiveConfiguration(ILogger logger, int count, string mask, string values);
+
+    [LoggerMessage(2, LogLevel.Information, "Validation policy {File}: {Rules} rules")]
+    public static partial void ValidationPolicy(ILogger logger, string file, int rules);
+
+    [LoggerMessage(3, LogLevel.Warning, "No validation policy file configured (Validation:PolicyFile): every rule keeps its designed level")]
+    public static partial void NoValidationPolicy(ILogger logger);
+
+    [LoggerMessage(4, LogLevel.Information, "Vocabulary {Version} loaded from the store: {Triples} triples, {Units} unit and quantity triples, {Classes} classes, shapes {Shapes}")]
+    public static partial void VocabularyLoaded(ILogger logger, string version, int triples, int units, int classes, string shapes);
+
+    [LoggerMessage(5, LogLevel.Warning, "Vocabulary not loaded, retrying in {Delay}: {Error}")]
+    public static partial void VocabularyRetry(ILogger logger, TimeSpan delay, string? error);
+
+    [LoggerMessage(6, LogLevel.Information, "Manifest {Id} injected: accepted {Accepted}, {Errors} errors, {Warnings} warnings, {Asserted} asserted triples, {Preprocessing} ms pre-processing, {Commit} ms commit")]
+    public static partial void ManifestInjected(ILogger logger, string id, bool accepted, int errors, int warnings, int asserted, long preprocessing, long commit);
+
+    [LoggerMessage(7, LogLevel.Error, "Manifest {Id} not committed: the store refused the write")]
+    public static partial void StoreRefusedWrite(ILogger logger, Exception exception, string id);
+}
