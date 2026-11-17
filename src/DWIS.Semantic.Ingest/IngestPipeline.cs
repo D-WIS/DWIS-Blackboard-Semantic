@@ -41,6 +41,23 @@ public sealed record StagedManifest(
     public bool Accepted => Report.Accepted;
 }
 
+/// <summary>A provided variable the real-time process creates, with its validity flag (R-RT-4).</summary>
+/// <param name="VariableId">The id as the manifest names it.</param>
+/// <param name="DataType">The data type as the manifest names it.</param>
+/// <param name="Rank">The rank.</param>
+/// <param name="Dimensions">The dimensions, or null.</param>
+/// <param name="InitialValue">The initial value text.</param>
+/// <param name="ValidityVariableId">The id of the validity boolean next to it, or null when the variable is itself a flag.</param>
+public sealed record VariableToCreate(string VariableId, string DataType, int Rank, int[]? Dimensions, string InitialValue, string? ValidityVariableId);
+
+/// <summary>What <c>PrepareManifest</c> answers (specification 3.3): the report of the pre-processing pass and the variables to create.</summary>
+/// <param name="Id">The manifest.</param>
+/// <param name="ContentHash">The hash of the manifest in its canonical JSON form.</param>
+/// <param name="Report">The report so far; the commit adds the re-check and the statistics.</param>
+/// <param name="AlreadyLive">True when identical content is live: nothing was staged and no commit is needed.</param>
+/// <param name="Variables">The provided variables with their validity flags, always, accepted or not.</param>
+public sealed record PrepareOutcome(ManifestId Id, string ContentHash, IngestionReport Report, bool AlreadyLive, IReadOnlyList<VariableToCreate> Variables);
+
 /// <summary>What re-deriving did to one manifest (Appendix C.7).</summary>
 /// <param name="Id">The manifest.</param>
 /// <param name="AcceptedBefore">Whether the whole manifest was live before.</param>
@@ -56,7 +73,8 @@ public sealed record RederivedManifest(ManifestId Id, bool AcceptedBefore, Inges
 /// (C.6 steps 1 to 4: the asserted graph, then the inferred graph read from the inference view, then the
 /// re-check on both with a downgrade to core-only when it finds a new error, then the provenance; the
 /// quarantine graph when rejected). After every change to the live description (commit, remove, re-derive) the
-/// observers are told, which is where the registered queries are re-evaluated (M3.1). The endpoints come with M3.3.
+/// observers are told, which is where the registered queries are re-evaluated (M3.1). The two phases of the
+/// gRPC contract are <see cref="StageAsync"/> and <see cref="CommitStagedAsync"/> over the staging table (M3.3).
 /// Injecting the same manifest twice returns the stored report without re-processing (C.5).
 /// </summary>
 public sealed class IngestPipeline
@@ -65,15 +83,17 @@ public sealed class IngestPipeline
     private readonly TimeProvider _clock;
     private readonly IReadOnlyList<ILiveDescriptionObserver> _observers;
     private readonly ILogger<IngestPipeline>? _logger;
+    private readonly StagingTable _staging;
 
-    /// <summary>Creates the pipeline over a store, with the observers told after every change (none by default).</summary>
-    public IngestPipeline(ITripleStore store, TimeProvider? clock = null, IEnumerable<ILiveDescriptionObserver>? observers = null, ILogger<IngestPipeline>? logger = null)
+    /// <summary>Creates the pipeline over a store, with the observers told after every change (none by default) and the staging table (60 s by default).</summary>
+    public IngestPipeline(ITripleStore store, TimeProvider? clock = null, IEnumerable<ILiveDescriptionObserver>? observers = null, ILogger<IngestPipeline>? logger = null, StagingTable? staging = null)
     {
         ArgumentNullException.ThrowIfNull(store);
         _store = store;
         _clock = clock ?? TimeProvider.System;
         _observers = observers?.ToList() ?? [];
         _logger = logger;
+        _staging = staging ?? new StagingTable(_clock, TimeSpan.FromSeconds(60));
     }
 
     /// <summary>The canonical JSON of a manifest and its hash, <c>sha256:</c> and 64 hex digits.</summary>
@@ -201,7 +221,7 @@ public sealed class IngestPipeline
     /// <summary>
     /// Removes a manifest (C.7): its asserted, inferred, provenance and staging graphs in one update, and
     /// its quarantine graph. False when the id is not live (nothing is touched then). The endpoints graph
-    /// follows in M3.3. The observers are told once the graphs are gone.
+    /// goes with it. The observers are told once the graphs are gone.
     /// </summary>
     public async Task<bool> RemoveAsync(ManifestId id, CancellationToken cancellationToken = default)
     {
@@ -212,7 +232,9 @@ public sealed class IngestPipeline
             return false;
         }
 
-        await _store.UpdateAsync(Dataset.Live, DropAll(id), cancellationToken).ConfigureAwait(false);
+        var stored = await GetStoredManifestAsync(id, cancellationToken).ConfigureAwait(false);
+        var endpoints = stored is null ? "" : Endpoints.DeleteUpdate(Endpoints.VariableIris(stored));
+        await _store.UpdateAsync(Dataset.Live, DropAll(id) + endpoints, cancellationToken).ConfigureAwait(false);
         await _store.DeleteGraphAsync(Dataset.Quarantine, id.QuarantineGraph, cancellationToken).ConfigureAwait(false);
         await NotifyAsync(new DescriptionChange(DescriptionChangeKind.Removed, [id]), cancellationToken).ConfigureAwait(false);
         return true;
@@ -256,6 +278,82 @@ public sealed class IngestPipeline
         }
 
         return result;
+    }
+
+    /// <summary>
+    /// The first phase of the two-phase injection (specification 3.3, <c>PrepareManifest</c>): prepare and
+    /// stage, nothing written. Identical content already live comes back as such, with the stored report,
+    /// and nothing is staged. The entry waits in the staging table for <see cref="CommitStagedAsync"/> or
+    /// <see cref="Abort"/>, for the table's time limit.
+    /// </summary>
+    public async Task<PrepareOutcome> StageAsync(Blackboard.Contracts.Manifests.Manifest manifest, VocabularyModel vocabulary, ValidationPolicy? policy, string origin, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        var id = ManifestId.Of(manifest);
+        var (_, hash) = Canonical(manifest);
+        var variables = VariablesToCreate(manifest);
+        var live = await ReadStoredAsync(id, cancellationToken).ConfigureAwait(false);
+        if (live is not null && live.Value.Hash == hash)
+        {
+            return new PrepareOutcome(id, hash, live.Value.Report, true, variables);
+        }
+
+        var staged = Prepare(manifest, vocabulary, policy);
+        _staging.Stage(staged, origin);
+        return new PrepareOutcome(id, hash, staged.Report, false, variables);
+    }
+
+    /// <summary>
+    /// The second phase (<c>CommitManifest</c>): the staged manifest goes live (C.6), its endpoints are
+    /// written, and the observers are told. Null when the id is not staged or its entry has expired.
+    /// </summary>
+    public async Task<IngestionReport?> CommitStagedAsync(ManifestId id, IReadOnlyList<VariableEndpoint> endpoints, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(id);
+        ArgumentNullException.ThrowIfNull(endpoints);
+        var entry = _staging.Take(id);
+        if (entry is null)
+        {
+            return null;
+        }
+
+        var report = await CommitCoreAsync(entry.Manifest, cancellationToken).ConfigureAwait(false);
+        var provider = id.Provider;
+        var update = Endpoints.DeleteUpdate(endpoints.Select(e => ManifestIris.ProvidedVariable(provider, e.VariableId)))
+            + "INSERT DATA { GRAPH <" + Endpoints.Graph + "> {\n" + NTriples(Endpoints.Build(id, provider, endpoints)) + "} }\n";
+        if (endpoints.Count > 0)
+        {
+            await _store.UpdateAsync(Dataset.Live, update, cancellationToken).ConfigureAwait(false);
+        }
+
+        await NotifyAsync(new DescriptionChange(DescriptionChangeKind.Committed, [id]), cancellationToken).ConfigureAwait(false);
+        return report;
+    }
+
+    /// <summary>Drops a staged manifest (<c>AbortManifest</c>); false when the id is not staged.</summary>
+    public bool Abort(ManifestId id) => _staging.Abort(id);
+
+    /// <summary>The staging table, for its count and its time limit.</summary>
+    public StagingTable Staging => _staging;
+
+    /// <summary>The endpoints the real-time process reported for a manifest at its commit; empty when none or not live.</summary>
+    public async Task<IReadOnlyList<VariableEndpoint>> GetEndpointsAsync(ManifestId id, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(id);
+        var result = await _store.QueryAsync(Dataset.Live, Endpoints.Query(id), QueryOptions.Default, cancellationToken).ConfigureAwait(false);
+        return result.Table is null ? [] : result.Table.Results.Select(r => Endpoints.Read(r, id.Provider)).ToList();
+    }
+
+    /// <summary>The provided variables of a manifest as the real-time process creates them, flags completed (C.2).</summary>
+    public static IReadOnlyList<VariableToCreate> VariablesToCreate(Blackboard.Contracts.Manifests.Manifest manifest)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        var completed = ManifestPreparation.Prepare(manifest).Completed.ProvidedVariables;
+        var ids = completed.Select(v => v.VariableID).ToHashSet(StringComparer.Ordinal);
+        return completed
+            .Select(v => new VariableToCreate(v.VariableID, v.DataType, v.Rank, v.Dimensions, v.InitialValue,
+                ids.Contains(ManifestIris.ValidityFlagId(v.VariableID)) ? ManifestIris.ValidityFlagId(v.VariableID) : null))
+            .ToList();
     }
 
     private async Task NotifyAsync(DescriptionChange change, CancellationToken cancellationToken)

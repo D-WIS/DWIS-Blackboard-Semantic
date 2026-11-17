@@ -22,8 +22,11 @@ public static class SemanticOptions
     /// <summary>The configuration section of the query limits.</summary>
     public const string QuerySection = "Query";
 
+    /// <summary>The configuration section of the staging table.</summary>
+    public const string StagingSection = "Staging";
+
     /// <summary>The sections the service reads, in the order the effective configuration is printed.</summary>
-    public static IReadOnlyList<string> Sections { get; } = [StoreSection, VocabularySection, ValidationSection, QuerySection];
+    public static IReadOnlyList<string> Sections { get; } = [StoreSection, VocabularySection, ValidationSection, QuerySection, StagingSection];
 
     /// <summary>Layer 1 of section 8: the defaults in code, as configuration keys.</summary>
     public static IReadOnlyDictionary<string, string?> Defaults { get; } = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase)
@@ -37,6 +40,7 @@ public static class SemanticOptions
         [$"{ValidationSection}:PolicyFile"] = "",
         [$"{QuerySection}:TimeoutSeconds"] = "30",
         [$"{QuerySection}:RowLimit"] = "10000",
+        [$"{StagingSection}:TimeLimitSeconds"] = "60",
     };
 }
 
@@ -67,6 +71,13 @@ public sealed class ValidationOptions
 {
     /// <summary>The validation policy file (decisions D-45, D-46); empty for no policy, every rule at its designed level.</summary>
     public string PolicyFile { get; set; } = "";
+}
+
+/// <summary>The staging table of the two-phase injection (Appendix C.5).</summary>
+public sealed class StagingOptions
+{
+    /// <summary>Seconds a prepared manifest waits for its commit before the entry is dropped.</summary>
+    public int TimeLimitSeconds { get; set; } = 60;
 }
 
 /// <summary>The limits of <c>/sparql</c> (R-SEM-8).</summary>

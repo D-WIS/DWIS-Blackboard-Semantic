@@ -24,6 +24,9 @@ internal static partial class Log
     [LoggerMessage(7, LogLevel.Error, "Manifest {Id} not committed: the store refused the write")]
     public static partial void StoreRefusedWrite(ILogger logger, Exception exception, string id);
 
+    [LoggerMessage(10, LogLevel.Information, "Manifest {Id} prepared over gRPC: accepted {Accepted}, already live {AlreadyLive}, {Variables} variables to create")]
+    public static partial void ManifestPrepared(ILogger logger, string id, bool accepted, bool alreadyLive, int variables);
+
     [LoggerMessage(8, LogLevel.Information, "Manifest {Id} removed")]
     public static partial void ManifestRemoved(ILogger logger, string id);
 
