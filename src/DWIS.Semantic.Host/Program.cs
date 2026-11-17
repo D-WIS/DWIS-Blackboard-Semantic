@@ -6,8 +6,10 @@ using DWIS.Blackboard.Configuration;
 using DWIS.Semantic.Host;
 using DWIS.Semantic.Host.Endpoints;
 using DWIS.Semantic.Ingest;
+using DWIS.Semantic.QueryRegistration;
 using DWIS.Semantic.Store;
 using DWIS.Semantic.Validation;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,11 @@ builder.Services.AddSingleton(builder.Configuration.GetSection(SemanticOptions.S
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddHttpClient<ITripleStore, FusekiStore>(http => http.Timeout = TimeSpan.FromMinutes(5));
 builder.Services.AddSingleton<IngestPipeline>();
+// The registered queries (specification 3.5): evaluated against the live dataset under the query limits, one
+// round after every change to the live description; the sinks of the diffs arrive with M3.4.
+builder.Services.AddSingleton(sp => new StoreQueryEvaluator(sp.GetRequiredService<ITripleStore>(), sp.GetRequiredService<IOptions<QueryLimits>>().Value.ToQueryOptions(), sp.GetService<ILogger<StoreQueryEvaluator>>()));
+builder.Services.AddSingleton(sp => new QueryManager(sp.GetRequiredService<StoreQueryEvaluator>().AsDelegate(), null, sp.GetService<ILogger<QueryManager>>()));
+builder.Services.AddSingleton<ILiveDescriptionObserver, QueryRoundObserver>();
 builder.Services.AddSingleton<VocabularyState>();
 builder.Services.AddSingleton<VocabularyLoader>();
 builder.Services.AddHostedService(sp => sp.GetRequiredService<VocabularyLoader>());

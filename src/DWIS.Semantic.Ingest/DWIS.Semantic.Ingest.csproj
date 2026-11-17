@@ -8,6 +8,7 @@
     <ProjectReference Include="../DWIS.Semantic.Manifest/DWIS.Semantic.Manifest.csproj" />
     <ProjectReference Include="../DWIS.Semantic.Validation/DWIS.Semantic.Validation.csproj" />
     <ProjectReference Include="../DWIS.Semantic.Store/DWIS.Semantic.Store.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
   </ItemGroup>
 
 </Project>

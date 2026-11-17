@@ -6,6 +6,7 @@ using DWIS.Blackboard.Contracts.Reports;
 using DWIS.Semantic.Manifest;
 using DWIS.Semantic.Store;
 using DWIS.Semantic.Validation;
+using Microsoft.Extensions.Logging;
 using VDS.RDF;
 using ITripleStore = DWIS.Semantic.Store.ITripleStore;
 using VDS.RDF.Parsing;
@@ -54,20 +55,25 @@ public sealed record RederivedManifest(ManifestId Id, bool AcceptedBefore, Inges
 /// The injection pipeline of specification 4 and Appendix C: prepare (C.2 to C.5, pure) and commit
 /// (C.6 steps 1 to 4: the asserted graph, then the inferred graph read from the inference view, then the
 /// re-check on both with a downgrade to core-only when it finds a new error, then the provenance; the
-/// quarantine graph when rejected). The endpoints and the registered queries come with M3 and M4.
+/// quarantine graph when rejected). After every change to the live description (commit, remove, re-derive) the
+/// observers are told, which is where the registered queries are re-evaluated (M3.1). The endpoints come with M3.3.
 /// Injecting the same manifest twice returns the stored report without re-processing (C.5).
 /// </summary>
 public sealed class IngestPipeline
 {
     private readonly ITripleStore _store;
     private readonly TimeProvider _clock;
+    private readonly IReadOnlyList<ILiveDescriptionObserver> _observers;
+    private readonly ILogger<IngestPipeline>? _logger;
 
-    /// <summary>Creates the pipeline over a store.</summary>
-    public IngestPipeline(ITripleStore store, TimeProvider? clock = null)
+    /// <summary>Creates the pipeline over a store, with the observers told after every change (none by default).</summary>
+    public IngestPipeline(ITripleStore store, TimeProvider? clock = null, IEnumerable<ILiveDescriptionObserver>? observers = null, ILogger<IngestPipeline>? logger = null)
     {
         ArgumentNullException.ThrowIfNull(store);
         _store = store;
         _clock = clock ?? TimeProvider.System;
+        _observers = observers?.ToList() ?? [];
+        _logger = logger;
     }
 
     /// <summary>The canonical JSON of a manifest and its hash, <c>sha256:</c> and 64 hex digits.</summary>
@@ -107,11 +113,19 @@ public sealed class IngestPipeline
     /// consequences recomputed). Second update: the staging graph becomes the asserted graph and the
     /// inferred and provenance graphs land with it, in one request, so that a reader sees either no
     /// manifest or the whole new one, never a mix (T-SEM-11). The whole manifest graph goes to the
-    /// quarantine dataset when the manifest is not accepted, else no quarantine graph.
+    /// quarantine dataset when the manifest is not accepted, else no quarantine graph. The observers are told
+    /// once the manifest is live.
     /// </summary>
     public async Task<IngestionReport> CommitAsync(StagedManifest staged, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(staged);
+        var report = await CommitCoreAsync(staged, cancellationToken).ConfigureAwait(false);
+        await NotifyAsync(new DescriptionChange(DescriptionChangeKind.Committed, [staged.Id]), cancellationToken).ConfigureAwait(false);
+        return report;
+    }
+
+    private async Task<IngestionReport> CommitCoreAsync(StagedManifest staged, CancellationToken cancellationToken)
+    {
         var watch = Stopwatch.StartNew();
         var id = staged.Id;
         var accepted = staged.Accepted;
@@ -187,7 +201,7 @@ public sealed class IngestPipeline
     /// <summary>
     /// Removes a manifest (C.7): its asserted, inferred, provenance and staging graphs in one update, and
     /// its quarantine graph. False when the id is not live (nothing is touched then). The endpoints graph
-    /// and the registered queries follow in M3 and M4.
+    /// follows in M3.3. The observers are told once the graphs are gone.
     /// </summary>
     public async Task<bool> RemoveAsync(ManifestId id, CancellationToken cancellationToken = default)
     {
@@ -200,6 +214,7 @@ public sealed class IngestPipeline
 
         await _store.UpdateAsync(Dataset.Live, DropAll(id), cancellationToken).ConfigureAwait(false);
         await _store.DeleteGraphAsync(Dataset.Quarantine, id.QuarantineGraph, cancellationToken).ConfigureAwait(false);
+        await NotifyAsync(new DescriptionChange(DescriptionChangeKind.Removed, [id]), cancellationToken).ConfigureAwait(false);
         return true;
     }
 
@@ -216,7 +231,8 @@ public sealed class IngestPipeline
     /// Re-derives every live manifest against a vocabulary (Appendix C.7, the vocabulary replaced): each is
     /// prepared and committed again from the manifest JSON kept with its provenance, so the pre-processing
     /// findings, the inferred graph and the re-check all follow the new vocabulary and shapes. Returns one
-    /// entry per manifest, in id order, saying whether it became core-only. Manifests are done one at a time.
+    /// entry per manifest, in id order, saying whether it became core-only. Manifests are done one at a time;
+    /// the observers are told once, at the end, when at least one manifest was re-derived.
     /// </summary>
     public async Task<IReadOnlyList<RederivedManifest>> RederiveAsync(VocabularyModel vocabulary, ValidationPolicy? policy = null, CancellationToken cancellationToken = default)
     {
@@ -230,11 +246,35 @@ public sealed class IngestPipeline
                 continue;
             }
 
-            var report = await CommitAsync(Prepare(manifest, vocabulary, policy), cancellationToken).ConfigureAwait(false);
+            var report = await CommitCoreAsync(Prepare(manifest, vocabulary, policy), cancellationToken).ConfigureAwait(false);
             result.Add(new RederivedManifest(live.Id, live.Accepted, report));
         }
 
+        if (result.Count > 0)
+        {
+            await NotifyAsync(new DescriptionChange(DescriptionChangeKind.Rederived, result.Select(r => r.Id).ToList()), cancellationToken).ConfigureAwait(false);
+        }
+
         return result;
+    }
+
+    private async Task NotifyAsync(DescriptionChange change, CancellationToken cancellationToken)
+    {
+        foreach (var observer in _observers)
+        {
+            try
+            {
+                await observer.ChangedAsync(change, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException)
+            {
+                // The change is written; an observer that fails must not make the caller believe it is not.
+                if (_logger is not null)
+                {
+                    Log.ObserverFailed(_logger, ex, change.Kind, change.Manifests.Count);
+                }
+            }
+        }
     }
 
     /// <summary>Every live manifest, from the provenance graphs, ordered by id.</summary>

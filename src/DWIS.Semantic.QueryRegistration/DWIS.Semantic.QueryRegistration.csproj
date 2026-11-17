@@ -1,11 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Query registration: ownership, snapshot, diff, re-evaluation; the ported QueryManager (specification 3.5, R-QR-1). Filled in milestone 3.</Description>
+    <Description>Query registration: the ported QueryManager (one entry per query text, owners, snapshot, diff, rounds), the evaluator against the store, and the round after every change to the live description (specification 3.5, R-QR-1 to R-QR-3).</Description>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="../DWIS.Semantic.Store/DWIS.Semantic.Store.csproj" />
+    <ProjectReference Include="../DWIS.Semantic.Ingest/DWIS.Semantic.Ingest.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
   </ItemGroup>
 
 </Project>
