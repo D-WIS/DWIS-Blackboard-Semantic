@@ -5,6 +5,7 @@
 using DWIS.Blackboard.Configuration;
 using DWIS.Semantic.Host;
 using DWIS.Semantic.Host.Endpoints;
+using DWIS.Semantic.Host.Grpc;
 using DWIS.Semantic.Ingest;
 using DWIS.Semantic.QueryRegistration;
 using DWIS.Semantic.Store;
@@ -31,9 +32,11 @@ builder.Configuration.AddDwisLayers(layers);
 builder.Services.Configure<VocabularyOptions>(builder.Configuration.GetSection(SemanticOptions.VocabularySection));
 builder.Services.Configure<ValidationOptions>(builder.Configuration.GetSection(SemanticOptions.ValidationSection));
 builder.Services.Configure<QueryLimits>(builder.Configuration.GetSection(SemanticOptions.QuerySection));
+builder.Services.Configure<StagingOptions>(builder.Configuration.GetSection(SemanticOptions.StagingSection));
 builder.Services.AddSingleton(builder.Configuration.GetSection(SemanticOptions.StoreSection).Get<FusekiOptions>() ?? new FusekiOptions());
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddHttpClient<ITripleStore, FusekiStore>(http => http.Timeout = TimeSpan.FromMinutes(5));
+builder.Services.AddSingleton(sp => new StagingTable(sp.GetRequiredService<TimeProvider>(), TimeSpan.FromSeconds(sp.GetRequiredService<IOptions<StagingOptions>>().Value.TimeLimitSeconds)));
 builder.Services.AddSingleton<IngestPipeline>();
 // The registered queries (specification 3.5): evaluated against the live dataset under the query limits, one
 // round after every change to the live description; the sinks of the diffs arrive with M3.4.
@@ -45,6 +48,9 @@ builder.Services.AddSingleton<VocabularyLoader>();
 builder.Services.AddHostedService(sp => sp.GetRequiredService<VocabularyLoader>());
 builder.Services.AddSemanticHealthChecks();
 builder.Services.AddProblemDetails();
+// The gRPC service of specification 3.3 (D-10), on the same port as the HTTP API: HTTP/2 without TLS inside the
+// Docker network (prior knowledge, which Grpc.Net.Client uses for http:// addresses); TLS comes with M5.
+builder.Services.AddGrpc();
 
 var app = builder.Build();
 
@@ -73,6 +79,7 @@ var api = app.MapGroup("/api/v1");
 api.MapManifests();
 api.MapSparql();
 api.MapService();
+app.MapGrpcService<SemanticGrpcService>();
 
 app.Run();
 

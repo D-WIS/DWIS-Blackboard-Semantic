@@ -11,6 +11,8 @@
     <ProjectReference Include="../DWIS.Semantic.Ingest/DWIS.Semantic.Ingest.csproj" />
     <ProjectReference Include="../DWIS.Semantic.QueryRegistration/DWIS.Semantic.QueryRegistration.csproj" />
     <PackageReference Include="DWIS.Blackboard.Configuration" />
+    <PackageReference Include="DWIS.Blackboard.Contracts.Grpc" />
+    <PackageReference Include="Grpc.AspNetCore" />
   </ItemGroup>
 
 </Project>
