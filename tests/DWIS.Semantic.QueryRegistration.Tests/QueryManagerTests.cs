@@ -54,10 +54,44 @@ public sealed class QueryManagerTests
         (await manager.SnapshotAsync(id, Ct))!.Added.Should().ContainSingle();
         current = Result("one", "two");
         manager.Register(Query, "B");
-        (await manager.SnapshotAsync(id, Ct))!.Added.Should().HaveCount(2);
+        (await manager.SnapshotAsync(id, Ct))!.Added.Should().ContainSingle("the snapshot is the stored answer; the pending change reaches B through the diff (TLA+ model of M3.0)");
         var pending = (await manager.ResolveAsync(id, cancellationToken: Ct))!;
         pending.Added.Should().ContainSingle().Which[0].Should().Be("urn:test/two");
         (await manager.ResolveAsync(id, cancellationToken: Ct))!.IsEmpty.Should().BeTrue();
+    }
+
+    // The TLA+ model of M3.0 found this one: with a fresh snapshot next to an older stored answer, a row
+    // that came and went between the two was never removed from the new subscriber's view.
+    [Fact]
+    public async Task A_row_that_came_and_went_between_two_snapshots_is_never_left_behind()
+    {
+        var current = Result("one");
+        var manager = new QueryManager(Answering(_ => current));
+        var id = manager.Register(Query, "A");
+        (await manager.SnapshotAsync(id, Ct))!.Added.Should().ContainSingle();
+        current = Result("one", "two");
+        manager.Register(Query, "B");
+        var snapshot = (await manager.SnapshotAsync(id, Ct))!;
+        snapshot.Added.Should().ContainSingle().Which[0].Should().Be("urn:test/one", "B holds what the diffs move forward");
+        current = Result("one");
+        (await manager.ResolveAllAsync(Ct)).Diffs.Should().BeEmpty("nothing changed against the stored answer, and B never held the row that came and went");
+    }
+
+    [Fact]
+    public async Task Owners_can_be_added_and_released_by_id()
+    {
+        var manager = new QueryManager(Answering(_ => Result("one")));
+        var id = manager.Register(Query, "A");
+        manager.TextOf(id).Should().Be(Query);
+        manager.TextOf(id + 1).Should().BeNull();
+        manager.AddOwner(id, "B").Should().BeTrue();
+        manager.AddOwner(id + 1, "B").Should().BeFalse();
+        manager.Unregister(id, "C").Should().BeFalse();
+        manager.Unregister(id, "A").Should().BeTrue();
+        manager.Count.Should().Be(1, "B still owns it");
+        manager.Unregister(id, "B").Should().BeTrue();
+        manager.Count.Should().Be(0);
+        manager.Unregister(id, "B").Should().BeFalse();
     }
 
     [Fact]

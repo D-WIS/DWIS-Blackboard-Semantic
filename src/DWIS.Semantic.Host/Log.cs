@@ -27,6 +27,18 @@ internal static partial class Log
     [LoggerMessage(10, LogLevel.Information, "Manifest {Id} prepared over gRPC: accepted {Accepted}, already live {AlreadyLive}, {Variables} variables to create")]
     public static partial void ManifestPrepared(ILogger logger, string id, bool accepted, bool alreadyLive, int variables);
 
+    [LoggerMessage(11, LogLevel.Information, "Query {Id} registered by {Owner}: {Rows} rows in the snapshot")]
+    public static partial void QueryRegistered(ILogger logger, int id, string owner, int rows);
+
+    [LoggerMessage(12, LogLevel.Information, "Owner {Owner} released: {Count} queries went with it")]
+    public static partial void OwnerReleased(ILogger logger, string owner, int count);
+
+    [LoggerMessage(13, LogLevel.Information, "Watch stream opened by {Watcher}: {Count} subscriptions")]
+    public static partial void WatchOpened(ILogger logger, string watcher, int count);
+
+    [LoggerMessage(14, LogLevel.Information, "Watch stream of {Watcher} closed")]
+    public static partial void WatchClosed(ILogger logger, string watcher);
+
     [LoggerMessage(8, LogLevel.Information, "Manifest {Id} removed")]
     public static partial void ManifestRemoved(ILogger logger, string id);
 
