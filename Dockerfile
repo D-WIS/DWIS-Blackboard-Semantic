@@ -10,7 +10,9 @@ RUN dotnet publish src/DWIS.Semantic.Host/DWIS.Semantic.Host.csproj -c Release -
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 COPY --from=build /app .
-ENV ASPNETCORE_HTTP_PORTS=8080
-EXPOSE 8080
+# The HTTP API on 8080 and the gRPC service on 8081 (HTTP/2 without TLS needs a port of its own: without TLS
+# there is no protocol negotiation, so Kestrel serves HTTP/2 only on an endpoint that is HTTP/2 only). Both
+# come from the Kestrel section of appsettings.json.
+EXPOSE 8080 8081
 USER app
 ENTRYPOINT ["dotnet", "DWIS.Semantic.Host.dll"]
