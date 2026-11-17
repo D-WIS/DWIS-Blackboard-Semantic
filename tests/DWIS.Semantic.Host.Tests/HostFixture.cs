@@ -24,7 +24,14 @@ public sealed class SharedHost : ICollectionFixture<HostFixture>
 /// </summary>
 public sealed class HostFixture : IAsyncLifetime
 {
-    private static readonly string[] TestManifests = ["smartconnect.manifest.json", "smartconnect-kilogram.manifest.json"];
+    private static readonly string[] TestManifests =
+    [
+        "smartconnect.manifest.json",
+        "smartconnect-kilogram.manifest.json",
+        "small/smartconnect-01.manifest.json",
+        "small/smartconnect-02.manifest.json",
+        "small/smartconnect-03.manifest.json",
+    ];
     private readonly FusekiFixture _fuseki = new();
     private WebApplicationFactory<Program>? _factory;
 

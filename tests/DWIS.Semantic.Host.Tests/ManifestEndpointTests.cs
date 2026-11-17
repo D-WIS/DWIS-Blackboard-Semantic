@@ -7,6 +7,7 @@ using DWIS.Semantic.Ingest;
 using DWIS.Semantic.Store;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using static DWIS.Semantic.Host.Tests.HostClient;
 
 namespace DWIS.Semantic.Host.Tests;
 
@@ -18,21 +19,6 @@ namespace DWIS.Semantic.Host.Tests;
 [Collection(SharedHost.Name)]
 public sealed class ManifestEndpointTests
 {
-    private const string SppByClass = """
-        PREFIX dwis: <http://d-wis.org/>
-        SELECT ?signal WHERE { ?dp a dwis:SPP ; dwis:HasDynamicValue ?signal . }
-        """;
-
-    private const string SppByQuantityAndPlace = """
-        PREFIX ddhub: <http://ddhub.no/>
-        SELECT ?signal WHERE { ?dp ddhub:IsOfMeasurableQuantity ?q ; ddhub:HasDynamicValue ?signal .
-                               ?q a ddhub:PressureDrillingQuantity . ?dp ddhub:IsLocatedAtEquipment ?e . ?e a ddhub:MudStandpipe . }
-        """;
-
-    private const string LegacyIriLeft = """
-        ASK { ?s ?p ?o . FILTER (STRSTARTS(STR(?s), "http://ddhub.no/") || STRSTARTS(STR(?p), "http://ddhub.no/") || (isIRI(?o) && STRSTARTS(STR(?o), "http://ddhub.no/"))) }
-        """;
-
     private static readonly ManifestId SmartConnect = ManifestId.Of("SmartConnect", "SmartConnect rig signals");
     private readonly HostFixture _host;
 
@@ -149,12 +135,6 @@ public sealed class ManifestEndpointTests
         restored.Accepted.Should().BeTrue();
         (await SelectAsync(client, SppByQuantityAndPlace)).Should().Equal(byClass);
         (await _host.Store.GetGraphAsync(Dataset.Quarantine, SmartConnect.QuarantineGraph)).Should().BeNull();
-    }
-
-    private static async Task RemoveAsync(HttpClient client, ManifestId id)
-    {
-        using var response = await client.DeleteAsync(new Uri($"/api/v1/manifests/{id.Value}", UriKind.Relative));
-        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 
     [Fact]
@@ -282,40 +262,4 @@ public sealed class ManifestEndpointTests
         (await noProvider.Content.ReadAsStringAsync()).Should().Contain("provider name");
     }
 
-    private static async Task<(HttpStatusCode Status, IngestionReport Report)> PostAsync(HttpClient client, string manifest)
-    {
-        using var content = new StringContent(await File.ReadAllTextAsync(HostFixture.ManifestPath(manifest)), Encoding.UTF8, "application/json");
-        using var response = await client.PostAsync(new Uri("/api/v1/manifests", UriKind.Relative), content);
-        var body = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(HttpStatusCode.OK, body);
-        return (response.StatusCode, ReportJson.Parse(body));
-    }
-
-    private static async Task<List<JsonElement>> ListAsync(HttpClient client)
-    {
-        using var response = await client.GetAsync(new Uri("/api/v1/manifests", UriKind.Relative));
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        using var json = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
-        return json.RootElement.EnumerateArray().Select(e => e.Clone()).ToList();
-    }
-
-    private static async Task<List<string>> SelectAsync(HttpClient client, string query)
-    {
-        using var response = await client.GetAsync(new Uri("/api/v1/sparql?query=" + Uri.EscapeDataString(query), UriKind.Relative));
-        var body = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(HttpStatusCode.OK, body);
-        using var json = JsonDocument.Parse(body);
-        var variable = json.RootElement.GetProperty("head").GetProperty("vars")[0].GetString()!;
-        return json.RootElement.GetProperty("results").GetProperty("bindings").EnumerateArray()
-            .Select(b => b.GetProperty(variable).GetProperty("value").GetString()!).ToList();
-    }
-
-    private static async Task<bool> AskAsync(HttpClient client, string query)
-    {
-        using var response = await client.GetAsync(new Uri("/api/v1/sparql?query=" + Uri.EscapeDataString(query), UriKind.Relative));
-        var body = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(HttpStatusCode.OK, body);
-        using var json = JsonDocument.Parse(body);
-        return json.RootElement.GetProperty("boolean").GetBoolean();
-    }
 }
