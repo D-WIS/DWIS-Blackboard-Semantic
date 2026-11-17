@@ -112,6 +112,43 @@ public sealed class QueryManager : IDisposable
         }
     }
 
+    /// <summary>Adds an owner to a registered query by its id; false when the id is unknown.</summary>
+    public bool AddOwner(int id, string? owner)
+    {
+        lock (_gate)
+        {
+            if (!_entries.TryGetValue(id, out var entry))
+            {
+                return false;
+            }
+
+            entry.Owners.Add(OwnerKey(owner));
+            return true;
+        }
+    }
+
+    /// <summary>Releases an owner's registration of a query by its id; false when the id is unknown or the owner did not hold it.</summary>
+    public bool Unregister(int id, string? owner)
+    {
+        lock (_gate)
+        {
+            if (!_entries.TryGetValue(id, out var entry) || !entry.Owners.Remove(OwnerKey(owner)))
+            {
+                return false;
+            }
+
+            if (entry.Owners.Count == 0)
+            {
+                Remove(entry);
+            }
+
+            return true;
+        }
+    }
+
+    /// <summary>The text of a registered query, or null when the id is unknown.</summary>
+    public string? TextOf(int id) => Find(id)?.Query;
+
     /// <summary>Releases everything a session owns (its close); returns the ids of the queries that went with it.</summary>
     public IReadOnlyList<int> ReleaseOwner(string owner)
     {
@@ -133,8 +170,11 @@ public sealed class QueryManager : IDisposable
     }
 
     /// <summary>
-    /// The full current answer for a new subscriber, as a diff from nothing. It never consumes a diff another
-    /// subscriber has not seen: the stored answer is set only when there was none. Null when the id is unknown.
+    /// The full answer for a new subscriber, as a diff from nothing: the stored answer of the query, evaluated
+    /// only when the query has none yet. The TLA+ model of M3.0 showed why it is the stored one: a fresh answer
+    /// next to an older stored one left the subscriber with a row that no later diff removed, since the diffs
+    /// are computed from the stored answer. It never consumes a diff another subscriber has not seen. Null
+    /// when the id is unknown.
     /// </summary>
     /// <exception cref="InvalidOperationException">The query could not be answered.</exception>
     public async Task<QueryDiff?> SnapshotAsync(int id, CancellationToken cancellationToken = default)
@@ -148,9 +188,8 @@ public sealed class QueryManager : IDisposable
         await _evaluation.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
-            var current = await Answer(_evaluate, entry.Query, cancellationToken).ConfigureAwait(false);
-            entry.Result ??= current;
-            return QueryDiff.Between(id, null, current);
+            entry.Result ??= await Answer(_evaluate, entry.Query, cancellationToken).ConfigureAwait(false);
+            return QueryDiff.Between(id, null, entry.Result);
         }
         finally
         {

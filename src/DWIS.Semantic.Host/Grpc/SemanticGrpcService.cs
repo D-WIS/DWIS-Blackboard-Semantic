@@ -21,9 +21,10 @@ namespace DWIS.Semantic.Host.Grpc;
 /// <summary>
 /// The <c>Semantic</c> service of <c>proto/semantic.proto</c> (DWIS-Blackboard-Contracts, specification 3.3) as
 /// the real-time process calls it: the two-phase injection over the staging table (prepare, commit, abort),
-/// remove, the list for the rebuild after a restart, the query and resources facades and the vocabulary.
-/// The query registration calls (register, unregister, release, watch) arrive with M3.4 and answer
-/// UNIMPLEMENTED until then. Errors are the status codes the proto file names.
+/// remove, the list for the rebuild after a restart, the query and resources facades, the vocabulary, and the
+/// query registration (register with a full snapshot, unregister, release an owner, one <c>WatchQueries</c>
+/// stream per real-time process with every diff of every registered query). Errors are the status codes the
+/// proto file names.
 /// </summary>
 public sealed class SemanticGrpcService : GrpcSemantic.SemanticBase
 {
@@ -31,16 +32,18 @@ public sealed class SemanticGrpcService : GrpcSemantic.SemanticBase
     private readonly VocabularyState _vocabulary;
     private readonly ITripleStore _store;
     private readonly QueryManager _queries;
+    private readonly QueryDiffBroadcaster _diffs;
     private readonly QueryLimits _limits;
     private readonly ILogger<SemanticGrpcService> _logger;
 
     /// <summary>Creates the service over the host's parts.</summary>
-    public SemanticGrpcService(IngestPipeline pipeline, VocabularyState vocabulary, ITripleStore store, QueryManager queries, IOptions<QueryLimits> limits, ILogger<SemanticGrpcService> logger)
+    public SemanticGrpcService(IngestPipeline pipeline, VocabularyState vocabulary, ITripleStore store, QueryManager queries, QueryDiffBroadcaster diffs, IOptions<QueryLimits> limits, ILogger<SemanticGrpcService> logger)
     {
         _pipeline = pipeline;
         _vocabulary = vocabulary;
         _store = store;
         _queries = queries;
+        _diffs = diffs;
         _limits = limits.Value;
         _logger = logger;
     }
@@ -249,6 +252,87 @@ public sealed class SemanticGrpcService : GrpcSemantic.SemanticBase
             Loaded = _vocabulary.Loaded,
             RegisteredQueries = _queries.Count,
         });
+
+    /// <inheritdoc />
+    public override async Task<QuerySnapshot> RegisterQuery(RegisterRequest request, ServerCallContext context)
+    {
+        if (string.IsNullOrWhiteSpace(request.Query))
+        {
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "A query is required."));
+        }
+
+        var owner = OwnerOf(request.Owner);
+        var id = _queries.Register(SparqlEndpoints.Canonical(request.Query), owner);
+        QueryRegistration.QueryDiff snapshot;
+        try
+        {
+            snapshot = (await _queries.SnapshotAsync(id, context.CancellationToken).ConfigureAwait(false))!;
+        }
+        catch (InvalidOperationException e)
+        {
+            _queries.Unregister(id, owner);
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "The query could not be answered (a SELECT within the limits is expected): " + e.Message));
+        }
+
+        Log.QueryRegistered(_logger, id, owner, snapshot.Added.Length);
+        var result = new QuerySnapshot { QueryId = id };
+        result.Variables.AddRange(snapshot.Variables);
+        result.Rows.AddRange(snapshot.Added.Select(ToProto));
+        return result;
+    }
+
+    /// <inheritdoc />
+    public override Task<UnregisterResult> UnregisterQuery(UnregisterRequest request, ServerCallContext context)
+    {
+        var released = _queries.Unregister(SparqlEndpoints.Canonical(request.Query ?? ""), OwnerOf(request.Owner), out var id);
+        return Task.FromResult(new UnregisterResult { Released = released, QueryId = id ?? 0 });
+    }
+
+    /// <inheritdoc />
+    public override Task<ReleasedQueries> ReleaseOwner(OwnerRef request, ServerCallContext context)
+    {
+        var result = new ReleasedQueries();
+        result.QueryIds.AddRange(_queries.ReleaseOwner(OwnerOf(request.Owner)));
+        Log.OwnerReleased(_logger, OwnerOf(request.Owner), result.QueryIds.Count);
+        return Task.FromResult(result);
+    }
+
+    /// <inheritdoc />
+    public override async Task WatchQueries(WatchRequest request, IServerStreamWriter<Blackboard.Contracts.Grpc.QueryDiff> responseStream, ServerCallContext context)
+    {
+        using var subscription = _diffs.Subscribe();
+        Log.WatchOpened(_logger, request.Watcher, _diffs.Count);
+        try
+        {
+            await foreach (var diff in subscription.Diffs.ReadAllAsync(context.CancellationToken).ConfigureAwait(false))
+            {
+                await responseStream.WriteAsync(ToProto(diff), context.CancellationToken).ConfigureAwait(false);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // The watcher went away or the service stops: the stream ends; the watcher registers again on reconnect.
+        }
+        catch (SubscriberTooSlowException e)
+        {
+            throw new RpcException(new Status(StatusCode.ResourceExhausted, e.Message));
+        }
+        finally
+        {
+            Log.WatchClosed(_logger, request.Watcher);
+        }
+    }
+
+    private static string OwnerOf(string? owner) => string.IsNullOrWhiteSpace(owner) ? "real-time" : owner;
+
+    private static Blackboard.Contracts.Grpc.QueryDiff ToProto(QueryRegistration.QueryDiff diff)
+    {
+        var result = new Blackboard.Contracts.Grpc.QueryDiff { QueryId = diff.QueryId, At = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow) };
+        result.Variables.AddRange(diff.Variables);
+        result.Added.AddRange(diff.Added.Select(ToProto));
+        result.Removed.AddRange(diff.Removed.Select(ToProto));
+        return result;
+    }
 
     private static ManifestRef Ref(ManifestId id) => new() { Provider = id.Provider, Name = id.Name };
 

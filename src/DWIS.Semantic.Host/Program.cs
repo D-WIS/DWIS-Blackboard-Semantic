@@ -39,9 +39,12 @@ builder.Services.AddHttpClient<ITripleStore, FusekiStore>(http => http.Timeout =
 builder.Services.AddSingleton(sp => new StagingTable(sp.GetRequiredService<TimeProvider>(), TimeSpan.FromSeconds(sp.GetRequiredService<IOptions<StagingOptions>>().Value.TimeLimitSeconds)));
 builder.Services.AddSingleton<IngestPipeline>();
 // The registered queries (specification 3.5): evaluated against the live dataset under the query limits, one
-// round after every change to the live description; the sinks of the diffs arrive with M3.4.
+// round after every change to the live description; the broadcaster fans the diffs out to the WatchQueries
+// streams and the server-sent events (M3.4).
 builder.Services.AddSingleton(sp => new StoreQueryEvaluator(sp.GetRequiredService<ITripleStore>(), sp.GetRequiredService<IOptions<QueryLimits>>().Value.ToQueryOptions(), sp.GetService<ILogger<StoreQueryEvaluator>>()));
 builder.Services.AddSingleton(sp => new QueryManager(sp.GetRequiredService<StoreQueryEvaluator>().AsDelegate(), null, sp.GetService<ILogger<QueryManager>>()));
+builder.Services.AddSingleton<QueryDiffBroadcaster>();
+builder.Services.AddSingleton<IQueryDiffSink>(sp => sp.GetRequiredService<QueryDiffBroadcaster>());
 builder.Services.AddSingleton<ILiveDescriptionObserver, QueryRoundObserver>();
 builder.Services.AddSingleton<VocabularyState>();
 builder.Services.AddSingleton<VocabularyLoader>();
@@ -79,6 +82,7 @@ var api = app.MapGroup("/api/v1");
 api.MapManifests();
 api.MapSparql();
 api.MapService();
+api.MapQueries();
 app.MapGrpcService<SemanticGrpcService>();
 
 app.Run();
