@@ -1,0 +1,249 @@
+{
+  "Provider": {
+    "Name": "Rotation and Torque",
+    "Company": null
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "SurfaceRPM_0",
+      "UniqueName": "SurfaceRPM_0",
+      "DisplayName": "SurfaceRPM_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopDriveShaft",
+      "BrowseName": "TopDriveShaft_0",
+      "UniqueName": "TopDriveShaft_0",
+      "DisplayName": "TopDriveShaft_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "SurfaceTorque_0",
+      "UniqueName": "SurfaceTorque_0",
+      "DisplayName": "SurfaceTorque_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/SurfaceRPMQuantity",
+      "BrowseName": "SurfaceRPMQuantity_0",
+      "UniqueName": "SurfaceRPMQuantity_0",
+      "DisplayName": "SurfaceRPMQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/SurfaceTorqueQuantity",
+      "BrowseName": "SurfaceTorqueQuantity_0",
+      "UniqueName": "SurfaceTorqueQuantity_0",
+      "DisplayName": "SurfaceTorqueQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Transformation",
+      "BrowseName": "Transformation_0",
+      "UniqueName": "Transformation_0",
+      "DisplayName": "Transformation_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Transformation",
+      "BrowseName": "Transformation_1",
+      "UniqueName": "Transformation_1",
+      "DisplayName": "Transformation_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DataFlowNode",
+      "BrowseName": "DataFlowNode_0",
+      "UniqueName": "DataFlowNode_0",
+      "DisplayName": "DataFlowNode_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopSideTelemetry",
+      "BrowseName": "TopSideTelemetry_0",
+      "UniqueName": "TopSideTelemetry_0",
+      "DisplayName": "TopSideTelemetry_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TimeWindowMovingAverage",
+      "BrowseName": "TimeWindowMovingAverage_0",
+      "UniqueName": "TimeWindowMovingAverage_0",
+      "DisplayName": "TimeWindowMovingAverage_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TimeWindowMovingAverage",
+      "BrowseName": "TimeWindowMovingAverage_1",
+      "UniqueName": "TimeWindowMovingAverage_1",
+      "DisplayName": "TimeWindowMovingAverage_1",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceRPM_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "SurfaceRPM"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceTorque_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "SurfaceTorque"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceRPM_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveShaft_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceTorque_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveShaft_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceRPM_0"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceRPMQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceTorque_0"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceTorqueQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Transformation_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationOutput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceRPM_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Transformation_1"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationOutput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceTorque_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceRPM_0"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DataFlowNode_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceTorque_0"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DataFlowNode_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceRPM_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransmittedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopSideTelemetry_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceTorque_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransmittedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopSideTelemetry_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceRPM_0"
+      },
+      "VerbURI": "http://ddhub.no/IsProcessedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TimeWindowMovingAverage_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceTorque_0"
+      },
+      "VerbURI": "http://ddhub.no/IsProcessedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TimeWindowMovingAverage_1"
+      }
+    }
+  ]
+}

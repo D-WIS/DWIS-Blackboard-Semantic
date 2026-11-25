@@ -1,0 +1,111 @@
+{
+  "status": 200,
+  "manifestId": "PumpStartupManifestPWDa:/pumpstartupmanifest",
+  "accepted": false,
+  "vocabularyVersion": "2026-10-14",
+  "counts": {
+    "errors": 2,
+    "warnings": 7,
+    "infos": 2
+  },
+  "live": {
+    "core": true,
+    "rest": false
+  },
+  "findings": [
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "belongs-to-class-used",
+      "message": "2 references use BelongsToClass, the deprecated form of a class assertion; rdf:type is preferred."
+    },
+    {
+      "stage": "commit",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupRecommendedProcedureParameters#01> is asserted to be both a DrillingStandardProcedureAdvice and a DrillingDataPoint, which are disjoint.",
+      "focus": "http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupRecommendedProcedureParameters#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/DrillingStandardProcedureAdvice, http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupRecommendedProcedureParameters#01> uses <http://d-wis.org/HasDynamicValue> but is not a DrillingDataPoint (it is Advice, DrillingStandardProcedureAdvice, JSonDataType).",
+      "focus": "http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupRecommendedProcedureParameters#01",
+      "path": "http://d-wis.org/HasDynamicValue",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupRecommendedProcedureParameters#01> uses <http://d-wis.org/IsRelatedToDrillingProcedure> but is not a DrillingDataPoint (it is Advice, DrillingStandardProcedureAdvice, JSonDataType).",
+      "focus": "http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupRecommendedProcedureParameters#01",
+      "path": "http://d-wis.org/IsRelatedToDrillingProcedure",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "range-mismatch",
+      "message": "<http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupRecommendedProcedureParameters#01> <http://d-wis.org/IsProvidedBy> <http://d-wis.org/PumpStartupManifestPWDa:/PWDa>: the object is not a DataProvider (it is Advisor).",
+      "focus": "http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupRecommendedProcedureParameters#01",
+      "path": "http://d-wis.org/IsProvidedBy",
+      "value": "http://d-wis.org/PumpStartupManifestPWDa:/PWDa"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "range-mismatch",
+      "message": "<http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupRecommendedProcedureParameters#01> <http://d-wis.org/IsProvidedTo> <http://d-wis.org/PumpStartupManifestPWDa:/ADCSStandardInterface>: the object is not a DataFlowNode (it is DWISADCSInterface).",
+      "focus": "http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupRecommendedProcedureParameters#01",
+      "path": "http://d-wis.org/IsProvidedTo",
+      "value": "http://d-wis.org/PumpStartupManifestPWDa:/ADCSStandardInterface"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/PumpStartupManifestPWDa:/Variables/PumpStartupManifestPWDa:.PumpStartupRecommendedProcedureParameters",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/PumpStartupManifestPWDa:/Variables/PumpStartupManifestPWDa:.PumpStartupRecommendedProcedureParameters_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "error",
+      "code": "unknown-class",
+      "message": "Class <http://ddhub.no/Advice> is not in the vocabulary.",
+      "focus": "http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupRecommendedProcedureParameters#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://ddhub.no/Advice"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "error",
+      "code": "unknown-class",
+      "message": "Class <http://ddhub.no/JSonDataType> is not in the vocabulary.",
+      "focus": "http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupRecommendedProcedureParameters#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://ddhub.no/JSonDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'PumpStartupRecommendedProcedureParameters_validitySignal' added for variable 'PumpStartupRecommendedProcedureParameters'.",
+      "focus": "PumpStartupRecommendedProcedureParameters"
+    }
+  ]
+}

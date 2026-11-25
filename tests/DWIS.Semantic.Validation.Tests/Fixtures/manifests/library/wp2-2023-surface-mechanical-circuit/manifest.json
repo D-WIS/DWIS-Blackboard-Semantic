@@ -1,0 +1,270 @@
+{
+  "Provider": {
+    "Name": "Surface mechanical circuit",
+    "Company": null
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ActiveLine",
+      "BrowseName": "ActiveLine_0",
+      "UniqueName": "ActiveLine_0",
+      "DisplayName": "ActiveLine_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrawWorks",
+      "BrowseName": "DrawWorks_0",
+      "UniqueName": "DrawWorks_0",
+      "DisplayName": "DrawWorks_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/CrownBlock",
+      "BrowseName": "CrownBlock_0",
+      "UniqueName": "CrownBlock_0",
+      "DisplayName": "CrownBlock_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DeadLine",
+      "BrowseName": "DeadLine_0",
+      "UniqueName": "DeadLine_0",
+      "DisplayName": "DeadLine_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/SupportLine",
+      "BrowseName": "SupportLine_0",
+      "UniqueName": "SupportLine_0",
+      "DisplayName": "SupportLine_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrawWorks",
+      "BrowseName": "DrawWorks_1",
+      "UniqueName": "DrawWorks_1",
+      "DisplayName": "DrawWorks_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Dolly",
+      "BrowseName": "Dolly_0",
+      "UniqueName": "Dolly_0",
+      "DisplayName": "Dolly_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DollyRail",
+      "BrowseName": "DollyRail_0",
+      "UniqueName": "DollyRail_0",
+      "DisplayName": "DollyRail_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Elevator",
+      "BrowseName": "Elevator_0",
+      "UniqueName": "Elevator_0",
+      "DisplayName": "Elevator_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillString",
+      "BrowseName": "DrillString_0",
+      "UniqueName": "DrillString_0",
+      "DisplayName": "DrillString_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TravellingBlock",
+      "BrowseName": "TravellingBlock_0",
+      "UniqueName": "TravellingBlock_0",
+      "DisplayName": "TravellingBlock_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopDriveBody",
+      "BrowseName": "TopDriveBody_0",
+      "UniqueName": "TopDriveBody_0",
+      "DisplayName": "TopDriveBody_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopDriveShaft",
+      "BrowseName": "TopDriveShaft_0",
+      "UniqueName": "TopDriveShaft_0",
+      "DisplayName": "TopDriveShaft_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopDriveHook",
+      "BrowseName": "TopDriveHook_0",
+      "UniqueName": "TopDriveHook_0",
+      "DisplayName": "TopDriveHook_0",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "ActiveLine_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyConnectTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrawWorks_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "CrownBlock_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyConnectTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ActiveLine_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "CrownBlock_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyConnectTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DeadLine_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "CrownBlock_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyConnectTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "SupportLine_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DeadLine_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyConnectTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrawWorks_1"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Dolly_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyConnectTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DollyRail_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Elevator_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyConnectTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillString_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SupportLine_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyConnectTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TravellingBlock_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveBody_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyConnectTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Dolly_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveBody_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyConnectTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Elevator_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveBody_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyConnectTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveShaft_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveHook_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyConnectTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveBody_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveShaft_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyConnectTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillString_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TravellingBlock_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyConnectTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveHook_0"
+      }
+    }
+  ]
+}

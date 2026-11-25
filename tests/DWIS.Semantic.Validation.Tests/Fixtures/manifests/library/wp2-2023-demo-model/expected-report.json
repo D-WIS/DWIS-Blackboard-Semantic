@@ -1,0 +1,9 @@
+{
+  "status": 400,
+  "answer": {
+    "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+    "title": "Not a manifest",
+    "status": 400,
+    "detail": "A manifest needs a provider name and a manifest name."
+  }
+}

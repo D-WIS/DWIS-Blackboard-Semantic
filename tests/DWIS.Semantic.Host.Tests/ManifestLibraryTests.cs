@@ -42,7 +42,8 @@ public sealed class ManifestLibraryTests
             .Where(d => File.Exists(Path.Combine(d, "manifest.json")))
             .OrderBy(Path.GetFileName, StringComparer.Ordinal)
             .ToList();
-        folders.Select(Path.GetFileName).Should().Equal("norce-digital-twin", "openlab-2023-wp2", "openlab-rig-signals", "well-a-rig-data", "well-a-transient-model");
+        folders.Select(Path.GetFileName).Should().Contain(["norce-digital-twin", "openlab-2023-wp2", "openlab-rig-signals", "well-a-rig-data", "well-a-transient-model"]);
+        folders.Should().OnlyContain(d => File.Exists(Path.Combine(d, "expected-report.json")), "every manifest of the library has its report recorded");
 
         var live = new List<string>();
         var differences = new List<string>();
@@ -80,8 +81,8 @@ public sealed class ManifestLibraryTests
 
             differences.Should().BeEmpty("every report of the library is as expected; a difference that is right is recorded again in both repositories:\n" + string.Join("\n", differences));
 
-            // Four of the five are live next to the SmartConnect manifest (the 2023 one is refused), each listed once.
-            live.Should().HaveCount(5);
+            // The accepted and core-only ones are live next to the SmartConnect manifest (the early ones are refused), each listed once.
+            live.Should().HaveCount(6, "the SmartConnect manifest and the five of the library that go live");
             var list = await ListAsync(client);
             foreach (var id in live)
             {
@@ -90,7 +91,13 @@ public sealed class ManifestLibraryTests
 
             // The F.3 query by class now answers three signals: the SmartConnect one and the standpipe pressure of two library providers.
             (await SelectAsync(client, SppByClass)).Should().BeEquivalentTo([.. byClass, "http://d-wis.org/openLAB/Variables/openLAB.SPP", "http://d-wis.org/WellARig/Variables/WellARig.spp"]);
-            (await AskAsync(client, LegacyIriLeft)).Should().BeFalse();
+            // No legacy IRI is stored (T-SEM-4), except the two classes of the RigOS manifest that the vocabulary does not have:
+            // the service keeps an unknown class as written today (a Semantic issue of 25 November 2026 tracks it); pinned here on purpose.
+            var legacy = await SelectAsync(client, """
+                SELECT DISTINCT ?legacy WHERE { ?s ?p ?o . BIND (IF(STRSTARTS(STR(?s), "http://ddhub.no/"), ?s, IF(STRSTARTS(STR(?p), "http://ddhub.no/"), ?p, ?o)) AS ?legacy)
+                                               FILTER (isIRI(?legacy) && STRSTARTS(STR(?legacy), "http://ddhub.no/")) }
+                """);
+            legacy.Should().BeEquivalentTo(["http://ddhub.no/Advice", "http://ddhub.no/JSonDataType"], "only the unknown classes of the RigOS manifest keep their legacy IRI");
         }
         finally
         {

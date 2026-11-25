@@ -1,0 +1,289 @@
+{
+  "Provider": {
+    "Name": "Density use case",
+    "Company": null
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DensityIn_0",
+      "UniqueName": "DensityIn_0",
+      "DisplayName": "DensityIn_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "TemperatureIn_0",
+      "UniqueName": "TemperatureIn_0",
+      "DisplayName": "TemperatureIn_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_0",
+      "UniqueName": "DrillingDataPoint_0",
+      "DisplayName": "DrillingDataPoint_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DensityIn_1",
+      "UniqueName": "DensityIn_1",
+      "DisplayName": "DensityIn_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "SPP_0",
+      "UniqueName": "SPP_0",
+      "DisplayName": "SPP_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "TemperatureIn_1",
+      "UniqueName": "TemperatureIn_1",
+      "DisplayName": "TemperatureIn_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ActivePit",
+      "BrowseName": "ActivePit_0",
+      "UniqueName": "ActivePit_0",
+      "DisplayName": "ActivePit_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/MudMixing",
+      "BrowseName": "MudMixing_0",
+      "UniqueName": "MudMixing_0",
+      "DisplayName": "MudMixing_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/StandPipe",
+      "BrowseName": "StandPipe_0",
+      "UniqueName": "StandPipe_0",
+      "DisplayName": "StandPipe_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/FluidTemperatureInQuantity",
+      "BrowseName": "FluidTemperatureInQuantity_0",
+      "UniqueName": "FluidTemperatureInQuantity_0",
+      "DisplayName": "FluidTemperatureInQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/PressureQuantity",
+      "BrowseName": "PressureQuantity_0",
+      "UniqueName": "PressureQuantity_0",
+      "DisplayName": "PressureQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/FluidDensityInQuantity",
+      "BrowseName": "FluidDensityInQuantity_0",
+      "UniqueName": "FluidDensityInQuantity_0",
+      "DisplayName": "FluidDensityInQuantity_0",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DensityIn_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "DensityIn"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TemperatureIn_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "TemperatureIn"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DensityIn_1"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "DensityIn"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SPP_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "SPP"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TemperatureIn_1"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "TemperatureIn"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DensityIn_0"
+      },
+      "VerbURI": "http://ddhub.no/IsDependentOn",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TemperatureIn_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DensityIn_0"
+      },
+      "VerbURI": "http://ddhub.no/IsDependentOn",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DensityIn_1"
+      },
+      "VerbURI": "http://ddhub.no/IsDependentOn",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "SPP_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DensityIn_1"
+      },
+      "VerbURI": "http://ddhub.no/IsDependentOn",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TemperatureIn_1"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TemperatureIn_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ActivePit_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DensityIn_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "MudMixing_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DensityIn_1"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "StandPipe_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TemperatureIn_0"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "FluidTemperatureInQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_0"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "PressureQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DensityIn_0"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "FluidDensityInQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DensityIn_1"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "FluidDensityInQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TemperatureIn_1"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "FluidTemperatureInQuantity_0"
+      }
+    }
+  ]
+}

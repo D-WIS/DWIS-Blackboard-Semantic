@@ -1,0 +1,563 @@
+{
+  "Provider": {
+    "Name": "Downhole ECD",
+    "Company": null
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DownholePressureQuantity",
+      "BrowseName": "DownholePressureQuantity_0",
+      "UniqueName": "DownholePressureQuantity_0",
+      "DisplayName": "DownholePressureQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/PressureQuantity",
+      "BrowseName": "PressureQuantity_0",
+      "UniqueName": "PressureQuantity_0",
+      "DisplayName": "PressureQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DownholeECD_0",
+      "UniqueName": "DownholeECD_0",
+      "DisplayName": "DownholeECD_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/EMWQuantity",
+      "BrowseName": "EMWQuantity_0",
+      "UniqueName": "EMWQuantity_0",
+      "DisplayName": "EMWQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DownholePressure_0",
+      "UniqueName": "DownholePressure_0",
+      "DisplayName": "DownholePressure_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_0",
+      "UniqueName": "DrillingDataPoint_0",
+      "DisplayName": "DrillingDataPoint_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TVDQuantity",
+      "BrowseName": "TVDQuantity_0",
+      "UniqueName": "TVDQuantity_0",
+      "DisplayName": "TVDQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_1",
+      "UniqueName": "DrillingDataPoint_1",
+      "DisplayName": "DrillingDataPoint_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/AccelerationQuantity",
+      "BrowseName": "AccelerationQuantity_0",
+      "UniqueName": "AccelerationQuantity_0",
+      "DisplayName": "AccelerationQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_2",
+      "UniqueName": "DrillingDataPoint_2",
+      "DisplayName": "DrillingDataPoint_2",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_3",
+      "UniqueName": "DrillingDataPoint_3",
+      "DisplayName": "DrillingDataPoint_3",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/LengthQuantity",
+      "BrowseName": "LengthQuantity_0",
+      "UniqueName": "LengthQuantity_0",
+      "DisplayName": "LengthQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_4",
+      "UniqueName": "DrillingDataPoint_4",
+      "DisplayName": "DrillingDataPoint_4",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DepthQuantity",
+      "BrowseName": "DepthQuantity_0",
+      "UniqueName": "DepthQuantity_0",
+      "DisplayName": "DepthQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "BitDepth_0",
+      "UniqueName": "BitDepth_0",
+      "DisplayName": "BitDepth_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DirectTransformation",
+      "BrowseName": "DirectTransformation_0",
+      "UniqueName": "DirectTransformation_0",
+      "DisplayName": "DirectTransformation_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DirectTransformation",
+      "BrowseName": "DirectTransformation_1",
+      "UniqueName": "DirectTransformation_1",
+      "DisplayName": "DirectTransformation_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DirectTransformation",
+      "BrowseName": "DirectTransformation_2",
+      "UniqueName": "DirectTransformation_2",
+      "DisplayName": "DirectTransformation_2",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/BHAAnnular",
+      "BrowseName": "BHAAnnular_0",
+      "UniqueName": "BHAAnnular_0",
+      "DisplayName": "BHAAnnular_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "FlowRateIn_0",
+      "UniqueName": "FlowRateIn_0",
+      "DisplayName": "FlowRateIn_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/GT",
+      "BrowseName": "GT_0",
+      "UniqueName": "GT_0",
+      "DisplayName": "GT_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_5",
+      "UniqueName": "DrillingDataPoint_5",
+      "DisplayName": "DrillingDataPoint_5",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/HydraulicConnectedState",
+      "BrowseName": "HydraulicConnectedState_0",
+      "UniqueName": "HydraulicConnectedState_0",
+      "DisplayName": "HydraulicConnectedState_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_6",
+      "UniqueName": "DrillingDataPoint_6",
+      "DisplayName": "DrillingDataPoint_6",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopDriveShaft",
+      "BrowseName": "TopDriveShaft_0",
+      "UniqueName": "TopDriveShaft_0",
+      "DisplayName": "TopDriveShaft_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ConnectedCondition",
+      "BrowseName": "ConnectedCondition_0",
+      "UniqueName": "ConnectedCondition_0",
+      "DisplayName": "ConnectedCondition_0",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholeECD_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "DownholeECD"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholePressure_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "DownholePressure"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "BitDepth_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "BitDepth"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "FlowRateIn_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "FlowRateIn"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholePressureQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "PressureQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholeECD_0"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "EMWQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholePressure_0"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DownholePressureQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_0"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TVDQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_1"
+      },
+      "VerbURI": "http://ddhub.no/IsOfBaseQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "AccelerationQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_2"
+      },
+      "VerbURI": "http://ddhub.no/IsOfBaseQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "PressureQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_3"
+      },
+      "VerbURI": "http://ddhub.no/IsOfBaseQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "LengthQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_4"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DepthQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "BitDepth_0"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DepthQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "BitDepth_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DirectTransformation_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_3"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DirectTransformation_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DirectTransformation_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationOutput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_4"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_4"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DirectTransformation_1"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DirectTransformation_1"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationOutput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_2"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DirectTransformation_2"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_1"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DirectTransformation_2"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DirectTransformation_2"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholePressure_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DirectTransformation_2"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DirectTransformation_2"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationOutput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DownholeECD_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholePressure_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "BHAAnnular_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholeECD_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "BHAAnnular_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "FlowRateIn_0"
+      },
+      "VerbURI": "http://ddhub.no/IsConditionLeft",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "GT_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_5"
+      },
+      "VerbURI": "http://ddhub.no/IsConditionRight",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "GT_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholePressure_0"
+      },
+      "VerbURI": "http://ddhub.no/IsConditionedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "GT_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HydraulicConnectedState_0"
+      },
+      "VerbURI": "http://ddhub.no/HasHydraulicStateValueFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_6"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveShaft_0"
+      },
+      "VerbURI": "http://ddhub.no/HasHydraulicState",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "HydraulicConnectedState_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholePressure_0"
+      },
+      "VerbURI": "http://ddhub.no/IsConditionedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ConnectedCondition_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HydraulicConnectedState_0"
+      },
+      "VerbURI": "http://ddhub.no/IsConditionInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ConnectedCondition_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholePressure_0"
+      },
+      "VerbURI": "http://ddhub.no/IsValidBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_6"
+      }
+    }
+  ]
+}
