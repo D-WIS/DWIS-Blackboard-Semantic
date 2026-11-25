@@ -1,0 +1,61 @@
+{
+  "Provider": {
+    "Name": "Top-drive hydraulic circuit",
+    "Company": null
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "http://ddhub.no/StandPipe",
+      "BrowseName": "StandPipe_0",
+      "UniqueName": "StandPipe_0",
+      "DisplayName": "StandPipe_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopDriveShaft",
+      "BrowseName": "TopDriveShaft_0",
+      "UniqueName": "TopDriveShaft_0",
+      "DisplayName": "TopDriveShaft_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopDrive",
+      "BrowseName": "TopDrive_0",
+      "UniqueName": "TopDrive_0",
+      "DisplayName": "TopDrive_0",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "StandPipe_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveShaft_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveShaft_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopDrive_0"
+      }
+    }
+  ]
+}

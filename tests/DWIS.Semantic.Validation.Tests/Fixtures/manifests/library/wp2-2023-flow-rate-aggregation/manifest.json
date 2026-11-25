@@ -1,0 +1,144 @@
+{
+  "Provider": {
+    "Name": "Flow-rate aggregation",
+    "Company": null
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "FlowRateIn_0",
+      "UniqueName": "FlowRateIn_0",
+      "DisplayName": "FlowRateIn_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/StandPipe",
+      "BrowseName": "StandPipe_0",
+      "UniqueName": "StandPipe_0",
+      "DisplayName": "StandPipe_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/FlowRateQuantity",
+      "BrowseName": "FlowRateQuantity_0",
+      "UniqueName": "FlowRateQuantity_0",
+      "DisplayName": "FlowRateQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_0",
+      "UniqueName": "DrillingDataPoint_0",
+      "DisplayName": "DrillingDataPoint_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Transformation",
+      "BrowseName": "Transformation_0",
+      "UniqueName": "Transformation_0",
+      "DisplayName": "Transformation_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_1",
+      "UniqueName": "DrillingDataPoint_1",
+      "DisplayName": "DrillingDataPoint_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_2",
+      "UniqueName": "DrillingDataPoint_2",
+      "DisplayName": "DrillingDataPoint_2",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "FlowRateIn_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "FlowRateIn"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "FlowRateIn_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "StandPipe_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "FlowRateIn_0"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "FlowRateQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Transformation_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_1"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Transformation_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_2"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Transformation_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Transformation_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationOutput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "FlowRateIn_0"
+      }
+    }
+  ]
+}

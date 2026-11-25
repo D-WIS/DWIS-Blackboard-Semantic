@@ -1,0 +1,445 @@
+{
+  "Provider": {
+    "Name": "Hookloads",
+    "Company": null
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_0",
+      "UniqueName": "DrillingDataPoint_0",
+      "DisplayName": "DrillingDataPoint_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DeadLine",
+      "BrowseName": "DeadLine_0",
+      "UniqueName": "DeadLine_0",
+      "DisplayName": "DeadLine_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "HookLoad_0",
+      "UniqueName": "HookLoad_0",
+      "DisplayName": "HookLoad_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TravellingBlock",
+      "BrowseName": "TravellingBlock_0",
+      "UniqueName": "TravellingBlock_0",
+      "DisplayName": "TravellingBlock_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "HookLoad_1",
+      "UniqueName": "HookLoad_1",
+      "DisplayName": "HookLoad_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopDriveShaft",
+      "BrowseName": "TopDriveShaft_0",
+      "UniqueName": "TopDriveShaft_0",
+      "DisplayName": "TopDriveShaft_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_1",
+      "UniqueName": "DrillingDataPoint_1",
+      "DisplayName": "DrillingDataPoint_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_2",
+      "UniqueName": "DrillingDataPoint_2",
+      "DisplayName": "DrillingDataPoint_2",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/HookloadQuantity",
+      "BrowseName": "HookloadQuantity_0",
+      "UniqueName": "HookloadQuantity_0",
+      "DisplayName": "HookloadQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Transformation",
+      "BrowseName": "Transformation_0",
+      "UniqueName": "Transformation_0",
+      "DisplayName": "Transformation_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ForceToLoadTransformation",
+      "BrowseName": "ForceToLoadTransformation_0",
+      "UniqueName": "ForceToLoadTransformation_0",
+      "DisplayName": "ForceToLoadTransformation_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ForceToLoadTransformation",
+      "BrowseName": "ForceToLoadTransformation_1",
+      "UniqueName": "ForceToLoadTransformation_1",
+      "DisplayName": "ForceToLoadTransformation_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_3",
+      "UniqueName": "DrillingDataPoint_3",
+      "DisplayName": "DrillingDataPoint_3",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopSideTelemetry",
+      "BrowseName": "TopSideTelemetry_0",
+      "UniqueName": "TopSideTelemetry_0",
+      "DisplayName": "TopSideTelemetry_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DataFlowNode",
+      "BrowseName": "DataFlowNode_0",
+      "UniqueName": "DataFlowNode_0",
+      "DisplayName": "DataFlowNode_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TimeWindowMovingAverage",
+      "BrowseName": "TimeWindowMovingAverage_0",
+      "UniqueName": "TimeWindowMovingAverage_0",
+      "DisplayName": "TimeWindowMovingAverage_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TimeWindowMovingAverage",
+      "BrowseName": "TimeWindowMovingAverage_1",
+      "UniqueName": "TimeWindowMovingAverage_1",
+      "DisplayName": "TimeWindowMovingAverage_1",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "HookLoad"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_1"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "HookLoad"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DeadLine_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TravellingBlock_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_1"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveShaft_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_1"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveShaft_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_2"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TravellingBlock_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_0"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "HookloadQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_1"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "HookloadQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Transformation_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_1"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ForceToLoadTransformation_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_2"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ForceToLoadTransformation_1"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "ForceToLoadTransformation_1"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationOutput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "ForceToLoadTransformation_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationOutput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_1"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Transformation_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationOutput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_2"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_1"
+      },
+      "VerbURI": "http://ddhub.no/IsValidBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_3"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransmittedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopSideTelemetry_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_1"
+      },
+      "VerbURI": "http://ddhub.no/IsTransmittedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopSideTelemetry_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransmittedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopSideTelemetry_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_1"
+      },
+      "VerbURI": "http://ddhub.no/IsTransmittedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopSideTelemetry_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_2"
+      },
+      "VerbURI": "http://ddhub.no/IsTransmittedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopSideTelemetry_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_0"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DataFlowNode_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_1"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DataFlowNode_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_0"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DataFlowNode_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_1"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DataFlowNode_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_2"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DataFlowNode_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_0"
+      },
+      "VerbURI": "http://ddhub.no/IsProcessedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TimeWindowMovingAverage_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_1"
+      },
+      "VerbURI": "http://ddhub.no/IsProcessedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TimeWindowMovingAverage_1"
+      }
+    }
+  ]
+}

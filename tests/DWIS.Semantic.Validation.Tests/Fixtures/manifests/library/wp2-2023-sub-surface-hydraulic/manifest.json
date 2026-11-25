@@ -1,0 +1,180 @@
+{
+  "Provider": {
+    "Name": "Sub surface hydraulic",
+    "Company": null
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillPipesAnnular",
+      "BrowseName": "DrillPipesAnnular_0",
+      "UniqueName": "DrillPipesAnnular_0",
+      "DisplayName": "DrillPipesAnnular_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/BellNipple",
+      "BrowseName": "BellNipple_0",
+      "UniqueName": "BellNipple_0",
+      "DisplayName": "BellNipple_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/BHAAnnular",
+      "BrowseName": "BHAAnnular_0",
+      "UniqueName": "BHAAnnular_0",
+      "DisplayName": "BHAAnnular_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Bit",
+      "BrowseName": "Bit_0",
+      "UniqueName": "Bit_0",
+      "DisplayName": "Bit_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/OpenHole",
+      "BrowseName": "OpenHole_0",
+      "UniqueName": "OpenHole_0",
+      "DisplayName": "OpenHole_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/BHAInner",
+      "BrowseName": "BHAInner_0",
+      "UniqueName": "BHAInner_0",
+      "DisplayName": "BHAInner_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillPipesInner",
+      "BrowseName": "DrillPipesInner_0",
+      "UniqueName": "DrillPipesInner_0",
+      "DisplayName": "DrillPipesInner_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/UnderReamer",
+      "BrowseName": "UnderReamer_0",
+      "UniqueName": "UnderReamer_0",
+      "DisplayName": "UnderReamer_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopDrive",
+      "BrowseName": "TopDrive_0",
+      "UniqueName": "TopDrive_0",
+      "DisplayName": "TopDrive_0",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillPipesAnnular_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "BellNipple_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "BHAAnnular_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillPipesAnnular_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Bit_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "BHAAnnular_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Bit_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "OpenHole_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "BHAInner_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Bit_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillPipesInner_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "UnderReamer_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TopDrive_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillPipesInner_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "UnderReamer_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillPipesAnnular_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "UnderReamer_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "BHAInner_0"
+      }
+    }
+  ]
+}

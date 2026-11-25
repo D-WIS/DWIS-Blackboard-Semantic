@@ -1,0 +1,207 @@
+{
+  "ManifestName": "PumpStartupManifest",
+  "Provider": {
+    "Name": "PumpStartupManifestPWDa:",
+    "Company": "PetroBras ESSS"
+  },
+  "InjectionInformation": {
+    "ServerName": "sourceserver",
+    "EndPointURL": "",
+    "PublishingIntervalInMS": 0,
+    "InjectedVariablesNamespaceAlias": "variables",
+    "InjectedNodesNamespaceAlias": "nodes",
+    "ProvidedVariablesNamespaceAlias": "providedNodes",
+    "InjectedVocabularyNamespaceAlias": "Vocabulary"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "DrillingStandardProcedureAdvice",
+      "BrowseName": "PumpStartupRecommendedProcedureParameters#01",
+      "UniqueName": "PumpStartupRecommendedProcedureParameters#01",
+      "DisplayName": "PumpStartupRecommendedProcedureParameters#01",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "CirculationStartupProcedure",
+      "BrowseName": "circulationStartupProcedure",
+      "UniqueName": "circulationStartupProcedure",
+      "DisplayName": "circulationStartupProcedure",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "ProcedureFunction",
+      "BrowseName": "procedureFunction",
+      "UniqueName": "procedureFunction",
+      "DisplayName": "procedureFunction",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DWISADCSInterface",
+      "BrowseName": "ADCSStandardInterface",
+      "UniqueName": "ADCSStandardInterface",
+      "DisplayName": "ADCSStandardInterface",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Advisor",
+      "BrowseName": "PWDa",
+      "UniqueName": "PWDa",
+      "DisplayName": "PWDa",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "GelBreakingFeature",
+      "BrowseName": "gelBreakingFeature",
+      "UniqueName": "gelBreakingFeature",
+      "DisplayName": "gelBreakingFeature",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "CirculationFeature",
+      "BrowseName": "circulationFeature",
+      "UniqueName": "circulationFeature",
+      "DisplayName": "circulationFeature",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DownholePressureFeature",
+      "BrowseName": "downholePressureFeature",
+      "UniqueName": "downholePressureFeature",
+      "DisplayName": "downholePressureFeature",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "nodes",
+        "ID": "PumpStartupRecommendedProcedureParameters#01"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no",
+        "ID": "Advice"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "nodes",
+        "ID": "PumpStartupRecommendedProcedureParameters#01"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no",
+        "ID": "JSonDataType"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "nodes",
+        "ID": "PumpStartupRecommendedProcedureParameters#01"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "providedNodes",
+        "ID": "PumpStartupRecommendedProcedureParameters"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "nodes",
+        "ID": "PumpStartupRecommendedProcedureParameters#01"
+      },
+      "VerbURI": "http://ddhub.no/IsRelatedToDrillingProcedure",
+      "Object": {
+        "NameSpace": "nodes",
+        "ID": "circulationStartupProcedure"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "nodes",
+        "ID": "procedureFunction"
+      },
+      "VerbURI": "http://ddhub.no/ImplementsProcedure",
+      "Object": {
+        "NameSpace": "nodes",
+        "ID": "circulationStartupProcedure"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "nodes",
+        "ID": "PumpStartupRecommendedProcedureParameters#01"
+      },
+      "VerbURI": "http://ddhub.no/IsRecommendedFor",
+      "Object": {
+        "NameSpace": "nodes",
+        "ID": "procedureFunction"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "nodes",
+        "ID": "PumpStartupRecommendedProcedureParameters#01"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedTo",
+      "Object": {
+        "NameSpace": "nodes",
+        "ID": "ADCSStandardInterface"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "nodes",
+        "ID": "PumpStartupRecommendedProcedureParameters#01"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "nodes",
+        "ID": "PWDa"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "nodes",
+        "ID": "PWDa"
+      },
+      "VerbURI": "http://ddhub.no/AccountsFor",
+      "Object": {
+        "NameSpace": "nodes",
+        "ID": "gelBreakingFeature"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "nodes",
+        "ID": "PWDa"
+      },
+      "VerbURI": "http://ddhub.no/AccountsFor",
+      "Object": {
+        "NameSpace": "nodes",
+        "ID": "circulationFeature"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "nodes",
+        "ID": "PWDa"
+      },
+      "VerbURI": "http://ddhub.no/AccountsFor",
+      "Object": {
+        "NameSpace": "nodes",
+        "ID": "downholePressureFeature"
+      }
+    }
+  ],
+  "ProvidedVariables": [
+    {
+      "VariableID": "PumpStartupRecommendedProcedureParameters",
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": "string"
+    }
+  ],
+  "InjectedVocabulary": null
+}

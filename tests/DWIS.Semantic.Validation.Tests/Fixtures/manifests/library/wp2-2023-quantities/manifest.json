@@ -1,0 +1,469 @@
+{
+  "Provider": {
+    "Name": "Quantities",
+    "Company": null
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "http://ddhub.no/BitTorqueQuantity",
+      "BrowseName": "BitTorqueQuantity_0",
+      "UniqueName": "BitTorqueQuantity_0",
+      "DisplayName": "BitTorqueQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TorqueQuantity",
+      "BrowseName": "TorqueQuantity_0",
+      "UniqueName": "TorqueQuantity_0",
+      "DisplayName": "TorqueQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/BlockAccelerationQuantity",
+      "BrowseName": "BlockAccelerationQuantity_0",
+      "UniqueName": "BlockAccelerationQuantity_0",
+      "DisplayName": "BlockAccelerationQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/AccelerationQuantity",
+      "BrowseName": "AccelerationQuantity_0",
+      "UniqueName": "AccelerationQuantity_0",
+      "DisplayName": "AccelerationQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/BlockPositionQuantity",
+      "BrowseName": "BlockPositionQuantity_0",
+      "UniqueName": "BlockPositionQuantity_0",
+      "DisplayName": "BlockPositionQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/LengthQuantity",
+      "BrowseName": "LengthQuantity_0",
+      "UniqueName": "LengthQuantity_0",
+      "DisplayName": "LengthQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/BlockVelocityQuantity",
+      "BrowseName": "BlockVelocityQuantity_0",
+      "UniqueName": "BlockVelocityQuantity_0",
+      "DisplayName": "BlockVelocityQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/VelocityQuantity",
+      "BrowseName": "VelocityQuantity_0",
+      "UniqueName": "VelocityQuantity_0",
+      "DisplayName": "VelocityQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DepthQuantity",
+      "BrowseName": "DepthQuantity_0",
+      "UniqueName": "DepthQuantity_0",
+      "DisplayName": "DepthQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/EMWQuantity",
+      "BrowseName": "EMWQuantity_0",
+      "UniqueName": "EMWQuantity_0",
+      "DisplayName": "EMWQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/MassDensityQuantity",
+      "BrowseName": "MassDensityQuantity_0",
+      "UniqueName": "MassDensityQuantity_0",
+      "DisplayName": "MassDensityQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/FlowRateQuantity",
+      "BrowseName": "FlowRateQuantity_0",
+      "UniqueName": "FlowRateQuantity_0",
+      "DisplayName": "FlowRateQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/VolumetricRateQuantity",
+      "BrowseName": "VolumetricRateQuantity_0",
+      "UniqueName": "VolumetricRateQuantity_0",
+      "DisplayName": "VolumetricRateQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/FluidDensityInQuantity",
+      "BrowseName": "FluidDensityInQuantity_0",
+      "UniqueName": "FluidDensityInQuantity_0",
+      "DisplayName": "FluidDensityInQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/FluidTemperatureInQuantity",
+      "BrowseName": "FluidTemperatureInQuantity_0",
+      "UniqueName": "FluidTemperatureInQuantity_0",
+      "DisplayName": "FluidTemperatureInQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TemperatureQuantity",
+      "BrowseName": "TemperatureQuantity_0",
+      "UniqueName": "TemperatureQuantity_0",
+      "DisplayName": "TemperatureQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/HookloadQuantity",
+      "BrowseName": "HookloadQuantity_0",
+      "UniqueName": "HookloadQuantity_0",
+      "DisplayName": "HookloadQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/MassQuantity",
+      "BrowseName": "MassQuantity_0",
+      "UniqueName": "MassQuantity_0",
+      "DisplayName": "MassQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/PumpRateQuantity",
+      "BrowseName": "PumpRateQuantity_0",
+      "UniqueName": "PumpRateQuantity_0",
+      "DisplayName": "PumpRateQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/FrequencyQuantity",
+      "BrowseName": "FrequencyQuantity_0",
+      "UniqueName": "FrequencyQuantity_0",
+      "DisplayName": "FrequencyQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/SPPQuantity",
+      "BrowseName": "SPPQuantity_0",
+      "UniqueName": "SPPQuantity_0",
+      "DisplayName": "SPPQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/PressureQuantity",
+      "BrowseName": "PressureQuantity_0",
+      "UniqueName": "PressureQuantity_0",
+      "DisplayName": "PressureQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/SurfaceRPMQuantity",
+      "BrowseName": "SurfaceRPMQuantity_0",
+      "UniqueName": "SurfaceRPMQuantity_0",
+      "DisplayName": "SurfaceRPMQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/SurfaceTorqueQuantity",
+      "BrowseName": "SurfaceTorqueQuantity_0",
+      "UniqueName": "SurfaceTorqueQuantity_0",
+      "DisplayName": "SurfaceTorqueQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopOfStringForceQuantity",
+      "BrowseName": "TopOfStringForceQuantity_0",
+      "UniqueName": "TopOfStringForceQuantity_0",
+      "DisplayName": "TopOfStringForceQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ForceQuantity",
+      "BrowseName": "ForceQuantity_0",
+      "UniqueName": "ForceQuantity_0",
+      "DisplayName": "ForceQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TVDQuantity",
+      "BrowseName": "TVDQuantity_0",
+      "UniqueName": "TVDQuantity_0",
+      "DisplayName": "TVDQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/WOBQuantity",
+      "BrowseName": "WOBQuantity_0",
+      "UniqueName": "WOBQuantity_0",
+      "DisplayName": "WOBQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Resistivity",
+      "BrowseName": "Resistivity_0",
+      "UniqueName": "Resistivity_0",
+      "DisplayName": "Resistivity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ElectricResistivityQuantity",
+      "BrowseName": "ElectricResistivityQuantity_0",
+      "UniqueName": "ElectricResistivityQuantity_0",
+      "DisplayName": "ElectricResistivityQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/RockDensityQuantity",
+      "BrowseName": "RockDensityQuantity_0",
+      "UniqueName": "RockDensityQuantity_0",
+      "DisplayName": "RockDensityQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/FormationPorosityQuantity",
+      "BrowseName": "FormationPorosityQuantity_0",
+      "UniqueName": "FormationPorosityQuantity_0",
+      "DisplayName": "FormationPorosityQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ProportionQuantity",
+      "BrowseName": "ProportionQuantity_0",
+      "UniqueName": "ProportionQuantity_0",
+      "DisplayName": "ProportionQuantity_0",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "BitTorqueQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TorqueQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "BlockAccelerationQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "AccelerationQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "BlockPositionQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "LengthQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "BlockVelocityQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "VelocityQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DepthQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "LengthQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "EMWQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "MassDensityQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "FlowRateQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "VolumetricRateQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "FluidDensityInQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "MassDensityQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "FluidTemperatureInQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TemperatureQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookloadQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "MassQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "PumpRateQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "FrequencyQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SPPQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "PressureQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceRPMQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "FrequencyQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceTorqueQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TorqueQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TopOfStringForceQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ForceQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TVDQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "LengthQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "WOBQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "MassQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Resistivity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ElectricResistivityQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "RockDensityQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "MassDensityQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "FormationPorosityQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ProportionQuantity_0"
+      }
+    }
+  ]
+}

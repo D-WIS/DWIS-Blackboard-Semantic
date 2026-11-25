@@ -1,0 +1,108 @@
+{
+  "Provider": {
+    "Name": "Sub-Surface Hydraulic Circuit",
+    "Company": null
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Bit",
+      "BrowseName": "Bit_0",
+      "UniqueName": "Bit_0",
+      "DisplayName": "Bit_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Pipe",
+      "BrowseName": "Pipe_0",
+      "UniqueName": "Pipe_0",
+      "DisplayName": "Pipe_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Pipe",
+      "BrowseName": "Pipe_1",
+      "UniqueName": "Pipe_1",
+      "DisplayName": "Pipe_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/HydraulicJunction",
+      "BrowseName": "HydraulicJunction_0",
+      "UniqueName": "HydraulicJunction_0",
+      "DisplayName": "HydraulicJunction_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopDrive",
+      "BrowseName": "TopDrive_0",
+      "UniqueName": "TopDrive_0",
+      "DisplayName": "TopDrive_0",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Bit_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Pipe_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Pipe_1"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Bit_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Pipe_1"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "HydraulicJunction_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TopDrive_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Pipe_1"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HydraulicJunction_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Pipe_0"
+      }
+    }
+  ]
+}

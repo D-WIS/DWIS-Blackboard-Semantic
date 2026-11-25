@@ -1,0 +1,224 @@
+{
+  "Provider": {
+    "Name": "Hook position and velocity",
+    "Company": null
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "HookPosition_0",
+      "UniqueName": "HookPosition_0",
+      "DisplayName": "HookPosition_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Derivation",
+      "BrowseName": "Derivation_0",
+      "UniqueName": "Derivation_0",
+      "DisplayName": "Derivation_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "HookVelocity_0",
+      "UniqueName": "HookVelocity_0",
+      "DisplayName": "HookVelocity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopDriveHook",
+      "BrowseName": "TopDriveHook_0",
+      "UniqueName": "TopDriveHook_0",
+      "DisplayName": "TopDriveHook_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/BlockPositionQuantity",
+      "BrowseName": "BlockPositionQuantity_0",
+      "UniqueName": "BlockPositionQuantity_0",
+      "DisplayName": "BlockPositionQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/BlockVelocityQuantity",
+      "BrowseName": "BlockVelocityQuantity_0",
+      "UniqueName": "BlockVelocityQuantity_0",
+      "DisplayName": "BlockVelocityQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Transformation",
+      "BrowseName": "Transformation_0",
+      "UniqueName": "Transformation_0",
+      "DisplayName": "Transformation_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/TopSideTelemetry",
+      "BrowseName": "TopSideTelemetry_0",
+      "UniqueName": "TopSideTelemetry_0",
+      "DisplayName": "TopSideTelemetry_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DataFlowNode",
+      "BrowseName": "DataFlowNode_0",
+      "UniqueName": "DataFlowNode_0",
+      "DisplayName": "DataFlowNode_0",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookPosition_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "HookPosition"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookVelocity_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "HookVelocity"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookPosition_0"
+      },
+      "VerbURI": "http://ddhub.no/IsDerivationInput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Derivation_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookVelocity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsDerivedFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Derivation_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookPosition_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveHook_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookVelocity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopDriveHook_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookPosition_0"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "BlockPositionQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookVelocity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "BlockVelocityQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Transformation_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransformationOutput",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "HookPosition_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookPosition_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransmittedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopSideTelemetry_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookVelocity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransmittedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "TopSideTelemetry_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookPosition_0"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DataFlowNode_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookVelocity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DataFlowNode_0"
+      }
+    }
+  ]
+}

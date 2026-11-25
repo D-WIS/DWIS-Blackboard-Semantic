@@ -1,0 +1,397 @@
+{
+  "Provider": {
+    "Name": "LWD Signals",
+    "Company": null
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_0",
+      "UniqueName": "DrillingDataPoint_0",
+      "DisplayName": "DrillingDataPoint_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Resistivity",
+      "BrowseName": "Resistivity_0",
+      "UniqueName": "Resistivity_0",
+      "DisplayName": "Resistivity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Location",
+      "BrowseName": "Location_0",
+      "UniqueName": "Location_0",
+      "DisplayName": "Location_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/MudPulseTelemetry",
+      "BrowseName": "MudPulseTelemetry_0",
+      "UniqueName": "MudPulseTelemetry_0",
+      "DisplayName": "MudPulseTelemetry_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DataFlowNode",
+      "BrowseName": "DataFlowNode_0",
+      "UniqueName": "DataFlowNode_0",
+      "DisplayName": "DataFlowNode_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_1",
+      "UniqueName": "DrillingDataPoint_1",
+      "DisplayName": "DrillingDataPoint_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/RockDensityQuantity",
+      "BrowseName": "RockDensityQuantity_0",
+      "UniqueName": "RockDensityQuantity_0",
+      "DisplayName": "RockDensityQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Location",
+      "BrowseName": "Location_1",
+      "UniqueName": "Location_1",
+      "DisplayName": "Location_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_2",
+      "UniqueName": "DrillingDataPoint_2",
+      "DisplayName": "DrillingDataPoint_2",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_3",
+      "UniqueName": "DrillingDataPoint_3",
+      "DisplayName": "DrillingDataPoint_3",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DepthQuantity",
+      "BrowseName": "DepthQuantity_0",
+      "UniqueName": "DepthQuantity_0",
+      "DisplayName": "DepthQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_4",
+      "UniqueName": "DrillingDataPoint_4",
+      "DisplayName": "DrillingDataPoint_4",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/FormationPorosityQuantity",
+      "BrowseName": "FormationPorosityQuantity_0",
+      "UniqueName": "FormationPorosityQuantity_0",
+      "DisplayName": "FormationPorosityQuantity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_5",
+      "UniqueName": "DrillingDataPoint_5",
+      "DisplayName": "DrillingDataPoint_5",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_6",
+      "UniqueName": "DrillingDataPoint_6",
+      "DisplayName": "DrillingDataPoint_6",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/Location",
+      "BrowseName": "Location_2",
+      "UniqueName": "Location_2",
+      "DisplayName": "Location_2",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DrillingDataPoint_7",
+      "UniqueName": "DrillingDataPoint_7",
+      "DisplayName": "DrillingDataPoint_7",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/MassDensityQuantity",
+      "BrowseName": "MassDensityQuantity_0",
+      "UniqueName": "MassDensityQuantity_0",
+      "DisplayName": "MassDensityQuantity_0",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_0"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Resistivity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_0"
+      },
+      "VerbURI": "http://ddhub.no/IsPhysicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Location_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_0"
+      },
+      "VerbURI": "http://ddhub.no/IsTransmittedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "MudPulseTelemetry_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_0"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DataFlowNode_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_1"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "RockDensityQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_1"
+      },
+      "VerbURI": "http://ddhub.no/IsPhysicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Location_1"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_1"
+      },
+      "VerbURI": "http://ddhub.no/IsTransmittedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "MudPulseTelemetry_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_1"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DataFlowNode_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Location_0"
+      },
+      "VerbURI": "http://ddhub.no/HasCoordinates",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_2"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Location_1"
+      },
+      "VerbURI": "http://ddhub.no/HasCoordinates",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_3"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_2"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DepthQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_3"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DepthQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_4"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "FormationPorosityQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_5"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "FormationPorosityQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_6"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "FormationPorosityQuantity_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_4"
+      },
+      "VerbURI": "http://ddhub.no/IsPhysicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Location_2"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_5"
+      },
+      "VerbURI": "http://ddhub.no/IsPhysicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Location_2"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_6"
+      },
+      "VerbURI": "http://ddhub.no/IsPhysicallyLocatedAt",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "Location_2"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "Location_2"
+      },
+      "VerbURI": "http://ddhub.no/HasCoordinates",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_7"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_5"
+      },
+      "VerbURI": "http://ddhub.no/IsTransmittedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "MudPulseTelemetry_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_6"
+      },
+      "VerbURI": "http://ddhub.no/IsTransmittedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "MudPulseTelemetry_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DrillingDataPoint_4"
+      },
+      "VerbURI": "http://ddhub.no/IsTransmittedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "MudPulseTelemetry_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "RockDensityQuantity_0"
+      },
+      "VerbURI": "http://ddhub.no/IsObservableFrom",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "MassDensityQuantity_0"
+      }
+    }
+  ]
+}

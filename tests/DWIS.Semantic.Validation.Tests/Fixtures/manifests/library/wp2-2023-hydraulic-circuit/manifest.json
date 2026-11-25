@@ -1,0 +1,335 @@
+{
+  "Provider": {
+    "Name": "Hydraulic circuit",
+    "Company": null
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ActivePit",
+      "BrowseName": "ActivePit_0",
+      "UniqueName": "ActivePit_0",
+      "DisplayName": "ActivePit_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ThreeWayValve",
+      "BrowseName": "ThreeWayValve_0",
+      "UniqueName": "ThreeWayValve_0",
+      "DisplayName": "ThreeWayValve_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/GateValve",
+      "BrowseName": "GateValve_0",
+      "UniqueName": "GateValve_0",
+      "DisplayName": "GateValve_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/GateValve",
+      "BrowseName": "GateValve_1",
+      "UniqueName": "GateValve_1",
+      "DisplayName": "GateValve_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/GateValve",
+      "BrowseName": "GateValve_2",
+      "UniqueName": "GateValve_2",
+      "DisplayName": "GateValve_2",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ThreeWayManifold",
+      "BrowseName": "ThreeWayManifold_0",
+      "UniqueName": "ThreeWayManifold_0",
+      "DisplayName": "ThreeWayManifold_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ThreeWayManifold",
+      "BrowseName": "ThreeWayManifold_1",
+      "UniqueName": "ThreeWayManifold_1",
+      "DisplayName": "ThreeWayManifold_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ThreeWayManifold",
+      "BrowseName": "ThreeWayManifold_2",
+      "UniqueName": "ThreeWayManifold_2",
+      "DisplayName": "ThreeWayManifold_2",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/CementPump",
+      "BrowseName": "CementPump_0",
+      "UniqueName": "CementPump_0",
+      "DisplayName": "CementPump_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/MudPump",
+      "BrowseName": "MudPump_0",
+      "UniqueName": "MudPump_0",
+      "DisplayName": "MudPump_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/MudPump",
+      "BrowseName": "MudPump_1",
+      "UniqueName": "MudPump_1",
+      "DisplayName": "MudPump_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ThreeWayValve",
+      "BrowseName": "ThreeWayValve_1",
+      "UniqueName": "ThreeWayValve_1",
+      "DisplayName": "ThreeWayValve_1",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ThreeWayValve",
+      "BrowseName": "ThreeWayValve_2",
+      "UniqueName": "ThreeWayValve_2",
+      "DisplayName": "ThreeWayValve_2",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ThreeWayValve",
+      "BrowseName": "ThreeWayValve_3",
+      "UniqueName": "ThreeWayValve_3",
+      "DisplayName": "ThreeWayValve_3",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/ThreeWayManifold",
+      "BrowseName": "ThreeWayManifold_3",
+      "UniqueName": "ThreeWayManifold_3",
+      "DisplayName": "ThreeWayManifold_3",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/StandPipe",
+      "BrowseName": "StandPipe_0",
+      "UniqueName": "StandPipe_0",
+      "DisplayName": "StandPipe_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/MudMixing",
+      "BrowseName": "MudMixing_0",
+      "UniqueName": "MudMixing_0",
+      "DisplayName": "MudMixing_0",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "ActivePit_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayValve_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayValve_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "GateValve_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayValve_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "GateValve_1"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayValve_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "GateValve_2"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "GateValve_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayManifold_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "GateValve_1"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayManifold_1"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "GateValve_2"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayManifold_2"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayManifold_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "CementPump_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayManifold_1"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "MudPump_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayManifold_2"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "MudPump_1"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "CementPump_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayValve_1"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "MudPump_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayValve_2"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "MudPump_1"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayValve_3"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayValve_1"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayManifold_3"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayValve_2"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayManifold_3"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayValve_3"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayManifold_3"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "ThreeWayManifold_3"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "StandPipe_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "MudMixing_0"
+      },
+      "VerbURI": "http://ddhub.no/IsHydraulicConnectedTo",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "ActivePit_0"
+      }
+    }
+  ]
+}

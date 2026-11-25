@@ -1,0 +1,446 @@
+{
+  "Provider": {
+    "Name": "Typical list model",
+    "Company": null
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes"
+  },
+  "InjectedVariables": [
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_0",
+      "InjectedName": "DynamicDrillingSignal_0",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_1",
+      "InjectedName": "DynamicDrillingSignal_1",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_2",
+      "InjectedName": "DynamicDrillingSignal_2",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_3",
+      "InjectedName": "DynamicDrillingSignal_3",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_4",
+      "InjectedName": "DynamicDrillingSignal_4",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_5",
+      "InjectedName": "DynamicDrillingSignal_5",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_6",
+      "InjectedName": "DynamicDrillingSignal_6",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_7",
+      "InjectedName": "DynamicDrillingSignal_7",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_8",
+      "InjectedName": "DynamicDrillingSignal_8",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_9",
+      "InjectedName": "DynamicDrillingSignal_9",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_10",
+      "InjectedName": "DynamicDrillingSignal_10",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_11",
+      "InjectedName": "DynamicDrillingSignal_11",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_12",
+      "InjectedName": "DynamicDrillingSignal_12",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_13",
+      "InjectedName": "DynamicDrillingSignal_13",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_14",
+      "InjectedName": "DynamicDrillingSignal_14",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_15",
+      "InjectedName": "DynamicDrillingSignal_15",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_16",
+      "InjectedName": "DynamicDrillingSignal_16",
+      "SamplingIntervalInMS": 0.0
+    },
+    {
+      "NativeAddressSpaceNameSpace": "Variables",
+      "NativeAddressSpaceNodeID": "DynamicDrillingSignal_17",
+      "InjectedName": "DynamicDrillingSignal_17",
+      "SamplingIntervalInMS": 0.0
+    }
+  ],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "HookVelocity_0",
+      "UniqueName": "HookVelocity_0",
+      "DisplayName": "HookVelocity_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "FlowRateIn_0",
+      "UniqueName": "FlowRateIn_0",
+      "DisplayName": "FlowRateIn_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "BitDepth_0",
+      "UniqueName": "BitDepth_0",
+      "DisplayName": "BitDepth_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "SurfaceRPM_0",
+      "UniqueName": "SurfaceRPM_0",
+      "DisplayName": "SurfaceRPM_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "SurfaceTorque_0",
+      "UniqueName": "SurfaceTorque_0",
+      "DisplayName": "SurfaceTorque_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "SPP_0",
+      "UniqueName": "SPP_0",
+      "DisplayName": "SPP_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DownholeECD_0",
+      "UniqueName": "DownholeECD_0",
+      "DisplayName": "DownholeECD_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "HookPosition_0",
+      "UniqueName": "HookPosition_0",
+      "DisplayName": "HookPosition_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "TemperatureIn_0",
+      "UniqueName": "TemperatureIn_0",
+      "DisplayName": "TemperatureIn_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "DownholePressure_0",
+      "UniqueName": "DownholePressure_0",
+      "DisplayName": "DownholePressure_0",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "http://ddhub.no/DrillingDataPoint",
+      "BrowseName": "HookLoad_0",
+      "UniqueName": "HookLoad_0",
+      "DisplayName": "HookLoad_0",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookVelocity_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "HookVelocity"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "FlowRateIn_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "FlowRateIn"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "BitDepth_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "BitDepth"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceRPM_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "SurfaceRPM"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceTorque_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "SurfaceTorque"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SPP_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "SPP"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholeECD_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "DownholeECD"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookPosition_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "HookPosition"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TemperatureIn_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "TemperatureIn"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholePressure_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "DownholePressure"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_0"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "HookLoad"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookVelocity_0"
+      },
+      "VerbURI": "http://ddhub.no/HasValue",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DynamicDrillingSignal_0"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "FlowRateIn_0"
+      },
+      "VerbURI": "http://ddhub.no/HasValue",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DynamicDrillingSignal_1"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "BitDepth_0"
+      },
+      "VerbURI": "http://ddhub.no/HasValue",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DynamicDrillingSignal_2"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceRPM_0"
+      },
+      "VerbURI": "http://ddhub.no/HasValue",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DynamicDrillingSignal_3"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SurfaceTorque_0"
+      },
+      "VerbURI": "http://ddhub.no/HasValue",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DynamicDrillingSignal_4"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "SPP_0"
+      },
+      "VerbURI": "http://ddhub.no/HasValue",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DynamicDrillingSignal_5"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholeECD_0"
+      },
+      "VerbURI": "http://ddhub.no/HasValue",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DynamicDrillingSignal_6"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookPosition_0"
+      },
+      "VerbURI": "http://ddhub.no/HasValue",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DynamicDrillingSignal_7"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "TemperatureIn_0"
+      },
+      "VerbURI": "http://ddhub.no/HasValue",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DynamicDrillingSignal_8"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "DownholePressure_0"
+      },
+      "VerbURI": "http://ddhub.no/HasValue",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DynamicDrillingSignal_9"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "HookLoad_0"
+      },
+      "VerbURI": "http://ddhub.no/HasValue",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "DynamicDrillingSignal_10"
+      }
+    }
+  ]
+}

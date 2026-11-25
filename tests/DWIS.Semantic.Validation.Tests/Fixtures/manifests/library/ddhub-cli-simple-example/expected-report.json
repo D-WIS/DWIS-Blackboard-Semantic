@@ -1,0 +1,9 @@
+{
+  "status": 502,
+  "answer": {
+    "type": "https://tools.ietf.org/html/rfc9110#section-15.6.3",
+    "title": "Store error",
+    "status": 502,
+    "detail": "The store answered 400 to POST /dwis/sparql?timeout=30000: Parse error: Encountered \" \"<\" \"< \"\" at line 1, column 46."
+  }
+}
