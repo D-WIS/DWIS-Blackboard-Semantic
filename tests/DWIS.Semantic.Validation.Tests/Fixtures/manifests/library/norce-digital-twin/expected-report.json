@@ -1,0 +1,78 @@
+{
+  "status": 200,
+  "manifestId": "NORCEDT/norce-digital-twin",
+  "accepted": true,
+  "vocabularyVersion": "2026-10-14",
+  "counts": {
+    "errors": 0,
+    "warnings": 6,
+    "infos": 1
+  },
+  "live": {
+    "core": true,
+    "rest": true
+  },
+  "findings": [
+    {
+      "stage": "commit",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/NORCEDT/DigitalTwinSignalsForMicroStates#01> is asserted to be both a DigitalTwinAdvice and a DrillingDataPoint, which are disjoint.",
+      "focus": "http://d-wis.org/NORCEDT/DigitalTwinSignalsForMicroStates#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/DigitalTwinAdvice, http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "commit",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/NORCEDT/MicroStateInterpreter> is asserted to be both a DWISDrillingProcessStateInterpreter and a DataFlowNode, which are disjoint.",
+      "focus": "http://d-wis.org/NORCEDT/MicroStateInterpreter",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/DWISDrillingProcessStateInterpreter, http://d-wis.org/DataFlowNode"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/NORCEDT/DigitalTwinSignalsForMicroStates#01> uses <http://d-wis.org/HasDynamicValue> but is not a DrillingDataPoint (it is DigitalTwinAdvice).",
+      "focus": "http://d-wis.org/NORCEDT/DigitalTwinSignalsForMicroStates#01",
+      "path": "http://d-wis.org/HasDynamicValue",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "range-mismatch",
+      "message": "<http://d-wis.org/NORCEDT/DigitalTwinSignalsForMicroStates#01> <http://d-wis.org/IsProvidedTo> <http://d-wis.org/NORCEDT/MicroStateInterpreter>: the object is not a DataFlowNode (it is DWISDrillingProcessStateInterpreter).",
+      "focus": "http://d-wis.org/NORCEDT/DigitalTwinSignalsForMicroStates#01",
+      "path": "http://d-wis.org/IsProvidedTo",
+      "value": "http://d-wis.org/NORCEDT/MicroStateInterpreter"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/NORCEDT/Variables/NORCEDT.DigitalTwinSignalsForMicroStates",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/NORCEDT/Variables/NORCEDT.DigitalTwinSignalsForMicroStates_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'DigitalTwinSignalsForMicroStates_validitySignal' added for variable 'DigitalTwinSignalsForMicroStates'.",
+      "focus": "DigitalTwinSignalsForMicroStates"
+    }
+  ]
+}

@@ -1,0 +1,2648 @@
+{
+  "ManifestName": null,
+  "Provider": {
+    "Name": "openLAB",
+    "Company": "NORCE"
+  },
+  "InjectionInformation": {
+    "ServerName": "DDHub1",
+    "EndPointURL": "opc.tcp://localhost:48031",
+    "PublishingIntervalInMS": 1000.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "openLAB",
+    "ProvidedVariablesNamespaceAlias": "ProvidedVariables"
+  },
+  "InjectedVariables": [
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "SPP",
+      "InjectedName": "SPP",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    },
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "ActivePit",
+      "InjectedName": "ActivePit",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    },
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "BitDepth",
+      "InjectedName": "BitDepth",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    },
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "FlowRateIn",
+      "InjectedName": "FlowRateIn",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    },
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "FlowRateOut",
+      "InjectedName": "FlowRateOut",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    },
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "DownholePressure",
+      "InjectedName": "DownholePressure",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    },
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "FluidTemperatureOut",
+      "InjectedName": "FluidTemperatureOut",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    },
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "FluidTemperatureIn",
+      "InjectedName": "FluidTemperatureIn",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    },
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "DownholeECD",
+      "InjectedName": "DownholeECD",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    },
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "WOB",
+      "InjectedName": "WOB",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    },
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "HookLoad",
+      "InjectedName": "HookLoad",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    },
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "SurfaceRPM",
+      "InjectedName": "SurfaceRPM",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    },
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "SurfaceTorque",
+      "InjectedName": "SurfaceTorque",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    },
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "TD",
+      "InjectedName": "TD",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    },
+    {
+      "NativeAddressSpaceNameSpace": "openLab",
+      "NativeAddressSpaceNodeID": "DWhkl",
+      "InjectedName": "DWHookloadsignal",
+      "SamplingIntervalInMS": 1000.0,
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": null
+    }
+  ],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "SPP",
+      "UniqueName": "SPP",
+      "DisplayName": "SPP",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Resampling",
+      "BrowseName": "SPP_resamp",
+      "UniqueName": "SPP_resamp",
+      "DisplayName": "SPP_resamp",
+      "Fields": [
+        {
+          "FieldName": "ResamplingDelay",
+          "FieldValue": "0.1"
+        },
+        {
+          "FieldName": "ResamplingRate",
+          "FieldValue": "0.25"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "MeasurementDevice",
+      "BrowseName": "SPP_sensor",
+      "UniqueName": "SPP_sensor",
+      "DisplayName": "SPP_sensor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "SensorUncertainty",
+      "BrowseName": "SPP_sensor_un",
+      "UniqueName": "SPP_sensor_un",
+      "DisplayName": "SPP_sensor_un",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "SPP_sensor_un_acc",
+      "UniqueName": "SPP_sensor_un_acc",
+      "DisplayName": "SPP_sensor_un_acc",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "SPP_sensor_un_acc_s",
+      "UniqueName": "SPP_sensor_un_acc_s",
+      "DisplayName": "SPP_sensor_un_acc_s",
+      "Fields": [
+        {
+          "FieldName": "Value",
+          "FieldValue": "50000"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "SPP_sensor_un_prec",
+      "UniqueName": "SPP_sensor_un_prec",
+      "DisplayName": "SPP_sensor_un_prec",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "SPP_sensor_un_prec_s",
+      "UniqueName": "SPP_sensor_un_prec_s",
+      "DisplayName": "SPP_sensor_un_prec_s",
+      "Fields": [
+        {
+          "FieldName": "Value",
+          "FieldValue": "5000"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "ActivePit",
+      "UniqueName": "ActivePit",
+      "DisplayName": "ActivePit",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Resampling",
+      "BrowseName": "ActivePit_resamp",
+      "UniqueName": "ActivePit_resamp",
+      "DisplayName": "ActivePit_resamp",
+      "Fields": [
+        {
+          "FieldName": "ResamplingDelay",
+          "FieldValue": "0.1"
+        },
+        {
+          "FieldName": "ResamplingRate",
+          "FieldValue": "0.25"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "MeasurementDevice",
+      "BrowseName": "ActivePit_sensor",
+      "UniqueName": "ActivePit_sensor",
+      "DisplayName": "ActivePit_sensor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "SensorUncertainty",
+      "BrowseName": "ActivePit_sensor_un",
+      "UniqueName": "ActivePit_sensor_un",
+      "DisplayName": "ActivePit_sensor_un",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "ActivePit_sensor_un_acc",
+      "UniqueName": "ActivePit_sensor_un_acc",
+      "DisplayName": "ActivePit_sensor_un_acc",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "ActivePit_sensor_un_acc_s",
+      "UniqueName": "ActivePit_sensor_un_acc_s",
+      "DisplayName": "ActivePit_sensor_un_acc_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "ActivePit_sensor_un_prec",
+      "UniqueName": "ActivePit_sensor_un_prec",
+      "DisplayName": "ActivePit_sensor_un_prec",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "ActivePit_sensor_un_prec_s",
+      "UniqueName": "ActivePit_sensor_un_prec_s",
+      "DisplayName": "ActivePit_sensor_un_prec_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "BitDepth",
+      "UniqueName": "BitDepth",
+      "DisplayName": "BitDepth",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Resampling",
+      "BrowseName": "BitDepth_resamp",
+      "UniqueName": "BitDepth_resamp",
+      "DisplayName": "BitDepth_resamp",
+      "Fields": [
+        {
+          "FieldName": "ResamplingDelay",
+          "FieldValue": "0.1"
+        },
+        {
+          "FieldName": "ResamplingRate",
+          "FieldValue": "0.25"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "MeasurementDevice",
+      "BrowseName": "BitDepth_sensor",
+      "UniqueName": "BitDepth_sensor",
+      "DisplayName": "BitDepth_sensor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "SensorUncertainty",
+      "BrowseName": "BitDepth_sensor_un",
+      "UniqueName": "BitDepth_sensor_un",
+      "DisplayName": "BitDepth_sensor_un",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "BitDepth_sensor_un_acc",
+      "UniqueName": "BitDepth_sensor_un_acc",
+      "DisplayName": "BitDepth_sensor_un_acc",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "BitDepth_sensor_un_acc_s",
+      "UniqueName": "BitDepth_sensor_un_acc_s",
+      "DisplayName": "BitDepth_sensor_un_acc_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "BitDepth_sensor_un_prec",
+      "UniqueName": "BitDepth_sensor_un_prec",
+      "DisplayName": "BitDepth_sensor_un_prec",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "BitDepth_sensor_un_prec_s",
+      "UniqueName": "BitDepth_sensor_un_prec_s",
+      "DisplayName": "BitDepth_sensor_un_prec_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "FlowRateIn",
+      "UniqueName": "FlowRateIn",
+      "DisplayName": "FlowRateIn",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Resampling",
+      "BrowseName": "FlowRateIn_resamp",
+      "UniqueName": "FlowRateIn_resamp",
+      "DisplayName": "FlowRateIn_resamp",
+      "Fields": [
+        {
+          "FieldName": "ResamplingDelay",
+          "FieldValue": "0.1"
+        },
+        {
+          "FieldName": "ResamplingRate",
+          "FieldValue": "0.25"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "MeasurementDevice",
+      "BrowseName": "FlowRateIn_sensor",
+      "UniqueName": "FlowRateIn_sensor",
+      "DisplayName": "FlowRateIn_sensor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "SensorUncertainty",
+      "BrowseName": "FlowRateIn_sensor_un",
+      "UniqueName": "FlowRateIn_sensor_un",
+      "DisplayName": "FlowRateIn_sensor_un",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "FlowRateIn_sensor_un_acc",
+      "UniqueName": "FlowRateIn_sensor_un_acc",
+      "DisplayName": "FlowRateIn_sensor_un_acc",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "FlowRateIn_sensor_un_acc_s",
+      "UniqueName": "FlowRateIn_sensor_un_acc_s",
+      "DisplayName": "FlowRateIn_sensor_un_acc_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "FlowRateIn_sensor_un_prec",
+      "UniqueName": "FlowRateIn_sensor_un_prec",
+      "DisplayName": "FlowRateIn_sensor_un_prec",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "FlowRateIn_sensor_un_prec_s",
+      "UniqueName": "FlowRateIn_sensor_un_prec_s",
+      "DisplayName": "FlowRateIn_sensor_un_prec_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "FlowRateOut",
+      "UniqueName": "FlowRateOut",
+      "DisplayName": "FlowRateOut",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Resampling",
+      "BrowseName": "FlowRateOut_resamp",
+      "UniqueName": "FlowRateOut_resamp",
+      "DisplayName": "FlowRateOut_resamp",
+      "Fields": [
+        {
+          "FieldName": "ResamplingDelay",
+          "FieldValue": "0.1"
+        },
+        {
+          "FieldName": "ResamplingRate",
+          "FieldValue": "0.25"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "MeasurementDevice",
+      "BrowseName": "FlowRateOut_sensor",
+      "UniqueName": "FlowRateOut_sensor",
+      "DisplayName": "FlowRateOut_sensor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "SensorUncertainty",
+      "BrowseName": "FlowRateOut_sensor_un",
+      "UniqueName": "FlowRateOut_sensor_un",
+      "DisplayName": "FlowRateOut_sensor_un",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "FlowRateOut_sensor_un_acc",
+      "UniqueName": "FlowRateOut_sensor_un_acc",
+      "DisplayName": "FlowRateOut_sensor_un_acc",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "FlowRateOut_sensor_un_acc_s",
+      "UniqueName": "FlowRateOut_sensor_un_acc_s",
+      "DisplayName": "FlowRateOut_sensor_un_acc_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "FlowRateOut_sensor_un_prec",
+      "UniqueName": "FlowRateOut_sensor_un_prec",
+      "DisplayName": "FlowRateOut_sensor_un_prec",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "FlowRateOut_sensor_un_prec_s",
+      "UniqueName": "FlowRateOut_sensor_un_prec_s",
+      "DisplayName": "FlowRateOut_sensor_un_prec_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "DownholePressure",
+      "UniqueName": "DownholePressure",
+      "DisplayName": "DownholePressure",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Resampling",
+      "BrowseName": "DownholePressure_resamp",
+      "UniqueName": "DownholePressure_resamp",
+      "DisplayName": "DownholePressure_resamp",
+      "Fields": [
+        {
+          "FieldName": "ResamplingDelay",
+          "FieldValue": "0.1"
+        },
+        {
+          "FieldName": "ResamplingRate",
+          "FieldValue": "0.25"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "MeasurementDevice",
+      "BrowseName": "DownholePressure_sensor",
+      "UniqueName": "DownholePressure_sensor",
+      "DisplayName": "DownholePressure_sensor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "SensorUncertainty",
+      "BrowseName": "DownholePressure_sensor_un",
+      "UniqueName": "DownholePressure_sensor_un",
+      "DisplayName": "DownholePressure_sensor_un",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "DownholePressure_sensor_un_acc",
+      "UniqueName": "DownholePressure_sensor_un_acc",
+      "DisplayName": "DownholePressure_sensor_un_acc",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "DownholePressure_sensor_un_acc_s",
+      "UniqueName": "DownholePressure_sensor_un_acc_s",
+      "DisplayName": "DownholePressure_sensor_un_acc_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "DownholePressure_sensor_un_prec",
+      "UniqueName": "DownholePressure_sensor_un_prec",
+      "DisplayName": "DownholePressure_sensor_un_prec",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "DownholePressure_sensor_un_prec_s",
+      "UniqueName": "DownholePressure_sensor_un_prec_s",
+      "DisplayName": "DownholePressure_sensor_un_prec_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "FluidTemperatureOut",
+      "UniqueName": "FluidTemperatureOut",
+      "DisplayName": "FluidTemperatureOut",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Resampling",
+      "BrowseName": "FluidTemperatureOut_resamp",
+      "UniqueName": "FluidTemperatureOut_resamp",
+      "DisplayName": "FluidTemperatureOut_resamp",
+      "Fields": [
+        {
+          "FieldName": "ResamplingDelay",
+          "FieldValue": "0.1"
+        },
+        {
+          "FieldName": "ResamplingRate",
+          "FieldValue": "0.25"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "MeasurementDevice",
+      "BrowseName": "FluidTemperatureOut_sensor",
+      "UniqueName": "FluidTemperatureOut_sensor",
+      "DisplayName": "FluidTemperatureOut_sensor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "SensorUncertainty",
+      "BrowseName": "FluidTemperatureOut_sensor_un",
+      "UniqueName": "FluidTemperatureOut_sensor_un",
+      "DisplayName": "FluidTemperatureOut_sensor_un",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "FluidTemperatureOut_sensor_un_acc",
+      "UniqueName": "FluidTemperatureOut_sensor_un_acc",
+      "DisplayName": "FluidTemperatureOut_sensor_un_acc",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "FluidTemperatureOut_sensor_un_acc_s",
+      "UniqueName": "FluidTemperatureOut_sensor_un_acc_s",
+      "DisplayName": "FluidTemperatureOut_sensor_un_acc_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "FluidTemperatureOut_sensor_un_prec",
+      "UniqueName": "FluidTemperatureOut_sensor_un_prec",
+      "DisplayName": "FluidTemperatureOut_sensor_un_prec",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "FluidTemperatureOut_sensor_un_prec_s",
+      "UniqueName": "FluidTemperatureOut_sensor_un_prec_s",
+      "DisplayName": "FluidTemperatureOut_sensor_un_prec_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "FluidTemperatureIn",
+      "UniqueName": "FluidTemperatureIn",
+      "DisplayName": "FluidTemperatureIn",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Resampling",
+      "BrowseName": "FluidTemperatureIn_resamp",
+      "UniqueName": "FluidTemperatureIn_resamp",
+      "DisplayName": "FluidTemperatureIn_resamp",
+      "Fields": [
+        {
+          "FieldName": "ResamplingDelay",
+          "FieldValue": "0.1"
+        },
+        {
+          "FieldName": "ResamplingRate",
+          "FieldValue": "0.25"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "MeasurementDevice",
+      "BrowseName": "FluidTemperatureIn_sensor",
+      "UniqueName": "FluidTemperatureIn_sensor",
+      "DisplayName": "FluidTemperatureIn_sensor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "SensorUncertainty",
+      "BrowseName": "FluidTemperatureIn_sensor_un",
+      "UniqueName": "FluidTemperatureIn_sensor_un",
+      "DisplayName": "FluidTemperatureIn_sensor_un",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "FluidTemperatureIn_sensor_un_acc",
+      "UniqueName": "FluidTemperatureIn_sensor_un_acc",
+      "DisplayName": "FluidTemperatureIn_sensor_un_acc",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "FluidTemperatureIn_sensor_un_acc_s",
+      "UniqueName": "FluidTemperatureIn_sensor_un_acc_s",
+      "DisplayName": "FluidTemperatureIn_sensor_un_acc_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "FluidTemperatureIn_sensor_un_prec",
+      "UniqueName": "FluidTemperatureIn_sensor_un_prec",
+      "DisplayName": "FluidTemperatureIn_sensor_un_prec",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "FluidTemperatureIn_sensor_un_prec_s",
+      "UniqueName": "FluidTemperatureIn_sensor_un_prec_s",
+      "DisplayName": "FluidTemperatureIn_sensor_un_prec_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "DownholeECD",
+      "UniqueName": "DownholeECD",
+      "DisplayName": "DownholeECD",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Resampling",
+      "BrowseName": "DownholeECD_resamp",
+      "UniqueName": "DownholeECD_resamp",
+      "DisplayName": "DownholeECD_resamp",
+      "Fields": [
+        {
+          "FieldName": "ResamplingDelay",
+          "FieldValue": "0.1"
+        },
+        {
+          "FieldName": "ResamplingRate",
+          "FieldValue": "0.25"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "MeasurementDevice",
+      "BrowseName": "DownholeECD_sensor",
+      "UniqueName": "DownholeECD_sensor",
+      "DisplayName": "DownholeECD_sensor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "SensorUncertainty",
+      "BrowseName": "DownholeECD_sensor_un",
+      "UniqueName": "DownholeECD_sensor_un",
+      "DisplayName": "DownholeECD_sensor_un",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "DownholeECD_sensor_un_acc",
+      "UniqueName": "DownholeECD_sensor_un_acc",
+      "DisplayName": "DownholeECD_sensor_un_acc",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "DownholeECD_sensor_un_acc_s",
+      "UniqueName": "DownholeECD_sensor_un_acc_s",
+      "DisplayName": "DownholeECD_sensor_un_acc_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "DownholeECD_sensor_un_prec",
+      "UniqueName": "DownholeECD_sensor_un_prec",
+      "DisplayName": "DownholeECD_sensor_un_prec",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "DownholeECD_sensor_un_prec_s",
+      "UniqueName": "DownholeECD_sensor_un_prec_s",
+      "DisplayName": "DownholeECD_sensor_un_prec_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "WOB",
+      "UniqueName": "WOB",
+      "DisplayName": "WOB",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Resampling",
+      "BrowseName": "WOB_resamp",
+      "UniqueName": "WOB_resamp",
+      "DisplayName": "WOB_resamp",
+      "Fields": [
+        {
+          "FieldName": "ResamplingDelay",
+          "FieldValue": "0.1"
+        },
+        {
+          "FieldName": "ResamplingRate",
+          "FieldValue": "0.25"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "MeasurementDevice",
+      "BrowseName": "WOB_sensor",
+      "UniqueName": "WOB_sensor",
+      "DisplayName": "WOB_sensor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "SensorUncertainty",
+      "BrowseName": "WOB_sensor_un",
+      "UniqueName": "WOB_sensor_un",
+      "DisplayName": "WOB_sensor_un",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "WOB_sensor_un_acc",
+      "UniqueName": "WOB_sensor_un_acc",
+      "DisplayName": "WOB_sensor_un_acc",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "WOB_sensor_un_acc_s",
+      "UniqueName": "WOB_sensor_un_acc_s",
+      "DisplayName": "WOB_sensor_un_acc_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "WOB_sensor_un_prec",
+      "UniqueName": "WOB_sensor_un_prec",
+      "DisplayName": "WOB_sensor_un_prec",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "WOB_sensor_un_prec_s",
+      "UniqueName": "WOB_sensor_un_prec_s",
+      "DisplayName": "WOB_sensor_un_prec_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "HookLoad",
+      "UniqueName": "HookLoad",
+      "DisplayName": "HookLoad",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Resampling",
+      "BrowseName": "HookLoad_resamp",
+      "UniqueName": "HookLoad_resamp",
+      "DisplayName": "HookLoad_resamp",
+      "Fields": [
+        {
+          "FieldName": "ResamplingDelay",
+          "FieldValue": "0.1"
+        },
+        {
+          "FieldName": "ResamplingRate",
+          "FieldValue": "0.25"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "MeasurementDevice",
+      "BrowseName": "HookLoad_sensor",
+      "UniqueName": "HookLoad_sensor",
+      "DisplayName": "HookLoad_sensor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "SensorUncertainty",
+      "BrowseName": "HookLoad_sensor_un",
+      "UniqueName": "HookLoad_sensor_un",
+      "DisplayName": "HookLoad_sensor_un",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "HookLoad_sensor_un_acc",
+      "UniqueName": "HookLoad_sensor_un_acc",
+      "DisplayName": "HookLoad_sensor_un_acc",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "HookLoad_sensor_un_acc_s",
+      "UniqueName": "HookLoad_sensor_un_acc_s",
+      "DisplayName": "HookLoad_sensor_un_acc_s",
+      "Fields": [
+        {
+          "FieldName": "Value",
+          "FieldValue": "500"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "HookLoad_sensor_un_prec",
+      "UniqueName": "HookLoad_sensor_un_prec",
+      "DisplayName": "HookLoad_sensor_un_prec",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "HookLoad_sensor_un_prec_s",
+      "UniqueName": "HookLoad_sensor_un_prec_s",
+      "DisplayName": "HookLoad_sensor_un_prec_s",
+      "Fields": [
+        {
+          "FieldName": "Value",
+          "FieldValue": "150"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "SurfaceRPM",
+      "UniqueName": "SurfaceRPM",
+      "DisplayName": "SurfaceRPM",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Resampling",
+      "BrowseName": "SurfaceRPM_resamp",
+      "UniqueName": "SurfaceRPM_resamp",
+      "DisplayName": "SurfaceRPM_resamp",
+      "Fields": [
+        {
+          "FieldName": "ResamplingDelay",
+          "FieldValue": "0.1"
+        },
+        {
+          "FieldName": "ResamplingRate",
+          "FieldValue": "0.25"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "MeasurementDevice",
+      "BrowseName": "SurfaceRPM_sensor",
+      "UniqueName": "SurfaceRPM_sensor",
+      "DisplayName": "SurfaceRPM_sensor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "SensorUncertainty",
+      "BrowseName": "SurfaceRPM_sensor_un",
+      "UniqueName": "SurfaceRPM_sensor_un",
+      "DisplayName": "SurfaceRPM_sensor_un",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "SurfaceRPM_sensor_un_acc",
+      "UniqueName": "SurfaceRPM_sensor_un_acc",
+      "DisplayName": "SurfaceRPM_sensor_un_acc",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "SurfaceRPM_sensor_un_acc_s",
+      "UniqueName": "SurfaceRPM_sensor_un_acc_s",
+      "DisplayName": "SurfaceRPM_sensor_un_acc_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "SurfaceRPM_sensor_un_prec",
+      "UniqueName": "SurfaceRPM_sensor_un_prec",
+      "DisplayName": "SurfaceRPM_sensor_un_prec",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "SurfaceRPM_sensor_un_prec_s",
+      "UniqueName": "SurfaceRPM_sensor_un_prec_s",
+      "DisplayName": "SurfaceRPM_sensor_un_prec_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "SurfaceTorque",
+      "UniqueName": "SurfaceTorque",
+      "DisplayName": "SurfaceTorque",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Resampling",
+      "BrowseName": "SurfaceTorque_resamp",
+      "UniqueName": "SurfaceTorque_resamp",
+      "DisplayName": "SurfaceTorque_resamp",
+      "Fields": [
+        {
+          "FieldName": "ResamplingDelay",
+          "FieldValue": "0.1"
+        },
+        {
+          "FieldName": "ResamplingRate",
+          "FieldValue": "0.25"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "MeasurementDevice",
+      "BrowseName": "SurfaceTorque_sensor",
+      "UniqueName": "SurfaceTorque_sensor",
+      "DisplayName": "SurfaceTorque_sensor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "SensorUncertainty",
+      "BrowseName": "SurfaceTorque_sensor_un",
+      "UniqueName": "SurfaceTorque_sensor_un",
+      "DisplayName": "SurfaceTorque_sensor_un",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "SurfaceTorque_sensor_un_acc",
+      "UniqueName": "SurfaceTorque_sensor_un_acc",
+      "DisplayName": "SurfaceTorque_sensor_un_acc",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "SurfaceTorque_sensor_un_acc_s",
+      "UniqueName": "SurfaceTorque_sensor_un_acc_s",
+      "DisplayName": "SurfaceTorque_sensor_un_acc_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "SurfaceTorque_sensor_un_prec",
+      "UniqueName": "SurfaceTorque_sensor_un_prec",
+      "DisplayName": "SurfaceTorque_sensor_un_prec",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "SurfaceTorque_sensor_un_prec_s",
+      "UniqueName": "SurfaceTorque_sensor_un_prec_s",
+      "DisplayName": "SurfaceTorque_sensor_un_prec_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "TD",
+      "UniqueName": "TD",
+      "DisplayName": "TD",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Resampling",
+      "BrowseName": "TD_resamp",
+      "UniqueName": "TD_resamp",
+      "DisplayName": "TD_resamp",
+      "Fields": [
+        {
+          "FieldName": "ResamplingDelay",
+          "FieldValue": "0.1"
+        },
+        {
+          "FieldName": "ResamplingRate",
+          "FieldValue": "0.25"
+        }
+      ]
+    },
+    {
+      "TypeDictionaryURI": "MeasurementDevice",
+      "BrowseName": "TD_sensor",
+      "UniqueName": "TD_sensor",
+      "DisplayName": "TD_sensor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "SensorUncertainty",
+      "BrowseName": "TD_sensor_un",
+      "UniqueName": "TD_sensor_un",
+      "DisplayName": "TD_sensor_un",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "TD_sensor_un_acc",
+      "UniqueName": "TD_sensor_un_acc",
+      "DisplayName": "TD_sensor_un_acc",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "TD_sensor_un_acc_s",
+      "UniqueName": "TD_sensor_un_acc_s",
+      "DisplayName": "TD_sensor_un_acc_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "TD_sensor_un_prec",
+      "UniqueName": "TD_sensor_un_prec",
+      "DisplayName": "TD_sensor_un_prec",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingSignal",
+      "BrowseName": "TD_sensor_un_prec_s",
+      "UniqueName": "TD_sensor_un_prec_s",
+      "DisplayName": "TD_sensor_un_prec_s",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DeadLineAnchor",
+      "BrowseName": "deadline",
+      "UniqueName": "deadline",
+      "DisplayName": "deadline",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingDataPoint",
+      "BrowseName": "DW Hookload",
+      "UniqueName": "DWHookload",
+      "DisplayName": "DW Hookload",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrawWorks",
+      "BrowseName": "DrawWorks",
+      "UniqueName": "DrawWorks",
+      "DisplayName": "DrawWorks",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SPP"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/Measurement"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SPP"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "SPP"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SPP"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/SPP"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SPP"
+      },
+      "VerbURI": "http://ddhub.no/IsResampledBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SPP_resamp"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SPP_resamp"
+      },
+      "VerbURI": "http://ddhub.no/IsMeasuredBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SPP_sensor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SPP_sensor"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertainty",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SPP_sensor_un"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SPP_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyAccuracy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SPP_sensor_un_acc"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SPP_sensor_un_acc"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SPP_sensor_un_acc_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SPP_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyPrecision",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SPP_sensor_un_prec"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SPP_sensor_un_prec"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SPP_sensor_un_prec_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/Measurement"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "ActivePit"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit"
+      },
+      "VerbURI": "http://ddhub.no/IsResampledBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit_resamp"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit_resamp"
+      },
+      "VerbURI": "http://ddhub.no/IsMeasuredBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit_sensor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit_sensor"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertainty",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit_sensor_un"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyAccuracy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit_sensor_un_acc"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit_sensor_un_acc"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit_sensor_un_acc_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyPrecision",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit_sensor_un_prec"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit_sensor_un_prec"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "ActivePit_sensor_un_prec_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/Measurement"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "BitDepth"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/BitDepth"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth"
+      },
+      "VerbURI": "http://ddhub.no/IsResampledBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth_resamp"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth_resamp"
+      },
+      "VerbURI": "http://ddhub.no/IsMeasuredBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth_sensor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth_sensor"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertainty",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth_sensor_un"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyAccuracy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth_sensor_un_acc"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth_sensor_un_acc"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth_sensor_un_acc_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyPrecision",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth_sensor_un_prec"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth_sensor_un_prec"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "BitDepth_sensor_un_prec_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/Measurement"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "FlowRateIn"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/FlowRateIn"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn"
+      },
+      "VerbURI": "http://ddhub.no/IsResampledBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn_resamp"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn_resamp"
+      },
+      "VerbURI": "http://ddhub.no/IsMeasuredBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn_sensor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn_sensor"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertainty",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn_sensor_un"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyAccuracy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn_sensor_un_acc"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn_sensor_un_acc"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn_sensor_un_acc_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyPrecision",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn_sensor_un_prec"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn_sensor_un_prec"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateIn_sensor_un_prec_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/Measurement"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "FlowRateOut"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/FlowRateOut"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut"
+      },
+      "VerbURI": "http://ddhub.no/IsResampledBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut_resamp"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut_resamp"
+      },
+      "VerbURI": "http://ddhub.no/IsMeasuredBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut_sensor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut_sensor"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertainty",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut_sensor_un"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyAccuracy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut_sensor_un_acc"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut_sensor_un_acc"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut_sensor_un_acc_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyPrecision",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut_sensor_un_prec"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut_sensor_un_prec"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FlowRateOut_sensor_un_prec_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/Measurement"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "DownholePressure"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/DownholePressure"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure"
+      },
+      "VerbURI": "http://ddhub.no/IsResampledBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure_resamp"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure_resamp"
+      },
+      "VerbURI": "http://ddhub.no/IsMeasuredBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure_sensor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure_sensor"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertainty",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure_sensor_un"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyAccuracy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure_sensor_un_acc"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure_sensor_un_acc"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure_sensor_un_acc_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyPrecision",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure_sensor_un_prec"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure_sensor_un_prec"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DownholePressure_sensor_un_prec_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/Measurement"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "FluidTemperatureOut"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut"
+      },
+      "VerbURI": "http://ddhub.no/IsResampledBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut_resamp"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut_resamp"
+      },
+      "VerbURI": "http://ddhub.no/IsMeasuredBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut_sensor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut_sensor"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertainty",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut_sensor_un"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyAccuracy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut_sensor_un_acc"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut_sensor_un_acc"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut_sensor_un_acc_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyPrecision",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut_sensor_un_prec"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut_sensor_un_prec"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureOut_sensor_un_prec_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/Measurement"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "FluidTemperatureIn"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn"
+      },
+      "VerbURI": "http://ddhub.no/IsResampledBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn_resamp"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn_resamp"
+      },
+      "VerbURI": "http://ddhub.no/IsMeasuredBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn_sensor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn_sensor"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertainty",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn_sensor_un"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyAccuracy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn_sensor_un_acc"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn_sensor_un_acc"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn_sensor_un_acc_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyPrecision",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn_sensor_un_prec"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn_sensor_un_prec"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "FluidTemperatureIn_sensor_un_prec_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/Measurement"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "DownholeECD"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/DownholeECD"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD"
+      },
+      "VerbURI": "http://ddhub.no/IsResampledBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD_resamp"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD_resamp"
+      },
+      "VerbURI": "http://ddhub.no/IsMeasuredBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD_sensor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD_sensor"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertainty",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD_sensor_un"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyAccuracy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD_sensor_un_acc"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD_sensor_un_acc"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD_sensor_un_acc_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyPrecision",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD_sensor_un_prec"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD_sensor_un_prec"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DownholeECD_sensor_un_prec_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "WOB"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/Measurement"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "WOB"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "WOB"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "WOB"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/WOB"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "WOB"
+      },
+      "VerbURI": "http://ddhub.no/IsResampledBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "WOB_resamp"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "WOB_resamp"
+      },
+      "VerbURI": "http://ddhub.no/IsMeasuredBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "WOB_sensor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "WOB_sensor"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertainty",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "WOB_sensor_un"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "WOB_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyAccuracy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "WOB_sensor_un_acc"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "WOB_sensor_un_acc"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "WOB_sensor_un_acc_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "WOB_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyPrecision",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "WOB_sensor_un_prec"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "WOB_sensor_un_prec"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "WOB_sensor_un_prec_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/Measurement"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "HookLoad"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/HookLoad"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad"
+      },
+      "VerbURI": "http://ddhub.no/IsResampledBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad_resamp"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad_resamp"
+      },
+      "VerbURI": "http://ddhub.no/IsMeasuredBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad_sensor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad_sensor"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertainty",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad_sensor_un"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyAccuracy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad_sensor_un_acc"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad_sensor_un_acc"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad_sensor_un_acc_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyPrecision",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad_sensor_un_prec"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad_sensor_un_prec"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad_sensor_un_prec_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/Measurement"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "SurfaceRPM"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/SurfaceRPM"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM"
+      },
+      "VerbURI": "http://ddhub.no/IsResampledBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM_resamp"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM_resamp"
+      },
+      "VerbURI": "http://ddhub.no/IsMeasuredBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM_sensor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM_sensor"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertainty",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM_sensor_un"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyAccuracy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM_sensor_un_acc"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM_sensor_un_acc"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM_sensor_un_acc_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyPrecision",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM_sensor_un_prec"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM_sensor_un_prec"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceRPM_sensor_un_prec_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/Measurement"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "SurfaceTorque"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/SurfaceTorque"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque"
+      },
+      "VerbURI": "http://ddhub.no/IsResampledBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque_resamp"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque_resamp"
+      },
+      "VerbURI": "http://ddhub.no/IsMeasuredBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque_sensor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque_sensor"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertainty",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque_sensor_un"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyAccuracy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque_sensor_un_acc"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque_sensor_un_acc"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque_sensor_un_acc_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyPrecision",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque_sensor_un_prec"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque_sensor_un_prec"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "SurfaceTorque_sensor_un_prec_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "TD"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/Measurement"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "TD"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "TD"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "TD"
+      },
+      "VerbURI": "http://ddhub.no/IsResampledBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "TD_resamp"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "TD_resamp"
+      },
+      "VerbURI": "http://ddhub.no/IsMeasuredBy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "TD_sensor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "TD_sensor"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertainty",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "TD_sensor_un"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "TD_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyAccuracy",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "TD_sensor_un_acc"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "TD_sensor_un_acc"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "TD_sensor_un_acc_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "TD_sensor_un"
+      },
+      "VerbURI": "http://ddhub.no/HasUncertaintyPrecision",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "TD_sensor_un_prec"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "TD_sensor_un_prec"
+      },
+      "VerbURI": "http://ddhub.no/HasStaticValue",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "TD_sensor_un_prec_s"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "HookLoad"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyLocatedAt",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "deadline"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DWHookload"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "Variables",
+        "ID": "DWHookloadsignal"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DWHookload"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/HookLoad"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "openLAB",
+        "ID": "DWHookload"
+      },
+      "VerbURI": "http://ddhub.no/IsMechanicallyLocatedAt",
+      "Object": {
+        "NameSpace": "openLAB",
+        "ID": "DrawWorks"
+      }
+    }
+  ],
+  "ProvidedVariables": null
+}
