@@ -1,0 +1,148 @@
+{
+  "status": 200,
+  "manifestId": "ModelVendor/well-a-transient-model",
+  "accepted": true,
+  "vocabularyVersion": "2026-10-14",
+  "counts": {
+    "errors": 0,
+    "warnings": 10,
+    "infos": 6
+  },
+  "live": {
+    "core": true,
+    "rest": true
+  },
+  "findings": [
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "belongs-to-class-used",
+      "message": "7 references use BelongsToClass, the deprecated form of a class assertion; rdf:type is preferred."
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/ModelVendor/annulusAverageFrictionCoefficient#01> is asserted to be both a ComputedData and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/ModelVendor/annulusAverageFrictionCoefficient#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/ComputedData, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/ModelVendor/annulusECDAtClosestFracturePressure#01> is asserted to be both a ComputedData and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/ModelVendor/annulusECDAtClosestFracturePressure#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/ComputedData, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/ModelVendor/annulusECDAtClosestPorePressure#01> is asserted to be both a ComputedData and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/ModelVendor/annulusECDAtClosestPorePressure#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/ComputedData, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/ModelVendor/fracturePressureEquivalentDensityAtWeakestDepth#01> is asserted to be both a ComputedData and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/ModelVendor/fracturePressureEquivalentDensityAtWeakestDepth#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/ComputedData, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/ModelVendor/porePressureEquivalentDensityAtWeakestDepth#01> is asserted to be both a ComputedData and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/ModelVendor/porePressureEquivalentDensityAtWeakestDepth#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/ComputedData, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/ModelVendor/Variables/ModelVendor.annulusAverageFrictionCoefficient_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/ModelVendor/Variables/ModelVendor.annulusECDAtClosestFracturePressure_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/ModelVendor/Variables/ModelVendor.annulusECDAtClosestPorePressure_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/ModelVendor/Variables/ModelVendor.fracturePressureEquivalentDensityAtWeakestDepth_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/ModelVendor/Variables/ModelVendor.porePressureEquivalentDensityAtWeakestDepth_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'annulusAverageFrictionCoefficient_validitySignal' added for variable 'annulusAverageFrictionCoefficient'.",
+      "focus": "annulusAverageFrictionCoefficient"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'annulusECDAtClosestFracturePressure_validitySignal' added for variable 'annulusECDAtClosestFracturePressure'.",
+      "focus": "annulusECDAtClosestFracturePressure"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'annulusECDAtClosestPorePressure_validitySignal' added for variable 'annulusECDAtClosestPorePressure'.",
+      "focus": "annulusECDAtClosestPorePressure"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'fracturePressureEquivalentDensityAtWeakestDepth_validitySignal' added for variable 'fracturePressureEquivalentDensityAtWeakestDepth'.",
+      "focus": "fracturePressureEquivalentDensityAtWeakestDepth"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'porePressureEquivalentDensityAtWeakestDepth_validitySignal' added for variable 'porePressureEquivalentDensityAtWeakestDepth'.",
+      "focus": "porePressureEquivalentDensityAtWeakestDepth"
+    }
+  ]
+}

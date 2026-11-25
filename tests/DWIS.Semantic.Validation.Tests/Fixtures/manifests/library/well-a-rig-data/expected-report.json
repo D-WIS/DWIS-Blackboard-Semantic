@@ -1,0 +1,700 @@
+{
+  "status": 200,
+  "manifestId": "WellARig/well-a-real-time-rig-data",
+  "accepted": true,
+  "vocabularyVersion": "2026-10-14",
+  "counts": {
+    "errors": 0,
+    "warnings": 55,
+    "infos": 27
+  },
+  "live": {
+    "core": true,
+    "rest": true
+  },
+  "findings": [
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "belongs-to-class-used",
+      "message": "40 references use BelongsToClass, the deprecated form of a class assertion; rdf:type is preferred."
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/activePitVolumeChange#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/activePitVolumeChange#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/bitAzimuth#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/bitAzimuth#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/bitDepth#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/bitDepth#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/bitInclination#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/bitInclination#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/downholeECD#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/downholeECD#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/downholeTemperature#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/downholeTemperature#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "commit",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/drillingBit#01> is asserted to be both a DrillingBit and a Location, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/drillingBit#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/DrillingBit, http://d-wis.org/Location"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/flowRateIn#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/flowRateIn#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/gasC1#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/gasC1#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/gasC2#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/gasC2#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/gasC3#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/gasC3#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/gasIC4#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/gasIC4#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/gasIC5#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/gasIC5#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/gasNC4#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/gasNC4#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/gasNC5#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/gasNC5#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/holeDepth#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/holeDepth#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/hookLoad#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/hookLoad#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/hookPosition#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/hookPosition#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/returnsDepth#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/returnsDepth#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/rop#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/rop#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/spp#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/spp#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/surfaceRPM#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/surfaceRPM#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/surfaceTorque#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/surfaceTorque#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/totalGas#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/totalGas#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/tripTank1Volume#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/tripTank1Volume#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/tripTank2Volume#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/tripTank2Volume#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "disjoint-classes",
+      "message": "<http://d-wis.org/WellARig/wob#01> is asserted to be both a Measurement and a ContinuousDataType, which are disjoint.",
+      "focus": "http://d-wis.org/WellARig/wob#01",
+      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "range-mismatch",
+      "message": "<http://d-wis.org/WellARig/bitAzimuth#01> <http://d-wis.org/IsPhysicallyLocatedAt> <http://d-wis.org/WellARig/drillingBit#01>: the object is not a Location (it is DrillingBit).",
+      "focus": "http://d-wis.org/WellARig/bitAzimuth#01",
+      "path": "http://d-wis.org/IsPhysicallyLocatedAt",
+      "value": "http://d-wis.org/WellARig/drillingBit#01"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "range-mismatch",
+      "message": "<http://d-wis.org/WellARig/bitInclination#01> <http://d-wis.org/IsPhysicallyLocatedAt> <http://d-wis.org/WellARig/drillingBit#01>: the object is not a Location (it is DrillingBit).",
+      "focus": "http://d-wis.org/WellARig/bitInclination#01",
+      "path": "http://d-wis.org/IsPhysicallyLocatedAt",
+      "value": "http://d-wis.org/WellARig/drillingBit#01"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.activePitVolumeChange_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.bitAzimuth_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.bitDepth_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.bitInclination_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.downholeECD_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.downholeTemperature_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.flowRateIn_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.gasC1_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.gasC2_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.gasC3_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.gasIC4_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.gasIC5_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.gasNC4_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.gasNC5_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.holeDepth_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.hookLoad_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.hookPosition_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.returnsDepth_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.rop_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.spp_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.surfaceRPM_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.surfaceTorque_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.totalGas_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.tripTank1Volume_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.tripTank2Volume_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/WellARig/Variables/WellARig.wob_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'activePitVolumeChange_validitySignal' added for variable 'activePitVolumeChange'.",
+      "focus": "activePitVolumeChange"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'bitAzimuth_validitySignal' added for variable 'bitAzimuth'.",
+      "focus": "bitAzimuth"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'bitDepth_validitySignal' added for variable 'bitDepth'.",
+      "focus": "bitDepth"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'bitInclination_validitySignal' added for variable 'bitInclination'.",
+      "focus": "bitInclination"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'downholeECD_validitySignal' added for variable 'downholeECD'.",
+      "focus": "downholeECD"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'downholeTemperature_validitySignal' added for variable 'downholeTemperature'.",
+      "focus": "downholeTemperature"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'flowRateIn_validitySignal' added for variable 'flowRateIn'.",
+      "focus": "flowRateIn"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'gasC1_validitySignal' added for variable 'gasC1'.",
+      "focus": "gasC1"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'gasC2_validitySignal' added for variable 'gasC2'.",
+      "focus": "gasC2"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'gasC3_validitySignal' added for variable 'gasC3'.",
+      "focus": "gasC3"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'gasIC4_validitySignal' added for variable 'gasIC4'.",
+      "focus": "gasIC4"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'gasIC5_validitySignal' added for variable 'gasIC5'.",
+      "focus": "gasIC5"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'gasNC4_validitySignal' added for variable 'gasNC4'.",
+      "focus": "gasNC4"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'gasNC5_validitySignal' added for variable 'gasNC5'.",
+      "focus": "gasNC5"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'holeDepth_validitySignal' added for variable 'holeDepth'.",
+      "focus": "holeDepth"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'hookLoad_validitySignal' added for variable 'hookLoad'.",
+      "focus": "hookLoad"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'hookPosition_validitySignal' added for variable 'hookPosition'.",
+      "focus": "hookPosition"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'returnsDepth_validitySignal' added for variable 'returnsDepth'.",
+      "focus": "returnsDepth"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'rop_validitySignal' added for variable 'rop'.",
+      "focus": "rop"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'spp_validitySignal' added for variable 'spp'.",
+      "focus": "spp"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'surfaceRPM_validitySignal' added for variable 'surfaceRPM'.",
+      "focus": "surfaceRPM"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'surfaceTorque_validitySignal' added for variable 'surfaceTorque'.",
+      "focus": "surfaceTorque"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'totalGas_validitySignal' added for variable 'totalGas'.",
+      "focus": "totalGas"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'tripTank1Volume_validitySignal' added for variable 'tripTank1Volume'.",
+      "focus": "tripTank1Volume"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'tripTank2Volume_validitySignal' added for variable 'tripTank2Volume'.",
+      "focus": "tripTank2Volume"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'wob_validitySignal' added for variable 'wob'.",
+      "focus": "wob"
+    }
+  ]
+}

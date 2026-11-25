@@ -1,0 +1,1163 @@
+{
+  "status": 200,
+  "manifestId": "openLAB/openlab-rig-signals",
+  "accepted": false,
+  "vocabularyVersion": "2026-10-14",
+  "counts": {
+    "errors": 1,
+    "warnings": 100,
+    "infos": 34
+  },
+  "live": {
+    "core": true,
+    "rest": false
+  },
+  "findings": [
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "belongs-to-class-used",
+      "message": "56 references use BelongsToClass, the deprecated form of a class assertion; rdf:type is preferred."
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "error",
+      "code": "dangling-reference",
+      "message": "<http://d-wis.org/openLAB/BitReferenceFrame> refers through <http://d-wis.org/HasReferenceFrameOrigin> to <http://d-wis.org/openLAB/BitLocation>, which exists neither in the manifest nor in the store.",
+      "focus": "http://d-wis.org/openLAB/BitReferenceFrame",
+      "path": "http://d-wis.org/HasReferenceFrameOrigin",
+      "value": "http://d-wis.org/openLAB/BitLocation"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/AnnulusPressure> uses <http://d-wis.org/HasCoordinates> but is not a Location (it is DownholePressure, DrillingDataPoint, Measurement).",
+      "focus": "http://d-wis.org/openLAB/AnnulusPressure",
+      "path": "http://d-wis.org/HasCoordinates",
+      "value": "http://d-wis.org/Location"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/AnnulusPressureASMLocation> uses <http://d-wis.org/HasReferenceFrame> but is not a DrillingDataPoint (it is Location).",
+      "focus": "http://d-wis.org/openLAB/AnnulusPressureASMLocation",
+      "path": "http://d-wis.org/HasReferenceFrame",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/AnnulusPressure_resampling> uses <http://d-wis.org/IsTransmissionOutput> but is not a DrillingDataPoint (it is Resampling).",
+      "focus": "http://d-wis.org/openLAB/AnnulusPressure_resampling",
+      "path": "http://d-wis.org/IsTransmissionOutput",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/AnnulusPressure_telemetry> uses <http://d-wis.org/HasTransmissionDelay> but is not a DrillingDataPoint (it is TransmissionLine).",
+      "focus": "http://d-wis.org/openLAB/AnnulusPressure_telemetry",
+      "path": "http://d-wis.org/HasTransmissionDelay",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/AnnulusPressure_telemetry> uses <http://d-wis.org/IsTransformationOutput> but is not a DrillingDataPoint (it is TransmissionLine).",
+      "focus": "http://d-wis.org/openLAB/AnnulusPressure_telemetry",
+      "path": "http://d-wis.org/IsTransformationOutput",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/AnnulusTemperature> uses <http://d-wis.org/HasCoordinates> but is not a Location (it is DownholeTemperature, DrillingDataPoint, Measurement).",
+      "focus": "http://d-wis.org/openLAB/AnnulusTemperature",
+      "path": "http://d-wis.org/HasCoordinates",
+      "value": "http://d-wis.org/Location"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/AnnulusTemperatureASMLocation> uses <http://d-wis.org/HasReferenceFrame> but is not a DrillingDataPoint (it is Location).",
+      "focus": "http://d-wis.org/openLAB/AnnulusTemperatureASMLocation",
+      "path": "http://d-wis.org/HasReferenceFrame",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/AnnulusTemperature_resampling> uses <http://d-wis.org/IsTransmissionOutput> but is not a DrillingDataPoint (it is Resampling).",
+      "focus": "http://d-wis.org/openLAB/AnnulusTemperature_resampling",
+      "path": "http://d-wis.org/IsTransmissionOutput",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/AnnulusTemperature_telemetry> uses <http://d-wis.org/HasTransmissionDelay> but is not a DrillingDataPoint (it is TransmissionLine).",
+      "focus": "http://d-wis.org/openLAB/AnnulusTemperature_telemetry",
+      "path": "http://d-wis.org/HasTransmissionDelay",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/AnnulusTemperature_telemetry> uses <http://d-wis.org/IsTransformationOutput> but is not a DrillingDataPoint (it is TransmissionLine).",
+      "focus": "http://d-wis.org/openLAB/AnnulusTemperature_telemetry",
+      "path": "http://d-wis.org/IsTransformationOutput",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/BitAxialAcceleration_resampling> uses <http://d-wis.org/IsTransmissionOutput> but is not a DrillingDataPoint (it is Resampling).",
+      "focus": "http://d-wis.org/openLAB/BitAxialAcceleration_resampling",
+      "path": "http://d-wis.org/IsTransmissionOutput",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/BitAxialAcceleration_telemetry> uses <http://d-wis.org/HasTransmissionDelay> but is not a DrillingDataPoint (it is TransmissionLine).",
+      "focus": "http://d-wis.org/openLAB/BitAxialAcceleration_telemetry",
+      "path": "http://d-wis.org/HasTransmissionDelay",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/BitAxialAcceleration_telemetry> uses <http://d-wis.org/IsTransformationOutput> but is not a DrillingDataPoint (it is TransmissionLine).",
+      "focus": "http://d-wis.org/openLAB/BitAxialAcceleration_telemetry",
+      "path": "http://d-wis.org/IsTransformationOutput",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/BitRotationalAcceleration_resampling> uses <http://d-wis.org/IsTransmissionOutput> but is not a DrillingDataPoint (it is Resampling).",
+      "focus": "http://d-wis.org/openLAB/BitRotationalAcceleration_resampling",
+      "path": "http://d-wis.org/IsTransmissionOutput",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/BitRotationalAcceleration_telemetry> uses <http://d-wis.org/HasTransmissionDelay> but is not a DrillingDataPoint (it is TransmissionLine).",
+      "focus": "http://d-wis.org/openLAB/BitRotationalAcceleration_telemetry",
+      "path": "http://d-wis.org/HasTransmissionDelay",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/BitRotationalAcceleration_telemetry> uses <http://d-wis.org/IsTransformationOutput> but is not a DrillingDataPoint (it is TransmissionLine).",
+      "focus": "http://d-wis.org/openLAB/BitRotationalAcceleration_telemetry",
+      "path": "http://d-wis.org/IsTransformationOutput",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/BitRotationalVelocity_resampling> uses <http://d-wis.org/IsTransmissionOutput> but is not a DrillingDataPoint (it is Resampling).",
+      "focus": "http://d-wis.org/openLAB/BitRotationalVelocity_resampling",
+      "path": "http://d-wis.org/IsTransmissionOutput",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/BitRotationalVelocity_telemetry> uses <http://d-wis.org/HasTransmissionDelay> but is not a DrillingDataPoint (it is TransmissionLine).",
+      "focus": "http://d-wis.org/openLAB/BitRotationalVelocity_telemetry",
+      "path": "http://d-wis.org/HasTransmissionDelay",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/BitRotationalVelocity_telemetry> uses <http://d-wis.org/IsTransformationOutput> but is not a DrillingDataPoint (it is TransmissionLine).",
+      "focus": "http://d-wis.org/openLAB/BitRotationalVelocity_telemetry",
+      "path": "http://d-wis.org/IsTransformationOutput",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/DownholePressure_WP_resampling> uses <http://d-wis.org/IsTransmissionOutput> but is not a DrillingDataPoint (it is Resampling).",
+      "focus": "http://d-wis.org/openLAB/DownholePressure_WP_resampling",
+      "path": "http://d-wis.org/IsTransmissionOutput",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/DownholePressure_WP_telemetry> uses <http://d-wis.org/HasTransmissionDelay> but is not a DrillingDataPoint (it is TransmissionLine).",
+      "focus": "http://d-wis.org/openLAB/DownholePressure_WP_telemetry",
+      "path": "http://d-wis.org/HasTransmissionDelay",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/DownholePressure_WP_telemetry> uses <http://d-wis.org/IsTransformationOutput> but is not a DrillingDataPoint (it is TransmissionLine).",
+      "focus": "http://d-wis.org/openLAB/DownholePressure_WP_telemetry",
+      "path": "http://d-wis.org/IsTransformationOutput",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/DownholePressure_resampling> uses <http://d-wis.org/IsTransmissionOutput> but is not a DrillingDataPoint (it is Resampling).",
+      "focus": "http://d-wis.org/openLAB/DownholePressure_resampling",
+      "path": "http://d-wis.org/IsTransmissionOutput",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/DownholePressure_telemetry> uses <http://d-wis.org/HasTransmissionDelay> but is not a DrillingDataPoint (it is TransmissionLine).",
+      "focus": "http://d-wis.org/openLAB/DownholePressure_telemetry",
+      "path": "http://d-wis.org/HasTransmissionDelay",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "domain-mismatch",
+      "message": "<http://d-wis.org/openLAB/DownholePressure_telemetry> uses <http://d-wis.org/IsTransformationOutput> but is not a DrillingDataPoint (it is TransmissionLine).",
+      "focus": "http://d-wis.org/openLAB/DownholePressure_telemetry",
+      "path": "http://d-wis.org/IsTransformationOutput",
+      "value": "http://d-wis.org/DrillingDataPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/AnnulusPressure_telemetry_delay_signal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/AnnulusPressurelocation_var",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/AnnulusTemperature_telemetry_delay_signal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/AnnulusTemperaturelocation_var",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/BitAxialAcceleration_telemetry_delay_signal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/BitRotationalAcceleration_telemetry_delay_signal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/BitRotationalVelocity_telemetry_delay_signal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/DownholePressure_WP_telemetry_delay_signal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/DownholePressure_telemetry_delay_signal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.ActivePitDensity",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.ActivePitDensity_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.ActivePitTemperature",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.ActivePitTemperature_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.ActivePitVolume",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.ActivePitVolume_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.AnnulusPressure",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.AnnulusPressure_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.AnnulusTemperature",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.AnnulusTemperature_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.BOPOpeningSetPoint",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.BOPOpeningSetPoint_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.BitAxialAcceleration",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.BitAxialAcceleration_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.BitDepth",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.BitDepth_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.BitRotationalAcceleration",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.BitRotationalAcceleration_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.BitRotationalVelocity",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.BitRotationalVelocity_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.BopChokeOpening",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.BopChokeOpening_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.BopChokePressure",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.BopChokePressure_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.ChokeOpening",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.ChokeOpeningSetPoint",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.ChokeOpeningSetPoint_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.ChokeOpening_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.ChokePressure",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.ChokePressure_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.DownholeECD",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.DownholeECD_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.DownholePressure",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.DownholePressure_WP",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.DownholePressure_WP_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.DownholePressure_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.FlowRateIn",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.FlowRateInSetPoint",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.FlowRateInSetPoint_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.FlowRateIn_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.FlowRateOut",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.FlowRateOut_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.GasFlowRateOut",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.GasFlowRateOut_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.HookLoad",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.HookLoad_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.HookPosition",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.HookPosition_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.HookVelocity",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.HookVelocity_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.InstantaneousROP",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.InstantaneousROP_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.SPP",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.SPP_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.SurfaceRPM",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.SurfaceRPMSetPoint",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.SurfaceRPMSetPoint_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.SurfaceRPM_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.SurfaceTorque",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.SurfaceTorque_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.TD",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.TD_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.TopOfStringVelocitySetPoint",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.TopOfStringVelocitySetPoint_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.WOB",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "warning",
+      "code": "shacl",
+      "message": "A DrillingSignal must have exactly one HasUnitOfMeasure.@en",
+      "focus": "http://d-wis.org/openLAB/Variables/openLAB.WOB_validitySignal",
+      "path": "http://d-wis.org/HasUnitOfMeasure",
+      "source": "http://d-wis.org/shapes/DrillingSignalShape"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'ActivePitDensity_validitySignal' added for variable 'ActivePitDensity'.",
+      "focus": "ActivePitDensity"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'ActivePitTemperature_validitySignal' added for variable 'ActivePitTemperature'.",
+      "focus": "ActivePitTemperature"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'ActivePitVolume_validitySignal' added for variable 'ActivePitVolume'.",
+      "focus": "ActivePitVolume"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'AnnulusPressure_validitySignal' added for variable 'AnnulusPressure'.",
+      "focus": "AnnulusPressure"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'AnnulusTemperature_validitySignal' added for variable 'AnnulusTemperature'.",
+      "focus": "AnnulusTemperature"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'BOPOpeningSetPoint_validitySignal' added for variable 'BOPOpeningSetPoint'.",
+      "focus": "BOPOpeningSetPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'BitAxialAcceleration_validitySignal' added for variable 'BitAxialAcceleration'.",
+      "focus": "BitAxialAcceleration"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'BitDepth_validitySignal' added for variable 'BitDepth'.",
+      "focus": "BitDepth"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'BitRotationalAcceleration_validitySignal' added for variable 'BitRotationalAcceleration'.",
+      "focus": "BitRotationalAcceleration"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'BitRotationalVelocity_validitySignal' added for variable 'BitRotationalVelocity'.",
+      "focus": "BitRotationalVelocity"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'BopChokeOpening_validitySignal' added for variable 'BopChokeOpening'.",
+      "focus": "BopChokeOpening"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'BopChokePressure_validitySignal' added for variable 'BopChokePressure'.",
+      "focus": "BopChokePressure"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'ChokeOpening_validitySignal' added for variable 'ChokeOpening'.",
+      "focus": "ChokeOpening"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'ChokeOpeningSetPoint_validitySignal' added for variable 'ChokeOpeningSetPoint'.",
+      "focus": "ChokeOpeningSetPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'ChokePressure_validitySignal' added for variable 'ChokePressure'.",
+      "focus": "ChokePressure"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'DownholeECD_validitySignal' added for variable 'DownholeECD'.",
+      "focus": "DownholeECD"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'DownholePressure_validitySignal' added for variable 'DownholePressure'.",
+      "focus": "DownholePressure"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'DownholePressure_WP_validitySignal' added for variable 'DownholePressure_WP'.",
+      "focus": "DownholePressure_WP"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'FlowRateIn_validitySignal' added for variable 'FlowRateIn'.",
+      "focus": "FlowRateIn"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'FlowRateInSetPoint_validitySignal' added for variable 'FlowRateInSetPoint'.",
+      "focus": "FlowRateInSetPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'FlowRateOut_validitySignal' added for variable 'FlowRateOut'.",
+      "focus": "FlowRateOut"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'GasFlowRateOut_validitySignal' added for variable 'GasFlowRateOut'.",
+      "focus": "GasFlowRateOut"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'HookLoad_validitySignal' added for variable 'HookLoad'.",
+      "focus": "HookLoad"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'HookPosition_validitySignal' added for variable 'HookPosition'.",
+      "focus": "HookPosition"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'HookVelocity_validitySignal' added for variable 'HookVelocity'.",
+      "focus": "HookVelocity"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'InstantaneousROP_validitySignal' added for variable 'InstantaneousROP'.",
+      "focus": "InstantaneousROP"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'SPP_validitySignal' added for variable 'SPP'.",
+      "focus": "SPP"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'SurfaceRPM_validitySignal' added for variable 'SurfaceRPM'.",
+      "focus": "SurfaceRPM"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'SurfaceRPMSetPoint_validitySignal' added for variable 'SurfaceRPMSetPoint'.",
+      "focus": "SurfaceRPMSetPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'SurfaceTorque_validitySignal' added for variable 'SurfaceTorque'.",
+      "focus": "SurfaceTorque"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'TD_validitySignal' added for variable 'TD'.",
+      "focus": "TD"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'TopOfStringVelocitySetPoint_validitySignal' added for variable 'TopOfStringVelocitySetPoint'.",
+      "focus": "TopOfStringVelocitySetPoint"
+    },
+    {
+      "stage": "preprocessing",
+      "severity": "info",
+      "code": "validity-flag-added",
+      "message": "Validity flag 'WOB_validitySignal' added for variable 'WOB'.",
+      "focus": "WOB"
+    }
+  ]
+}

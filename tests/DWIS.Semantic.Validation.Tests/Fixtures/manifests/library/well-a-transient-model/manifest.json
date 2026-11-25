@@ -1,0 +1,460 @@
+{
+  "ManifestName": "Well A transient model",
+  "Provider": {
+    "Name": "ModelVendor",
+    "Company": "ModelVendor"
+  },
+  "InjectionInformation": {
+    "ServerName": null,
+    "EndPointURL": null,
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "Variables",
+    "InjectedNodesNamespaceAlias": "Nodes",
+    "ProvidedVariablesNamespaceAlias": "ProvidedVariables",
+    "InjectedVocabularyNamespaceAlias": "Vocabulary"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "ComputedData",
+      "BrowseName": "annulusAverageFrictionCoefficient#01",
+      "UniqueName": "annulusAverageFrictionCoefficient#01",
+      "DisplayName": "annulusAverageFrictionCoefficient#01",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "ComputationUnit",
+      "BrowseName": "modelVendorTransientModel",
+      "UniqueName": "modelVendorTransientModel",
+      "DisplayName": "modelVendorTransientModel",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DrillingAnalyticsAutomationCompany",
+      "BrowseName": "modelVendor",
+      "UniqueName": "modelVendor",
+      "DisplayName": "modelVendor",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "ComputedData",
+      "BrowseName": "annulusECDAtClosestFracturePressure#01",
+      "UniqueName": "annulusECDAtClosestFracturePressure#01",
+      "DisplayName": "annulusECDAtClosestFracturePressure#01",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "ComputedData",
+      "BrowseName": "annulusECDAtClosestPorePressure#01",
+      "UniqueName": "annulusECDAtClosestPorePressure#01",
+      "DisplayName": "annulusECDAtClosestPorePressure#01",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "ComputedData",
+      "BrowseName": "fracturePressureEquivalentDensityAtWeakestDepth#01",
+      "UniqueName": "fracturePressureEquivalentDensityAtWeakestDepth#01",
+      "DisplayName": "fracturePressureEquivalentDensityAtWeakestDepth#01",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "ComputedData",
+      "BrowseName": "porePressureEquivalentDensityAtWeakestDepth#01",
+      "UniqueName": "porePressureEquivalentDensityAtWeakestDepth#01",
+      "DisplayName": "porePressureEquivalentDensityAtWeakestDepth#01",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusAverageFrictionCoefficient#01"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/ContinuousDataType"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusAverageFrictionCoefficient#01"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/AnnularHydraulicFrictionCoefficient"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusECDAtClosestFracturePressure#01"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/ContinuousDataType"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusECDAtClosestPorePressure#01"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/ContinuousDataType"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "fracturePressureEquivalentDensityAtWeakestDepth#01"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/ContinuousDataType"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "porePressureEquivalentDensityAtWeakestDepth#01"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/ContinuousDataType"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "porePressureEquivalentDensityAtWeakestDepth#01"
+      },
+      "VerbURI": "http://ddhub.no/BelongsToClass",
+      "Object": {
+        "NameSpace": "http://ddhub.no/",
+        "ID": "http://ddhub.no/PorePressure"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusAverageFrictionCoefficient#01"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "ProvidedVariables",
+        "ID": "annulusAverageFrictionCoefficient"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusAverageFrictionCoefficient#01"
+      },
+      "VerbURI": "http://ddhub.no/IsComputedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "modelVendorTransientModel"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusAverageFrictionCoefficient#01"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "modelVendor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusECDAtClosestFracturePressure#01"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "ProvidedVariables",
+        "ID": "annulusECDAtClosestFracturePressure"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusECDAtClosestFracturePressure#01"
+      },
+      "VerbURI": "http://ddhub.no/IsComputedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "modelVendorTransientModel"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusECDAtClosestFracturePressure#01"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "modelVendor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusECDAtClosestPorePressure#01"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "ProvidedVariables",
+        "ID": "annulusECDAtClosestPorePressure"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusECDAtClosestPorePressure#01"
+      },
+      "VerbURI": "http://ddhub.no/IsComputedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "modelVendorTransientModel"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusECDAtClosestPorePressure#01"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "modelVendor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "fracturePressureEquivalentDensityAtWeakestDepth#01"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "ProvidedVariables",
+        "ID": "fracturePressureEquivalentDensityAtWeakestDepth"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "fracturePressureEquivalentDensityAtWeakestDepth#01"
+      },
+      "VerbURI": "http://ddhub.no/IsComputedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "modelVendorTransientModel"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "fracturePressureEquivalentDensityAtWeakestDepth#01"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "modelVendor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "porePressureEquivalentDensityAtWeakestDepth#01"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "ProvidedVariables",
+        "ID": "porePressureEquivalentDensityAtWeakestDepth"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "porePressureEquivalentDensityAtWeakestDepth#01"
+      },
+      "VerbURI": "http://ddhub.no/IsComputedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "modelVendorTransientModel"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "porePressureEquivalentDensityAtWeakestDepth#01"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedBy",
+      "Object": {
+        "NameSpace": "Nodes",
+        "ID": "modelVendor"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusAverageFrictionCoefficient#01"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "http://ddhub.no/UnitAndQuantity/",
+        "ID": "DimensionLessStandardQuantity"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "ProvidedVariables",
+        "ID": "annulusAverageFrictionCoefficient"
+      },
+      "VerbURI": "http://ddhub.no/HasUnitOfMeasure",
+      "Object": {
+        "NameSpace": "http://ddhub.no/UnitAndQuantity/",
+        "ID": "Dimensionless"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusECDAtClosestFracturePressure#01"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "http://ddhub.no/UnitAndQuantity/",
+        "ID": "MassDensityDrillingQuantity"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "ProvidedVariables",
+        "ID": "annulusECDAtClosestFracturePressure"
+      },
+      "VerbURI": "http://ddhub.no/HasUnitOfMeasure",
+      "Object": {
+        "NameSpace": "http://ddhub.no/UnitAndQuantity/",
+        "ID": "KilogramPerCubicMetre"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "annulusECDAtClosestPorePressure#01"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "http://ddhub.no/UnitAndQuantity/",
+        "ID": "MassDensityDrillingQuantity"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "ProvidedVariables",
+        "ID": "annulusECDAtClosestPorePressure"
+      },
+      "VerbURI": "http://ddhub.no/HasUnitOfMeasure",
+      "Object": {
+        "NameSpace": "http://ddhub.no/UnitAndQuantity/",
+        "ID": "KilogramPerCubicMetre"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "fracturePressureEquivalentDensityAtWeakestDepth#01"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "http://ddhub.no/UnitAndQuantity/",
+        "ID": "MassDensityDrillingQuantity"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "ProvidedVariables",
+        "ID": "fracturePressureEquivalentDensityAtWeakestDepth"
+      },
+      "VerbURI": "http://ddhub.no/HasUnitOfMeasure",
+      "Object": {
+        "NameSpace": "http://ddhub.no/UnitAndQuantity/",
+        "ID": "KilogramPerCubicMetre"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "Nodes",
+        "ID": "porePressureEquivalentDensityAtWeakestDepth#01"
+      },
+      "VerbURI": "http://ddhub.no/IsOfMeasurableQuantity",
+      "Object": {
+        "NameSpace": "http://ddhub.no/UnitAndQuantity/",
+        "ID": "MassDensityDrillingQuantity"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "ProvidedVariables",
+        "ID": "porePressureEquivalentDensityAtWeakestDepth"
+      },
+      "VerbURI": "http://ddhub.no/HasUnitOfMeasure",
+      "Object": {
+        "NameSpace": "http://ddhub.no/UnitAndQuantity/",
+        "ID": "KilogramPerCubicMetre"
+      }
+    }
+  ],
+  "ProvidedVariables": [
+    {
+      "VariableID": "annulusAverageFrictionCoefficient",
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": "double",
+      "InitialValue": ""
+    },
+    {
+      "VariableID": "annulusECDAtClosestFracturePressure",
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": "double",
+      "InitialValue": ""
+    },
+    {
+      "VariableID": "annulusECDAtClosestPorePressure",
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": "double",
+      "InitialValue": ""
+    },
+    {
+      "VariableID": "fracturePressureEquivalentDensityAtWeakestDepth",
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": "double",
+      "InitialValue": ""
+    },
+    {
+      "VariableID": "porePressureEquivalentDensityAtWeakestDepth",
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": "double",
+      "InitialValue": ""
+    }
+  ],
+  "InjectedVocabulary": null
+}

@@ -31,6 +31,11 @@ public sealed class HostFixture : IAsyncLifetime
         "small/smartconnect-01.manifest.json",
         "small/smartconnect-02.manifest.json",
         "small/smartconnect-03.manifest.json",
+        // The four accepted manifests of the library (the 2023 one has no manifest name and never goes live).
+        "library/norce-digital-twin/manifest.json",
+        "library/openlab-rig-signals/manifest.json",
+        "library/well-a-rig-data/manifest.json",
+        "library/well-a-transient-model/manifest.json",
     ];
     private readonly FusekiFixture _fuseki = new();
     private WebApplicationFactory<Program>? _factory;

@@ -1,0 +1,84 @@
+{
+  "ManifestName": "NORCE Digital Twin",
+  "Provider": {
+    "Name": "NORCEDT",
+    "Company": "NORCE"
+  },
+  "InjectionInformation": {
+    "ServerName": "sourceserver",
+    "EndPointURL": "",
+    "PublishingIntervalInMS": 0.0,
+    "InjectedVariablesNamespaceAlias": "variables",
+    "InjectedNodesNamespaceAlias": "nodes",
+    "ProvidedVariablesNamespaceAlias": "providedNodes",
+    "InjectedVocabularyNamespaceAlias": "Vocabulary"
+  },
+  "InjectedVariables": [],
+  "InjectedNodes": [
+    {
+      "TypeDictionaryURI": "DigitalTwinAdvice",
+      "BrowseName": "DigitalTwinSignalsForMicroStates#01",
+      "UniqueName": "DigitalTwinSignalsForMicroStates#01",
+      "DisplayName": "DigitalTwinSignalsForMicroStates#01",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "Simulator",
+      "BrowseName": "DigitalTwin",
+      "UniqueName": "DigitalTwin",
+      "DisplayName": "DigitalTwin",
+      "Fields": null
+    },
+    {
+      "TypeDictionaryURI": "DWISDrillingProcessStateInterpreter",
+      "BrowseName": "MicroStateInterpreter",
+      "UniqueName": "MicroStateInterpreter",
+      "DisplayName": "MicroStateInterpreter",
+      "Fields": null
+    }
+  ],
+  "InjectedReferences": [
+    {
+      "Subject": {
+        "NameSpace": "nodes",
+        "ID": "DigitalTwinSignalsForMicroStates#01"
+      },
+      "VerbURI": "http://ddhub.no/HasDynamicValue",
+      "Object": {
+        "NameSpace": "providedNodes",
+        "ID": "DigitalTwinSignalsForMicroStates"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "nodes",
+        "ID": "DigitalTwinSignalsForMicroStates#01"
+      },
+      "VerbURI": "http://ddhub.no/IsRecommendedBy",
+      "Object": {
+        "NameSpace": "nodes",
+        "ID": "DigitalTwin"
+      }
+    },
+    {
+      "Subject": {
+        "NameSpace": "nodes",
+        "ID": "DigitalTwinSignalsForMicroStates#01"
+      },
+      "VerbURI": "http://ddhub.no/IsProvidedTo",
+      "Object": {
+        "NameSpace": "nodes",
+        "ID": "MicroStateInterpreter"
+      }
+    }
+  ],
+  "ProvidedVariables": [
+    {
+      "VariableID": "DigitalTwinSignalsForMicroStates",
+      "Rank": 0,
+      "Dimensions": null,
+      "DataType": "string"
+    }
+  ],
+  "InjectedVocabulary": null
+}
