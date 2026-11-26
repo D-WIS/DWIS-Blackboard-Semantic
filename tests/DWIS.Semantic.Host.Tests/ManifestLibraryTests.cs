@@ -82,15 +82,15 @@ public sealed class ManifestLibraryTests
             differences.Should().BeEmpty("every report of the library is as expected; a difference that is right is recorded again in both repositories:\n" + string.Join("\n", differences));
 
             // The accepted and core-only ones are live next to the SmartConnect manifest (the early ones are refused), each listed once.
-            live.Should().HaveCount(6, "the SmartConnect manifest and the five of the library that go live");
+            live.Should().HaveCount(7, "the SmartConnect manifest and the six of the library that go live");
             var list = await ListAsync(client);
             foreach (var id in live)
             {
                 list.Should().ContainSingle(e => e.GetProperty("id").GetProperty("value").GetString() == id, id);
             }
 
-            // The F.3 query by class now answers three signals: the SmartConnect one and the standpipe pressure of two library providers.
-            (await SelectAsync(client, SppByClass)).Should().BeEquivalentTo([.. byClass, "http://d-wis.org/openLAB/Variables/openLAB.SPP", "http://d-wis.org/WellARig/Variables/WellARig.spp"]);
+            // The F.3 query by class now answers four signals: the SmartConnect one and the standpipe pressure of three library providers.
+            (await SelectAsync(client, SppByClass)).Should().BeEquivalentTo([.. byClass, "http://d-wis.org/DDHub_CLI/Variables/DDHub_CLI.SPP", "http://d-wis.org/openLAB/Variables/openLAB.SPP", "http://d-wis.org/WellARig/Variables/WellARig.spp"]);
             // No legacy IRI is stored (T-SEM-4), except the two classes of the RigOS manifest that the vocabulary does not have:
             // the service keeps an unknown class as written today (a Semantic issue of 25 November 2026 tracks it); pinned here on purpose.
             var legacy = await SelectAsync(client, """

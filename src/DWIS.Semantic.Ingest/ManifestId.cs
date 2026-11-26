@@ -7,6 +7,8 @@ namespace DWIS.Semantic.Ingest;
 /// The id of a manifest, <c>{provider}/{name}</c> (Appendix C.5), and the graphs it owns (Appendix C.8).
 /// The name is the manifest name made safe for a path: lower case, runs of anything but letters and
 /// digits replaced by one hyphen, so "SmartConnect rig signals" gives <c>SmartConnect/smartconnect-rig-signals</c>.
+/// The provider is the provider name made safe for an IRI (<see cref="Names.IriSafe"/>, decision D-62), so
+/// "DDHub CLI" gives <c>DDHub_CLI/…</c>.
 /// </summary>
 public sealed record ManifestId
 {
@@ -19,7 +21,7 @@ public sealed record ManifestId
         Name = name;
     }
 
-    /// <summary>The provider name as written in the manifest.</summary>
+    /// <summary>The provider name made safe for an IRI (as written when it carries no character an IRI cannot).</summary>
     public string Provider { get; }
 
     /// <summary>The manifest name made safe for a path.</summary>
@@ -50,7 +52,7 @@ public sealed record ManifestId
         return Of(manifest.Provider.Name, manifest.ManifestName);
     }
 
-    /// <summary>The id from a provider name and a manifest name (the name is made safe here).</summary>
+    /// <summary>The id from a provider name and a manifest name (both are made safe here).</summary>
     public static ManifestId Of(string provider, string manifestName)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(provider);
@@ -65,7 +67,7 @@ public sealed record ManifestId
             throw new ArgumentException("A manifest name needs at least one letter or digit.", nameof(manifestName));
         }
 
-        return new ManifestId(provider, name);
+        return new ManifestId(Names.IriSafe(provider), name);
     }
 
     /// <summary>Reads an id back from its text form, <c>{provider}/{name}</c>; null when the text is not one.</summary>
@@ -84,7 +86,7 @@ public sealed record ManifestId
 
         var provider = text[..slash];
         var name = text[(slash + 1)..];
-        return name == Slug(name) && provider.Trim() == provider ? new ManifestId(provider, name) : null;
+        return name == Slug(name) && Names.IsIriSafe(provider) ? new ManifestId(provider, name) : null;
     }
 
     /// <summary>Lower case; every run of characters other than ASCII letters and digits becomes one hyphen; no hyphen at either end.</summary>

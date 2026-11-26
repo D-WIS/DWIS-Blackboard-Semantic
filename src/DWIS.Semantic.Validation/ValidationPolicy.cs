@@ -51,6 +51,7 @@ public sealed record ValidationPolicy
             ManifestGraphBuilder.ReferenceToInjectedVariable,
             ManifestGraphBuilder.UnknownNamespaceAlias,
             ManifestGraphBuilder.IncompleteReference,
+            ManifestGraphBuilder.NameCharactersReplaced,
         ]), StringComparer.Ordinal);
 
     /// <summary>The entries, by finding code or shape IRI.</summary>

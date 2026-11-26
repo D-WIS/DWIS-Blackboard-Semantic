@@ -40,6 +40,20 @@ public sealed class ManifestIdTests
         ManifestId.Parse("SmartConnect/Not A Slug").Should().BeNull();
     }
 
+    [Fact]
+    public void A_provider_name_with_a_blank_is_made_safe_for_an_iri()
+    {
+        // Decision D-62: the old server's own CLI example, provider "DDHub CLI", manifest "SimpleExample".
+        var id = ManifestId.Of("DDHub CLI", "SimpleExample");
+
+        id.Provider.Should().Be("DDHub_CLI");
+        id.Value.Should().Be("DDHub_CLI/simpleexample");
+        id.AssertedGraph.Should().Be("http://d-wis.org/manifests/DDHub_CLI/simpleexample");
+        ManifestId.Parse(id.Value).Should().Be(id);
+        ManifestId.Parse("DDHub CLI/simpleexample").Should().BeNull("an id carries the safe form only");
+        ManifestId.Of("PumpStartupManifestPWDa:", "PumpStartupManifest").Value.Should().Be("PumpStartupManifestPWDa:/pumpstartupmanifest");
+    }
+
     [Theory]
     [InlineData("", "x")]
     [InlineData("a/b", "x")]
