@@ -143,6 +143,75 @@ public sealed class QueryRegistrationTests
     }
 
     [Fact]
+    public async Task A_fresh_watch_stream_releases_the_watchers_owners_and_a_plain_reconnect_does_not()
+    {
+        // Decision D-61 (M5.1): the registrations of a real-time process that restarted go when its stream reopens fresh;
+        // another watcher's, the HTTP API's and a resumed stream's stay.
+        _host.SkipUnlessAvailable();
+        using var http = _host.CreateClient();
+        await HostFixture.WaitUntilLoadedAsync(http);
+        using var channel = GrpcChannel.ForAddress(_host.Factory.Server.BaseAddress, new GrpcChannelOptions { HttpHandler = _host.Factory.Server.CreateHandler() });
+        var client = new GrpcSemantic.SemanticClient(channel);
+        var manager = (QueryRegistration.QueryManager)_host.Factory.Services.GetService(typeof(QueryRegistration.QueryManager))!;
+        var query = DataPointsOf("SmartConnect-01");
+        const string otherQuery = "PREFIX dwis: <http://d-wis.org/> SELECT ?p WHERE { ?p a dwis:DataProvider }";
+        int? httpQueryId = null;
+        try
+        {
+            var rig1 = await client.RegisterQueryAsync(new RegisterRequest { Query = query, Owner = "rig-1 session 1", Watcher = "rig-1" });
+            await client.RegisterQueryAsync(new RegisterRequest { Query = query, Owner = "rig-1 session 2", Watcher = "rig-1" });
+            var rig2 = await client.RegisterQueryAsync(new RegisterRequest { Query = otherQuery, Owner = "rig-2 session 1", Watcher = "rig-2" });
+            using var posted = await http.PostAsJsonAsync(new Uri("/api/v1/queries", UriKind.Relative), new { query = otherQuery });
+            posted.StatusCode.Should().Be(HttpStatusCode.OK);
+            httpQueryId = (await posted.Content.ReadFromJsonAsync<JsonElement>()).GetProperty("id").GetInt32();
+
+            // 1. A plain reconnect (fresh false) keeps everything.
+            using (var resumed = new CancellationTokenSource())
+            {
+                using var watch = client.WatchQueries(new WatchRequest { Watcher = "rig-1" }, cancellationToken: resumed.Token);
+                await watch.ResponseHeadersAsync;
+                manager.TextOf(rig1.QueryId).Should().NotBeNull();
+                manager.WatcherOf("rig-1 session 1").Should().Be("rig-1");
+                manager.WatcherOf("rig-1 session 2").Should().Be("rig-1");
+                await resumed.CancelAsync();
+            }
+
+            // 2. A fresh stream releases rig-1's two sessions: their query goes; rig-2's and the HTTP owner's stay.
+            using (var fresh = new CancellationTokenSource())
+            {
+                using var watch = client.WatchQueries(new WatchRequest { Watcher = "rig-1", Fresh = true }, cancellationToken: fresh.Token);
+                await watch.ResponseHeadersAsync;
+                manager.TextOf(rig1.QueryId).Should().BeNull("both owners of the query belonged to rig-1");
+                manager.WatcherOf("rig-1 session 1").Should().BeNull();
+                manager.WatcherOf("rig-2 session 1").Should().Be("rig-2");
+                manager.TextOf(rig2.QueryId).Should().NotBeNull();
+                (await client.UnregisterQueryAsync(new UnregisterRequest { Query = query, Owner = "rig-1 session 1" })).Released.Should().BeFalse();
+                await fresh.CancelAsync();
+            }
+
+            // 3. A fresh stream of the other watcher releases its session; the HTTP owner keeps the query alive.
+            using (var fresh = new CancellationTokenSource())
+            {
+                using var watch = client.WatchQueries(new WatchRequest { Watcher = "rig-2", Fresh = true }, cancellationToken: fresh.Token);
+                await watch.ResponseHeadersAsync;
+                manager.WatcherOf("rig-2 session 1").Should().BeNull();
+                manager.TextOf(rig2.QueryId).Should().NotBeNull("the HTTP registration holds it");
+                await fresh.CancelAsync();
+            }
+        }
+        finally
+        {
+            await client.ReleaseOwnerAsync(new OwnerRef { Owner = "rig-1 session 1" });
+            await client.ReleaseOwnerAsync(new OwnerRef { Owner = "rig-1 session 2" });
+            await client.ReleaseOwnerAsync(new OwnerRef { Owner = "rig-2 session 1" });
+            if (httpQueryId is not null)
+            {
+                using var deleted = await http.DeleteAsync(new Uri($"/api/v1/queries/{httpQueryId}", UriKind.Relative));
+            }
+        }
+    }
+
+    [Fact]
     public async Task Registration_over_http_with_server_sent_events()
     {
         _host.SkipUnlessAvailable();
