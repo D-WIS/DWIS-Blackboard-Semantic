@@ -37,6 +37,9 @@ public static class ManifestGraphBuilder
     /// <summary>Note code: a reference has an empty subject, verb or object.</summary>
     public const string IncompleteReference = "incomplete-reference";
 
+    /// <summary>Note code: a name carried a character an IRI cannot, replaced by an underscore (decision D-62).</summary>
+    public const string NameCharactersReplaced = "name-characters-replaced";
+
     /// <summary>Gives the XML Schema datatype of an attribute, or null for a plain literal.</summary>
     public delegate Uri? AttributeDatatypeResolver(string attributeIri);
 
@@ -52,6 +55,24 @@ public static class ManifestGraphBuilder
         var rdfType = Iri(graph, Vocabulary.RdfType);
         var isProvidedBy = Iri(graph, Vocabulary.IsProvidedBy);
         var providerNode = Iri(graph, ManifestIris.Provider(provider));
+
+        // Decision D-62: a name with a character an IRI cannot carry is stored with underscores, and the manifest says so.
+        NoteReplaced(notes, "Provider name", provider, ManifestIris.Provider(provider));
+        var variableIds = manifest.ProvidedVariables.Select(v => v.VariableID).ToHashSet(StringComparer.Ordinal);
+        foreach (var variable in manifest.ProvidedVariables)
+        {
+            // A validity flag follows its variable; one note for the variable is enough.
+            var isFlag = variable.VariableID.EndsWith(ManifestIris.ValiditySuffix, StringComparison.Ordinal) && variableIds.Contains(variable.VariableID[..^ManifestIris.ValiditySuffix.Length]);
+            if (!isFlag)
+            {
+                NoteReplaced(notes, "Variable id", variable.VariableID, ManifestIris.ProvidedVariable(provider, variable.VariableID));
+            }
+        }
+
+        foreach (var injected in manifest.InjectedNodes)
+        {
+            NoteReplaced(notes, "Unique name", injected.UniqueName, ManifestIris.Node(provider, injected.UniqueName));
+        }
 
         // Provider: type and name (specification C.3; the vocabulary has a ProviderName attribute, no company attribute).
         graph.Assert(providerNode, rdfType, Iri(graph, Vocabulary.DataProvider));
@@ -178,7 +199,7 @@ public static class ManifestGraphBuilder
             }
 
             var separator = ns.EndsWith('/') || ns.EndsWith('#') ? "" : "/";
-            return (canonicalNs + separator + id, isRoot);
+            return (canonicalNs + separator + Names.IriSafe(id), isRoot);
         }
 
         if (string.IsNullOrEmpty(ns))
@@ -190,6 +211,15 @@ public static class ManifestGraphBuilder
         notes.Add(new ManifestNote(NoteSeverity.Error, UnknownNamespaceAlias,
             $"Reference '{Describe(reference)}' uses namespace alias '{ns}', which the manifest does not declare; the reference was dropped.", Describe(reference)));
         return null;
+    }
+
+    private static void NoteReplaced(List<ManifestNote> notes, string what, string? name, string iri)
+    {
+        if (!string.IsNullOrEmpty(name) && !Names.IsIriSafe(name))
+        {
+            notes.Add(new ManifestNote(NoteSeverity.Info, NameCharactersReplaced,
+                $"{what} '{name}' carries characters an IRI cannot; stored as '{Names.IriSafe(name)}' (decision D-62).", iri));
+        }
     }
 
     private static IUriNode Iri(Graph graph, string iri) => graph.CreateUriNode(UriFactory.Create(iri));

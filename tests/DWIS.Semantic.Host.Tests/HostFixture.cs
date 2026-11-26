@@ -31,7 +31,8 @@ public sealed class HostFixture : IAsyncLifetime
         "small/smartconnect-01.manifest.json",
         "small/smartconnect-02.manifest.json",
         "small/smartconnect-03.manifest.json",
-        // The manifests of the library that go live (the early ones have no manifest name; the old server's CLI example is refused today).
+        // The manifests of the library that go live (the early ones have no manifest name).
+        "library/ddhub-cli-simple-example/manifest.json",
         "library/norce-digital-twin/manifest.json",
         "library/openlab-rig-signals/manifest.json",
         "library/rigos-pump-startup-procedure/manifest.json",

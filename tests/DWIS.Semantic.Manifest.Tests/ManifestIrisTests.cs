@@ -13,6 +13,18 @@ public sealed class ManifestIrisTests
         ManifestIris.ValidityFlagId("spp").Should().Be("spp_validitySignal");
     }
 
+    [Fact]
+    public void A_name_with_characters_an_iri_cannot_carry_is_stored_with_underscores()
+    {
+        // Decision D-62: the old server's own CLI example has the provider "DDHub CLI".
+        ManifestIris.Provider("DDHub CLI").Should().Be("http://d-wis.org/DDHub_CLI/DDHub_CLI");
+        ManifestIris.Node("DDHub CLI", "Hook Load#01").Should().Be("http://d-wis.org/DDHub_CLI/Hook_Load#01");
+        ManifestIris.ProvidedVariable("DDHub CLI", "Hook Load").Should().Be("http://d-wis.org/DDHub_CLI/Variables/DDHub_CLI.Hook_Load");
+        ManifestIris.InjectedTerm("DDHub CLI", "My Class").Should().Be("http://d-wis.org/DDHub_CLI/Semantic/My_Class");
+        ManifestIris.Term("Pressure Drilling Quantity").Should().Be("http://d-wis.org/Pressure_Drilling_Quantity");
+        ManifestIris.Provider("PumpStartupManifestPWDa:").Should().Be("http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupManifestPWDa:", "a colon is a character an IRI can carry");
+    }
+
     [Theory]
     [InlineData("Measurement", "http://d-wis.org/Measurement")]
     [InlineData("http://ddhub.no/Measurement", "http://d-wis.org/Measurement")]

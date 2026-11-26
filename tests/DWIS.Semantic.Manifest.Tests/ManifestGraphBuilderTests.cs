@@ -31,6 +31,36 @@ public sealed class ManifestGraphBuilderTests
     }
 
     [Fact]
+    public void A_name_with_characters_an_iri_cannot_carry_is_stored_with_underscores_and_noted()
+    {
+        // Decision D-62: the provider of the old server's CLI example, plus a variable and a node with a blank.
+        var manifest = new Blackboard.Contracts.Manifests.Manifest
+        {
+            ManifestName = "Simple Example",
+            Provider = new Provider { Name = "DDHub CLI", Company = "NORCE" },
+            ProvidedVariables = [new ProvidedVariable { VariableID = "Hook Load", DataType = "double" }, new ProvidedVariable { VariableID = "SPP", DataType = "double" }],
+            InjectedNodes = [new InjectedNode { UniqueName = "Hook Load#01", TypeDictionaryURI = "DrillingDataPoint" }],
+        };
+
+        var graph = ManifestGraphBuilder.Build(ManifestPreparation.Prepare(manifest));
+
+        graph.ProviderIri.Should().Be("http://d-wis.org/DDHub_CLI/DDHub_CLI");
+        Count(graph.Graph, "SELECT (COUNT(*) AS ?n) WHERE { <http://d-wis.org/DDHub_CLI/Variables/DDHub_CLI.Hook_Load> ?p ?o }").Should().BeGreaterThan(0);
+        Count(graph.Graph, "SELECT (COUNT(*) AS ?n) WHERE { <http://d-wis.org/DDHub_CLI/Hook_Load#01> ?p ?o }").Should().BeGreaterThan(0);
+        Count(graph.Graph, $"SELECT (COUNT(*) AS ?n) WHERE {{ ?s <{Dwis}ProviderName> \"DDHub CLI\" }}").Should().Be(1, "the name as written stays a literal");
+        var replaced = graph.Notes.Where(n => n.Code == ManifestGraphBuilder.NameCharactersReplaced).ToList();
+        replaced.Should().HaveCount(3).And.OnlyContain(n => n.Severity == NoteSeverity.Info);
+        replaced.Select(n => n.Subject).Should().BeEquivalentTo(
+        [
+            "http://d-wis.org/DDHub_CLI/DDHub_CLI",
+            "http://d-wis.org/DDHub_CLI/Variables/DDHub_CLI.Hook_Load",
+            "http://d-wis.org/DDHub_CLI/Hook_Load#01",
+        ]);
+        replaced[0].Message.Should().Contain("'DDHub CLI'").And.Contain("'DDHub_CLI'");
+        graph.Notes.Where(n => n.Code != ManifestGraphBuilder.NameCharactersReplaced).Should().BeEmpty();
+    }
+
+    [Fact]
     public void Both_milestone_queries_return_the_same_signal_on_the_asserted_graph()
     {
         // The unit and quantity individuals come from the built-in "UnitAndQuantity" manifest of today's server

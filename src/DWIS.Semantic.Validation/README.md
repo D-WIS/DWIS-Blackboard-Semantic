@@ -49,6 +49,7 @@ The manifest step (`DWIS.Semantic.Manifest`) reports what it changed or could no
 | `reference-to-injected-variable` | a reference names a dropped injected variable; the reference is dropped | warning | `ManifestGraphBuilder.cs` |
 | `incomplete-reference` | a reference has an empty subject, verb or object | error | `ManifestGraphBuilder.cs` |
 | `unknown-namespace-alias` | a reference uses a namespace alias the manifest does not declare | error | `ManifestGraphBuilder.cs` |
+| `name-characters-replaced` | the provider name, a variable id or a unique name carries a character an IRI cannot (a blank, `<`, `{`, …); it is stored with underscores instead, and the manifest is accepted (decision D-62; `focus` is the IRI stored) | info | `ManifestGraphBuilder.cs` |
 
 ### SHACL shapes in force
 
