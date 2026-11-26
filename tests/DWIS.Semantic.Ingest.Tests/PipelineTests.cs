@@ -58,7 +58,7 @@ public sealed class PipelineTests : IClassFixture<VocabularyFixture>
         var id = ManifestId.Of("SmartConnect", "SmartConnect rig signals");
         var report = IngestionReport.From(id.Value, "2026-10-14", [new Finding { Severity = Severity.Warning, Message = "w" }], new IngestionStatistics { Asserted = 10 });
         var at = new DateTimeOffset(2026, 11, 16, 9, 30, 0, TimeSpan.Zero);
-        var provenance = Provenance.Build(id, "SmartConnect rig signals", "sha256:abc", "{}", report, at, 10, 4, 0);
+        var provenance = Provenance.Build(id, "SmartConnect rig signals", "sha256:abc", "{}", report, at, 10, 4, 0, "hub:default:7a3c");
         var named = new Graph(new UriNode(new Uri(id.ProvenanceGraph)));
         named.Merge(provenance);
         var store = new TripleStore();
@@ -67,8 +67,10 @@ public sealed class PipelineTests : IClassFixture<VocabularyFixture>
         var rows = (SparqlResultSet)new LeviathanQueryProcessor(store).ProcessQuery(new SparqlQueryParser().ParseFromString(Provenance.ListQuery));
         var summary = Provenance.Read(rows.Results.Should().ContainSingle().Subject);
 
-        summary.Should().BeEquivalentTo(new ManifestSummary(id, "SmartConnect rig signals", "sha256:abc", "2026-10-14", at, true, new FindingCounts(0, 1, 0), 10, 4, 0));
+        summary.Should().BeEquivalentTo(new ManifestSummary(id, "SmartConnect rig signals", "sha256:abc", "2026-10-14", at, true, new FindingCounts(0, 1, 0), 10, 4, 0, "hub:default:7a3c"));
         provenance.GetTriplesWithPredicate(provenance.CreateUriNode(new Uri(Provenance.QuarantineGraphProperty))).Should().BeEmpty("an accepted manifest has no quarantine graph");
+        Provenance.Build(id, "x", "sha256:0", "{}", report, at, 1, 0, 0).GetTriplesWithPredicate(provenance.CreateUriNode(new Uri(Provenance.OriginProperty)))
+            .Should().ContainSingle().Which.Object.Should().BeAssignableTo<ILiteralNode>().Which.Value.Should().Be("local", "no origin given means injected here");
 
         var reportRows = (SparqlResultSet)new LeviathanQueryProcessor(store).ProcessQuery(new SparqlQueryParser().ParseFromString(Provenance.ReportQuery(id)));
         var stored = ReportJson.Parse(((ILiteralNode)reportRows.Results.Single()["report"]).Value);

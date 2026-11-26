@@ -17,6 +17,7 @@ namespace DWIS.Semantic.Ingest;
 /// <param name="AssertedTriples">Triples in the asserted graph.</param>
 /// <param name="InferredTriples">Triples in the inferred graph.</param>
 /// <param name="QuarantinedTriples">Triples in the quarantine graph (zero when accepted).</param>
+/// <param name="Origin">Where the injection came from: <c>local</c>, or <c>hub:{group}:{sender}</c> for a manifest a peer sent through the hub (R-HUB-3).</param>
 public sealed record ManifestSummary(
     ManifestId Id,
     string ManifestName,
@@ -27,7 +28,8 @@ public sealed record ManifestSummary(
     FindingCounts Counts,
     int AssertedTriples,
     int InferredTriples,
-    int QuarantinedTriples);
+    int QuarantinedTriples,
+    string Origin = Provenance.LocalOrigin);
 
 /// <summary>
 /// The service's own terms for the provenance graph, under <c>http://d-wis.org/blackboard/</c> so that
@@ -59,8 +61,11 @@ public static class Provenance
     /// <summary>Property: when the manifest was committed.</summary>
     public const string InjectedAtProperty = Namespace + "injectedAt";
 
-    /// <summary>Property: where the injection came from (<c>local</c> in this project; a hub site later).</summary>
+    /// <summary>Property: where the injection came from (<see cref="LocalOrigin"/>, or what the real-time process says for a peer's manifest, <c>hub:{group}:{sender}</c>, R-HUB-3).</summary>
     public const string OriginProperty = Namespace + "origin";
+
+    /// <summary>The origin of a manifest injected here, by a client of this Blackboard or through the HTTP API.</summary>
+    public const string LocalOrigin = "local";
 
     /// <summary>Property: whether the whole manifest went live.</summary>
     public const string AcceptedProperty = Namespace + "accepted";
@@ -95,11 +100,15 @@ public static class Provenance
     /// <summary>Property: the manifest as a JSON literal, as received.</summary>
     public const string ManifestProperty = Namespace + "manifest";
 
-    /// <summary>Builds the provenance graph of one injection.</summary>
-    public static Graph Build(ManifestId id, string manifestName, string contentHash, string manifestJson, IngestionReport report, DateTimeOffset injectedAt, int assertedTriples, int inferredTriples, int quarantinedTriples)
+    /// <summary>Builds the provenance graph of one injection; an empty origin is <see cref="LocalOrigin"/>.</summary>
+    public static Graph Build(ManifestId id, string manifestName, string contentHash, string manifestJson, IngestionReport report, DateTimeOffset injectedAt, int assertedTriples, int inferredTriples, int quarantinedTriples, string origin = LocalOrigin)
     {
         ArgumentNullException.ThrowIfNull(id);
         ArgumentNullException.ThrowIfNull(report);
+        if (string.IsNullOrWhiteSpace(origin))
+        {
+            origin = LocalOrigin;
+        }
         var graph = new Graph();
         var subject = graph.CreateUriNode(new Uri(id.AssertedGraph));
         graph.Assert(subject, graph.CreateUriNode(new Uri(RdfSpecsHelper.RdfType)), graph.CreateUriNode(new Uri(Injection)));
@@ -109,7 +118,7 @@ public static class Provenance
         graph.Assert(subject, Iri(graph, ContentHashProperty), graph.CreateLiteralNode(contentHash));
         graph.Assert(subject, Iri(graph, VocabularyVersionProperty), graph.CreateLiteralNode(report.VocabularyVersion ?? ""));
         graph.Assert(subject, Iri(graph, InjectedAtProperty), graph.CreateLiteralNode(injectedAt.ToString("o", CultureInfo.InvariantCulture), new Uri(XmlSpecsHelper.XmlSchemaDataTypeDateTime)));
-        graph.Assert(subject, Iri(graph, OriginProperty), graph.CreateLiteralNode("local"));
+        graph.Assert(subject, Iri(graph, OriginProperty), graph.CreateLiteralNode(origin));
         graph.Assert(subject, Iri(graph, AcceptedProperty), Boolean(graph, report.Accepted));
         graph.Assert(subject, Iri(graph, ErrorsProperty), Integer(graph, report.Counts.Errors));
         graph.Assert(subject, Iri(graph, WarningsProperty), Integer(graph, report.Counts.Warnings));
@@ -129,7 +138,7 @@ public static class Provenance
 
     /// <summary>The SPARQL that lists every live manifest, one row each, ordered by id.</summary>
     public static string ListQuery { get; } = $$"""
-        SELECT ?id ?name ?hash ?version ?at ?accepted ?errors ?warnings ?infos ?asserted ?inferred ?quarantined
+        SELECT ?id ?name ?hash ?version ?at ?accepted ?errors ?warnings ?infos ?asserted ?inferred ?quarantined ?origin
         WHERE {
           GRAPH ?g {
             ?m a <{{Injection}}> ;
@@ -145,6 +154,7 @@ public static class Provenance
                <{{AssertedTriplesProperty}}> ?asserted ;
                <{{InferredTriplesProperty}}> ?inferred ;
                <{{QuarantinedTriplesProperty}}> ?quarantined .
+            OPTIONAL { ?m <{{OriginProperty}}> ?origin }
           }
         }
         ORDER BY ?id
@@ -191,7 +201,8 @@ public static class Provenance
             new FindingCounts(Int(row, "errors"), Int(row, "warnings"), Int(row, "infos")),
             Int(row, "asserted"),
             Int(row, "inferred"),
-            Int(row, "quarantined"));
+            Int(row, "quarantined"),
+            Text(row, "origin") is { Length: > 0 } origin ? origin : LocalOrigin);
     }
 
     private static string Text(VDS.RDF.Query.ISparqlResult row, string variable) =>
