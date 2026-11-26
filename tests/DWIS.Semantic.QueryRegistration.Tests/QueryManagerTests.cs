@@ -107,6 +107,33 @@ public sealed class QueryManagerTests
     }
 
     [Fact]
+    public void A_watcher_released_takes_its_owners_and_nothing_else()
+    {
+        // Decision D-61: the sessions of a real-time process that restarted are gone with it.
+        using var manager = new QueryManager(Answering(_ => Result()));
+        var shared = manager.Register(Query, "A", "rig-1");
+        manager.Register(Query, "B", "rig-1");
+        var other = manager.Register(Query + " # other", "C", "rig-2");
+        var http = manager.Register(Query + " # http", "H");
+        var permanent = manager.Register(Query + " # internal");
+        manager.WatcherOf("A").Should().Be("rig-1");
+        manager.WatcherOf("H").Should().BeNull("an owner registered without a watcher belongs to none");
+
+        var (owners, queries) = manager.ReleaseWatcher("rig-1");
+
+        owners.Should().BeEquivalentTo(["A", "B"]);
+        queries.Should().Equal(shared);
+        manager.TextOf(shared).Should().BeNull("its last owners went");
+        manager.IsOwnedBy(Query + " # other", "C").Should().BeTrue();
+        manager.TextOf(http).Should().NotBeNull();
+        manager.TextOf(permanent).Should().NotBeNull();
+        var again = manager.ReleaseWatcher("rig-1");
+        again.Owners.Should().BeEmpty("nothing is left for the watcher");
+        again.QueryIds.Should().BeEmpty();
+        manager.ReleaseWatcher("rig-2").QueryIds.Should().Equal(other);
+    }
+
+    [Fact]
     public void Normalization_does_not_change_literal_meaning()
     {
         var manager = new QueryManager(Answering(_ => Result()));

@@ -39,6 +39,9 @@ internal static partial class Log
     [LoggerMessage(14, LogLevel.Information, "Watch stream of {Watcher} closed")]
     public static partial void WatchClosed(ILogger logger, string watcher);
 
+    [LoggerMessage(15, LogLevel.Information, "Watch stream opened fresh by {Watcher}: {Owners} owners released, {Queries} queries went with them (D-61)")]
+    public static partial void WatchOpenedFresh(ILogger logger, string watcher, int owners, int queries);
+
     [LoggerMessage(8, LogLevel.Information, "Manifest {Id} removed")]
     public static partial void ManifestRemoved(ILogger logger, string id);
 

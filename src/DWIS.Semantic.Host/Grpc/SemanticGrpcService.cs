@@ -262,7 +262,7 @@ public sealed class SemanticGrpcService : GrpcSemantic.SemanticBase
         }
 
         var owner = OwnerOf(request.Owner);
-        var id = _queries.Register(SparqlEndpoints.Canonical(request.Query), owner);
+        var id = _queries.Register(SparqlEndpoints.Canonical(request.Query), owner, string.IsNullOrWhiteSpace(request.Watcher) ? null : request.Watcher);
         QueryRegistration.QueryDiff snapshot;
         try
         {
@@ -300,10 +300,19 @@ public sealed class SemanticGrpcService : GrpcSemantic.SemanticBase
     /// <inheritdoc />
     public override async Task WatchQueries(WatchRequest request, IServerStreamWriter<Blackboard.Contracts.Grpc.QueryDiff> responseStream, ServerCallContext context)
     {
+        // Decision D-61: a stream opened fresh after a start-up first releases every owner the watcher registered
+        // before, as ReleaseOwner would; the headers go out once that is done, so the watcher can wait for it.
+        if (request.Fresh && !string.IsNullOrWhiteSpace(request.Watcher))
+        {
+            var (owners, queries) = _queries.ReleaseWatcher(request.Watcher);
+            Log.WatchOpenedFresh(_logger, request.Watcher, owners.Count, queries.Count);
+        }
+
         using var subscription = _diffs.Subscribe();
         Log.WatchOpened(_logger, request.Watcher, _diffs.Count);
         try
         {
+            await context.WriteResponseHeadersAsync([]).ConfigureAwait(false);
             await foreach (var diff in subscription.Diffs.ReadAllAsync(context.CancellationToken).ConfigureAwait(false))
             {
                 await responseStream.WriteAsync(ToProto(diff), context.CancellationToken).ConfigureAwait(false);

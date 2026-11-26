@@ -17,6 +17,8 @@ public sealed class QueryManager : IDisposable
     private readonly Lock _gate = new();
     private readonly Dictionary<int, Entry> _entries = [];
     private readonly Dictionary<string, Entry> _byText = new(StringComparer.Ordinal);
+    // The watcher each owner belongs to (decision D-61): the real-time process that reported the session.
+    private readonly Dictionary<string, string> _watcherOf = new(StringComparer.Ordinal);
     private readonly QueryEvaluator _evaluate;
     private readonly RoundStarter? _beginRound;
 
@@ -53,9 +55,11 @@ public sealed class QueryManager : IDisposable
     /// <summary>
     /// Registers a query for an owner (a session id; null for the service itself) and returns its id. The same
     /// text registered again, by the same owner or another, is the same query. Only the ends of the text are
-    /// trimmed: literals, comments and inner whitespace are kept as written.
+    /// trimmed: literals, comments and inner whitespace are kept as written. The watcher, when given, is the
+    /// real-time process the owner belongs to: a watch stream opened fresh releases every owner of that
+    /// watcher (<see cref="ReleaseWatcher"/>, decision D-61); an owner registered without one is never released that way.
     /// </summary>
-    public int Register(string sparql, string? owner = null)
+    public int Register(string sparql, string? owner = null, string? watcher = null)
     {
         if (string.IsNullOrWhiteSpace(sparql))
         {
@@ -72,8 +76,52 @@ public sealed class QueryManager : IDisposable
                 _entries.Add(entry.Id, entry);
             }
 
-            entry.Owners.Add(OwnerKey(owner));
+            var key = OwnerKey(owner);
+            entry.Owners.Add(key);
+            if (!string.IsNullOrWhiteSpace(watcher))
+            {
+                _watcherOf[key] = watcher;
+            }
+
             return entry.Id;
+        }
+    }
+
+    /// <summary>The watcher an owner was registered under, or null.</summary>
+    public string? WatcherOf(string? owner)
+    {
+        lock (_gate)
+        {
+            return _watcherOf.GetValueOrDefault(OwnerKey(owner));
+        }
+    }
+
+    /// <summary>
+    /// Releases every owner that belongs to a watcher, as <see cref="ReleaseOwner"/> does for each (decision D-61: the
+    /// sessions of a real-time process that restarted are gone with it). Returns the owners released and the ids of
+    /// the queries that went with them (no other owner held them).
+    /// </summary>
+    public (IReadOnlyList<string> Owners, IReadOnlyList<int> QueryIds) ReleaseWatcher(string watcher)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(watcher);
+        lock (_gate)
+        {
+            var owners = _watcherOf.Where(p => p.Value == watcher).Select(p => p.Key).ToList();
+            var removed = new List<int>();
+            foreach (var key in owners)
+            {
+                _watcherOf.Remove(key);
+                foreach (var entry in _entries.Values.ToArray())
+                {
+                    if (entry.Owners.Remove(key) && entry.Owners.Count == 0)
+                    {
+                        Remove(entry);
+                        removed.Add(entry.Id);
+                    }
+                }
+            }
+
+            return (owners.Select(OwnerName).ToList(), removed);
         }
     }
 
@@ -155,6 +203,7 @@ public sealed class QueryManager : IDisposable
         var key = OwnerKey(owner);
         lock (_gate)
         {
+            _watcherOf.Remove(key);
             var removed = new List<int>();
             foreach (var entry in _entries.Values.ToArray())
             {
@@ -290,6 +339,8 @@ public sealed class QueryManager : IDisposable
     public void Dispose() => _evaluation.Dispose();
 
     private static string OwnerKey(string? owner) => owner is null ? InternalOwner : "session:" + owner;
+
+    private static string OwnerName(string key) => key == InternalOwner ? InternalOwner : key["session:".Length..];
 
     private static async Task<QueryRows> Answer(QueryEvaluator evaluate, string query, CancellationToken cancellationToken) =>
         await evaluate(query, cancellationToken).ConfigureAwait(false) ?? throw new InvalidOperationException("Query resolution failed.");
