@@ -68,6 +68,8 @@ public sealed class GrpcServiceTests
             report.ManifestId.Should().Be(id.Value);
             report.Statistics.CommitMs.Should().BeGreaterThan(0);
             report.Statistics.Inferred.Should().BeGreaterThan(0);
+            (await ListAsync(http)).Single(e => e.GetProperty("id").GetProperty("value").GetString() == id.Value)
+                .GetProperty("origin").GetString().Should().Be("test", "the provenance records the origin the process gave at prepare (R-HUB-3)");
 
             // 3. A second commit finds nothing staged; preparing the same content again says it is live.
             var again = async () => await client.CommitManifestAsync(commit);

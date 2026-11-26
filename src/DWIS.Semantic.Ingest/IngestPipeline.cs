@@ -139,12 +139,15 @@ public sealed class IngestPipeline
     public async Task<IngestionReport> CommitAsync(StagedManifest staged, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(staged);
-        var report = await CommitCoreAsync(staged, cancellationToken).ConfigureAwait(false);
+        var report = await CommitCoreAsync(staged, Provenance.LocalOrigin, cancellationToken).ConfigureAwait(false);
         await NotifyAsync(new DescriptionChange(DescriptionChangeKind.Committed, [staged.Id]), cancellationToken).ConfigureAwait(false);
         return report;
     }
 
-    private async Task<IngestionReport> CommitCoreAsync(StagedManifest staged, CancellationToken cancellationToken)
+    /// <param name="staged">The prepared manifest.</param>
+    /// <param name="origin">What the provenance records as the origin: <c>local</c>, or what the real-time process said at prepare (a peer's manifest from the hub, R-HUB-3).</param>
+    /// <param name="cancellationToken">Cancels the commit.</param>
+    private async Task<IngestionReport> CommitCoreAsync(StagedManifest staged, string origin, CancellationToken cancellationToken)
     {
         var watch = Stopwatch.StartNew();
         var id = staged.Id;
@@ -184,7 +187,7 @@ public sealed class IngestPipeline
         // Step 4: provenance, with the findings and the sizes known.
         var report = IngestionReport.From(id.Value, staged.Report.VocabularyVersion, findings,
             staged.Report.Statistics with { Asserted = asserted.Triples.Count, Inferred = inferred.Triples.Count, CommitMs = watch.ElapsedMilliseconds });
-        var provenance = Provenance.Build(id, staged.ManifestName, staged.ContentHash, staged.ManifestJson, report, _clock.GetUtcNow(), asserted.Triples.Count, inferred.Triples.Count, quarantined);
+        var provenance = Provenance.Build(id, staged.ManifestName, staged.ContentHash, staged.ManifestJson, report, _clock.GetUtcNow(), asserted.Triples.Count, inferred.Triples.Count, quarantined, origin);
         var publish = new StringBuilder()
             .Append("DROP SILENT GRAPH <").Append(id.StagingGraph).Append("> ;\n")
             .Append("INSERT DATA { GRAPH <").Append(id.AssertedGraph).Append("> {\n").Append(NTriples(asserted)).Append("} } ;\n")
@@ -268,7 +271,8 @@ public sealed class IngestPipeline
                 continue;
             }
 
-            var report = await CommitCoreAsync(Prepare(manifest, vocabulary, policy), cancellationToken).ConfigureAwait(false);
+            // The origin stays what it was: a re-derivation changes the vocabulary, not where the manifest came from.
+            var report = await CommitCoreAsync(Prepare(manifest, vocabulary, policy), live.Origin, cancellationToken).ConfigureAwait(false);
             result.Add(new RederivedManifest(live.Id, live.Accepted, report));
         }
 
@@ -317,7 +321,7 @@ public sealed class IngestPipeline
             return null;
         }
 
-        var report = await CommitCoreAsync(entry.Manifest, cancellationToken).ConfigureAwait(false);
+        var report = await CommitCoreAsync(entry.Manifest, entry.Origin, cancellationToken).ConfigureAwait(false);
         var provider = id.Provider;
         var update = Endpoints.DeleteUpdate(endpoints.Select(e => ManifestIris.ProvidedVariable(provider, e.VariableId)))
             + "INSERT DATA { GRAPH <" + Endpoints.Graph + "> {\n" + NTriples(Endpoints.Build(id, provider, endpoints)) + "} }\n";
