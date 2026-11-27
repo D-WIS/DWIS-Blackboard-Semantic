@@ -38,7 +38,7 @@ builder.Services.AddSingleton(builder.Configuration.GetSection(SemanticOptions.S
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddHttpClient<ITripleStore, FusekiStore>(http => http.Timeout = TimeSpan.FromMinutes(5));
 builder.Services.AddSingleton(sp => new StagingTable(sp.GetRequiredService<TimeProvider>(), TimeSpan.FromSeconds(sp.GetRequiredService<IOptions<StagingOptions>>().Value.TimeLimitSeconds)));
-// The inference rules of the commit (decision D-64): the embedded SPARQL files, or the ones the configuration names.
+// The reasoning rules of the commit (decisions D-64 and D-65): the embedded files, or the ones the configuration names.
 builder.Services.AddSingleton(sp => { var o = sp.GetRequiredService<IOptions<InferenceOptions>>().Value; return Inference.FromFiles(o.RulesFile, o.AnswerFile); });
 builder.Services.AddSingleton(sp => new IngestPipeline(sp.GetRequiredService<ITripleStore>(), sp.GetRequiredService<TimeProvider>(), sp.GetServices<ILiveDescriptionObserver>(), sp.GetService<ILogger<IngestPipeline>>(), sp.GetRequiredService<StagingTable>(), sp.GetRequiredService<Inference>()));
 // The registered queries (specification 3.5): evaluated against the live dataset under the query limits, one
@@ -80,6 +80,13 @@ else
 {
     Log.NoValidationPolicy(app.Logger);
 }
+
+// The reasoning rules (decision D-65): which ones run is read from the file, so say it once at start-up.
+var inferenceOptions = app.Configuration.GetSection(SemanticOptions.InferenceSection).Get<InferenceOptions>() ?? new InferenceOptions();
+var inferenceRules = app.Services.GetRequiredService<Inference>().Rules;
+Log.InferenceRules(app.Logger, string.IsNullOrWhiteSpace(inferenceOptions.RulesFile) ? "the embedded inference-rules.json" : inferenceOptions.RulesFile,
+    inferenceRules.Enabled.Count(), string.Join(", ", inferenceRules.Enabled.Select(r => r.Name)),
+    inferenceRules.Disabled.Count(), string.Join(", ", inferenceRules.Disabled.Select(r => r.Name)));
 
 var api = app.MapGroup("/api/v1");
 api.MapManifests();

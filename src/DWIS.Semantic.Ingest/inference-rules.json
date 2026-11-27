@@ -1,0 +1,94 @@
+// The reasoning rules of the commit (Appendix C.6 step 2; decisions D-64 and D-65): what a manifest's
+// triples imply, derived in the store by SPARQL updates over the closed schema (the vocabulary and the
+// units graphs shipped closed, decision D-47). Every rule is listed, on or off; the service runs the rules
+// that are "enabled", in this order, in one transaction, from the staging graph {source} into the scratch
+// graph {scratch} (the service drops the scratch graph first), then reads the scratch graph back with the
+// answer query of inference-answer.sparql.
+//
+// A rule is one step because the schema is closed (one step of rdfs:subClassOf or rdfs:subPropertyOf is
+// the whole chain), and a derived triple never makes a new property value except through a sub-property or
+// an inverse, both read from {scratch} by the rules that follow. Each rule is the instance rule of Jena's
+// owl-fb-micro.rules named in "jena". Not written: hasValue, symmetric and transitive properties (none in
+// the vocabulary of 2026-10-14; make-closure.py of the Tests repository refuses the first).
+//
+// Left out on purpose (decision D-64): values of dwis:DWISVerb, the root of every verb, and types
+// dwis:DWISNoun, the root of every class; they said nothing and were 60 % of the inferred graph.
+//
+// To change a rule, copy this file, edit "enabled" (or the SPARQL), and point Inference:RulesFile at the
+// copy. "name", "enabled", "description" and "update" are required; "jena" is optional; an unknown
+// property, a repeated name or an update that does not write to {scratch} is an error when the file is
+// read. Comments and trailing commas are allowed.
+{
+  "prefixes": [
+    "PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>",
+    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+    "PREFIX owl:  <http://www.w3.org/2002/07/owl#>",
+    "PREFIX dwis: <http://d-wis.org/>"
+  ],
+  "rules": [
+    {
+      "name": "sub-property",
+      "jena": "rdfs6",
+      "enabled": true,
+      "description": "A value given through a verb is also a value of every broader verb the vocabulary puts above it (rdfs:subPropertyOf). Example: a HasControlLimit is an IsRelatedToDrillingLimit. The root DWISVerb is left out.",
+      "update": [
+        "INSERT { GRAPH <{scratch}> { ?s ?q ?o } }",
+        "WHERE { GRAPH <{source}> { ?s ?p ?o } ?p rdfs:subPropertyOf ?q FILTER (?p != ?q && ?q != dwis:DWISVerb) }"
+      ]
+    },
+    {
+      "name": "inverse",
+      "jena": "inverseOf2b",
+      "enabled": true,
+      "description": "When a verb has an inverse (owl:inverseOf), the value is also stated the other way round. Example: a thing that IsOfBaseQuantity a quantity makes that quantity HasMeasurableQuantity the thing. Values the sub-property rule added count too.",
+      "update": [
+        "INSERT { GRAPH <{scratch}> { ?o ?q ?s } }",
+        "WHERE { { GRAPH <{source}> { ?s ?p ?o } } UNION { GRAPH <{scratch}> { ?s ?p ?o } } ?p owl:inverseOf ?q FILTER (isIRI(?o)) }"
+      ]
+    },
+    {
+      "name": "domain",
+      "jena": "rdfs2",
+      "enabled": false,
+      "description": "The subject of a verb or an attribute is given the class the vocabulary declares as its domain (rdfs:domain). Example: whatever HasDynamicValue is a DrillingDataPoint. Off (decision D-65): the domain axioms of the vocabulary of 2026-10-14 are not reliable enough to add types from. The check domain-mismatch of the validation policy is separate and stays useful to find the bad axioms. The root DWISNoun is left out.",
+      "update": [
+        "INSERT { GRAPH <{scratch}> { ?s rdf:type ?c } }",
+        "WHERE { { GRAPH <{source}> { ?s ?p ?o } } UNION { GRAPH <{scratch}> { ?s ?p ?o } } ?p rdfs:domain ?c FILTER (?c != dwis:DWISNoun) }"
+      ]
+    },
+    {
+      "name": "range",
+      "jena": "rdfs3",
+      "enabled": false,
+      "description": "The object of a verb is given the class the vocabulary declares as its range (rdfs:range); literal values are skipped. Off (decision D-65), for the same reason as the domain rule; the check range-mismatch of the validation policy is separate. The root DWISNoun is left out.",
+      "update": [
+        "INSERT { GRAPH <{scratch}> { ?o rdf:type ?c } }",
+        "WHERE { { GRAPH <{source}> { ?s ?p ?o } } UNION { GRAPH <{scratch}> { ?s ?p ?o } } ?p rdfs:range ?c FILTER (isIRI(?o) && ?c != dwis:DWISNoun) }"
+      ]
+    },
+    {
+      "name": "some-values-from",
+      "jena": "someRec2b",
+      "enabled": true,
+      "description": "A thing with at least one value of class D through verb p is of every class the vocabulary defines as 'some p value is a D' (owl:someValuesFrom), and of the named classes declared equivalent to that definition (owl:equivalentClass). The definition itself is a blank node, which the answer query drops; only the named classes reach the inferred graph.",
+      "update": [
+        "INSERT { GRAPH <{scratch}> { ?x rdf:type ?r } }",
+        "WHERE { ?r owl:onProperty ?p ; owl:someValuesFrom ?d .",
+        "        { GRAPH <{source}> { ?x ?p ?a } } UNION { GRAPH <{scratch}> { ?x ?p ?a } }",
+        "        { { GRAPH <{source}> { ?a rdf:type ?d } } UNION { GRAPH <{scratch}> { ?a rdf:type ?d } } UNION { ?a rdf:type ?d } } } ;",
+        "INSERT { GRAPH <{scratch}> { ?x rdf:type ?n } }",
+        "WHERE { GRAPH <{scratch}> { ?x rdf:type ?r } { ?n owl:equivalentClass ?r } UNION { ?r owl:equivalentClass ?n } FILTER (isIRI(?n)) }"
+      ]
+    },
+    {
+      "name": "sub-class",
+      "jena": "rdfs9",
+      "enabled": true,
+      "description": "A thing of a class is also of every broader class the vocabulary puts above it (rdfs:subClassOf), whether the class was stated by the manifest or added by a rule above. Example: a PhysicalData is a DrillingDataPoint. The root DWISNoun is left out.",
+      "update": [
+        "INSERT { GRAPH <{scratch}> { ?s rdf:type ?d } }",
+        "WHERE { { GRAPH <{source}> { ?s rdf:type ?c } } UNION { GRAPH <{scratch}> { ?s rdf:type ?c } } ?c rdfs:subClassOf ?d FILTER (?c != ?d && ?d != dwis:DWISNoun) }"
+      ]
+    }
+  ]
+}

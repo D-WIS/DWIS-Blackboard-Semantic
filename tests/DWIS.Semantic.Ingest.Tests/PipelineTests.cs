@@ -97,8 +97,9 @@ public sealed class PipelineTests : IClassFixture<VocabularyFixture>
         var rules = Inference.Default.RulesFor(id);
         rules.Should().Contain("DROP SILENT GRAPH <" + id.InferenceScratchGraph + ">").And.Contain("GRAPH <" + id.StagingGraph + ">").And.NotContain("{source}").And.NotContain("{scratch}");
         rules.Should().Contain("dwis:DWISVerb").And.Contain("dwis:DWISNoun", "decision D-64 leaves those out");
+        rules.Should().Contain("rdfs:subClassOf").And.NotContain("rdfs:domain").And.NotContain("rdfs:range", "decision D-65: the domain and range rules are off by default");
         Inference.Default.AnswerFor(id).Should().StartWith("#").And.Contain("CONSTRUCT").And.Contain("!STRENDS(STR(?g), \"/inferred\")");
-        var act = () => new Inference("no placeholders", Inference.Default.Answer);
+        var act = () => new Inference(Inference.Default.Rules, "no placeholders");
         act.Should().Throw<ArgumentException>();
     }
 

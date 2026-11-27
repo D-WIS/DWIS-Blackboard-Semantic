@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <!-- The inference rules and their answer query (decision D-64), data the configuration can replace. -->
-    <EmbeddedResource Include="inference-rules.sparql" />
+    <EmbeddedResource Include="inference-rules.json" />
     <EmbeddedResource Include="inference-answer.sparql" />
   </ItemGroup>
 

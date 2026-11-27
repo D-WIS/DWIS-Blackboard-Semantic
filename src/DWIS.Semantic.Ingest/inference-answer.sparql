@@ -1,4 +1,4 @@
-# The answer of the inference rules (inference-rules.sparql): what the scratch graph {scratch} holds
+# The answer of the inference rules (inference-rules.json): what the scratch graph {scratch} holds
 # about the subjects of the staging graph {source}, minus what any graph but an inferred one already
 # asserts (another manifest's inferred graph is that manifest's, R-SEM-3), minus the reasoner's trivia
 # (a blank-node object, a type of owl:Thing or rdfs:Resource). This is the manifest's inferred graph.

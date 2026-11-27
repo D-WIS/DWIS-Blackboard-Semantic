@@ -5,7 +5,7 @@
   "vocabularyVersion": "2026-10-14",
   "counts": {
     "errors": 0,
-    "warnings": 55,
+    "warnings": 54,
     "infos": 27
   },
   "live": {
@@ -72,15 +72,6 @@
       "focus": "http://d-wis.org/WellARig/downholeTemperature#01",
       "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
       "value": "http://d-wis.org/Measurement, http://d-wis.org/ContinuousDataType"
-    },
-    {
-      "stage": "commit",
-      "severity": "warning",
-      "code": "disjoint-classes",
-      "message": "<http://d-wis.org/WellARig/drillingBit#01> is asserted to be both a DrillingBit and a Location, which are disjoint.",
-      "focus": "http://d-wis.org/WellARig/drillingBit#01",
-      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-      "value": "http://d-wis.org/DrillingBit, http://d-wis.org/Location"
     },
     {
       "stage": "preprocessing",

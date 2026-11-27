@@ -12,6 +12,9 @@ internal static partial class Log
     [LoggerMessage(3, LogLevel.Warning, "No validation policy file configured (Validation:PolicyFile): every rule keeps its designed level")]
     public static partial void NoValidationPolicy(ILogger logger);
 
+    [LoggerMessage(16, LogLevel.Information, "Reasoning rules from {File}: {Enabled} on ({EnabledNames}), {Disabled} off ({DisabledNames}); decisions D-64 and D-65")]
+    public static partial void InferenceRules(ILogger logger, string file, int enabled, string enabledNames, int disabled, string disabledNames);
+
     [LoggerMessage(4, LogLevel.Information, "Vocabulary {Version} loaded from the store: {Triples} triples, {Units} unit and quantity triples, {Classes} classes, shapes {Shapes}")]
     public static partial void VocabularyLoaded(ILogger logger, string version, int triples, int units, int classes, string shapes);
 

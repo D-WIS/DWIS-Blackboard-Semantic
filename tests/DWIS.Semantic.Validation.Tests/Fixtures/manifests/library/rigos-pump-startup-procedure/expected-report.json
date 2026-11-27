@@ -5,7 +5,7 @@
   "vocabularyVersion": "2026-10-14",
   "counts": {
     "errors": 2,
-    "warnings": 7,
+    "warnings": 6,
     "infos": 2
   },
   "live": {
@@ -18,15 +18,6 @@
       "severity": "info",
       "code": "belongs-to-class-used",
       "message": "2 references use BelongsToClass, the deprecated form of a class assertion; rdf:type is preferred."
-    },
-    {
-      "stage": "commit",
-      "severity": "warning",
-      "code": "disjoint-classes",
-      "message": "<http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupRecommendedProcedureParameters#01> is asserted to be both a DrillingStandardProcedureAdvice and a DrillingDataPoint, which are disjoint.",
-      "focus": "http://d-wis.org/PumpStartupManifestPWDa:/PumpStartupRecommendedProcedureParameters#01",
-      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-      "value": "http://d-wis.org/DrillingStandardProcedureAdvice, http://d-wis.org/DrillingDataPoint"
     },
     {
       "stage": "preprocessing",
