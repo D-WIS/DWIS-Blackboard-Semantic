@@ -21,11 +21,33 @@ public sealed class VocabularyModelTests : IClassFixture<VocabularyFixture>
     }
 
     [Fact]
+    public void A_closed_vocabulary_gives_the_same_domains_and_ranges_as_the_plain_one()
+    {
+        // The closure (decision D-47) declares every superclass of a domain or range as one too; reduced to the
+        // most specific classes, the checks see what the plain vocabulary declares (M5.6).
+        var root = Path.Combine(AppContext.BaseDirectory, "Fixtures", "vocabulary");
+        var advanced = Path.Combine(root, "advancedDefinitions");
+        var closed = VocabularyModel.Load("closed",
+            [Path.Combine(root, "DWISVocabulary.ttl"), Path.Combine(advanced, "DWISVocabularyLogicalDefinitions.Units.ttl"), Path.Combine(root, "closure", "vocabulary.nt")],
+            null,
+            [Path.Combine(root, "unit-and-quantity-individuals.ttl"), Path.Combine(root, "closure", "units.nt")]);
+        closed.Graph.Triples.Count.Should().BeGreaterThan(_model.Graph.Triples.Count);
+        foreach (var property in new[] { "HasDynamicValue", "IsAHydraulicRepresentationFor", "IsUnitForQuantity", "IsOfBaseQuantity", "IsLocatedAtEquipment" })
+        {
+            // The anonymous union range of IsUnitForQuantity is a blank node, named differently in every graph and left out of the closure.
+            closed.DomainsOf(Dwis + property).Where(Named).Should().BeEquivalentTo(_model.DomainsOf(Dwis + property).Where(Named), property);
+            closed.RangesOf(Dwis + property).Where(Named).Should().BeEquivalentTo(_model.RangesOf(Dwis + property).Where(Named), property);
+        }
+    }
+
+    private static bool Named(string iri) => !iri.StartsWith("_:", StringComparison.Ordinal);
+
+    [Fact]
     public void Subclass_closure_domains_and_ranges_are_computed()
     {
         _model.SuperClassesOf(Dwis + "SPP").Should().Contain(Dwis + "DrillingDataPoint");
         _model.SuperClassesOf(Dwis + "Bar").Should().Contain(Dwis + "Unit");
-        _model.DomainsOf(Dwis + "HasDynamicValue").Should().Contain(Dwis + "DrillingDataPoint", "own domain").And.Contain(Dwis + "DWISNoun", "inherited from the super-property");
+        _model.DomainsOf(Dwis + "HasDynamicValue").Should().Contain(Dwis + "DrillingDataPoint", "own domain").And.NotContain(Dwis + "DWISNoun", "inherited from the super-property, but a superclass of the own domain says nothing more");
         _model.RangesOf(Dwis + "HasDynamicValue").Should().Contain(Dwis + "DynamicDrillingSignal");
         _model.Satisfies([Dwis + "SPP"], Dwis + "DrillingDataPoint").Should().BeTrue();
         _model.Satisfies([Dwis + "Bar"], Dwis + "DrillingDataPoint").Should().BeFalse();

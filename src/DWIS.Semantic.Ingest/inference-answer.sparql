@@ -1,0 +1,17 @@
+# The answer of the inference rules (inference-rules.sparql): what the scratch graph {scratch} holds
+# about the subjects of the staging graph {source}, minus what any graph but an inferred one already
+# asserts (another manifest's inferred graph is that manifest's, R-SEM-3), minus the reasoner's trivia
+# (a blank-node object, a type of owl:Thing or rdfs:Resource). This is the manifest's inferred graph.
+# Inference:AnswerFile in the configuration points at another copy of this file.
+
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+
+CONSTRUCT { ?s ?p ?o }
+WHERE {
+  GRAPH <{scratch}> { ?s ?p ?o }
+  FILTER (isIRI(?s) && !isBlank(?o) && ?o != owl:Thing && ?o != rdfs:Resource)
+  FILTER EXISTS { GRAPH <{source}> { ?s ?anyPredicate ?anyObject } }
+  FILTER NOT EXISTS { GRAPH ?g { ?s ?p ?o } FILTER (?g != <{scratch}> && !STRENDS(STR(?g), "/inferred")) }
+}

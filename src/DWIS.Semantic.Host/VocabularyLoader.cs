@@ -142,6 +142,14 @@ public sealed class VocabularyLoader : BackgroundService
                 return false;
             }
 
+            // Decision D-64: the inference rules take the schema as closed (one step of subclass or subproperty
+            // is the whole chain), so a version loaded without its closure would under-derive silently.
+            if (!IsClosed(vocabulary) || !IsClosed(units))
+            {
+                _state.Fail($"The vocabulary graph <{graph}> or the units graph <{unitsGraph}> is not closed (no <{ClosedBy}> marker): load the closure of the version with it (decision D-47; the compose loader with VOCABULARY_CLOSURE=on).");
+                return false;
+            }
+
             var model = VocabularyModel.FromGraphs(version, AsGraph(vocabulary), AsGraph(vocabulary), AsGraph(units));
             _state.Version = version;
             _state.Set(model, vocabulary.Triples.Count, units.Triples.Count, _clock.GetUtcNow());
@@ -177,6 +185,12 @@ public sealed class VocabularyLoader : BackgroundService
             }
         }
     }
+
+    /// <summary>The marker the closure tool writes in each closed graph (<c>tools/closure/make-closure.py</c> of the Tests repository).</summary>
+    public const string ClosedBy = "http://d-wis.org/blackboard/closedBy";
+
+    private static bool IsClosed(IGraph graph) =>
+        graph.Triples.Any(t => t.Predicate is IUriNode p && p.Uri.AbsoluteUri == ClosedBy);
 
     private static Graph AsGraph(IGraph graph)
     {

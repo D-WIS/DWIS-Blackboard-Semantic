@@ -22,7 +22,6 @@ namespace DWIS.Semantic.Ingest;
 /// <param name="Graph">The asserted graph.</param>
 /// <param name="Split">Its core and its rest.</param>
 /// <param name="Report">The report of the pre-processing pass; the commit adds the statistics.</param>
-/// <param name="InferencePredicates">The predicates the commit asks the inference view for (<see cref="Inference.PredicatesOf"/>).</param>
 /// <param name="Vocabulary">The vocabulary the manifest was checked against; the re-check after reasoning uses it again.</param>
 /// <param name="Policy">The policy in force.</param>
 public sealed record StagedManifest(
@@ -33,7 +32,6 @@ public sealed record StagedManifest(
     ManifestGraph Graph,
     SplitGraph Split,
     IngestionReport Report,
-    IReadOnlyList<string> InferencePredicates,
     VocabularyModel Vocabulary,
     ValidationPolicy Policy)
 {
@@ -70,7 +68,7 @@ public sealed record RederivedManifest(ManifestId Id, bool AcceptedBefore, Inges
 
 /// <summary>
 /// The injection pipeline of specification 4 and Appendix C: prepare (C.2 to C.5, pure) and commit
-/// (C.6 steps 1 to 4: the asserted graph, then the inferred graph read from the inference view, then the
+/// (C.6 steps 1 to 4: the asserted graph, then the inferred graph derived by the inference rules, then the
 /// re-check on both with a downgrade to core-only when it finds a new error, then the provenance; the
 /// quarantine graph when rejected). After every change to the live description (commit, remove, re-derive) the
 /// observers are told, which is where the registered queries are re-evaluated (M3.1). The two phases of the
@@ -84,12 +82,14 @@ public sealed class IngestPipeline
     private readonly IReadOnlyList<ILiveDescriptionObserver> _observers;
     private readonly ILogger<IngestPipeline>? _logger;
     private readonly StagingTable _staging;
+    private readonly Inference _inference;
 
-    /// <summary>Creates the pipeline over a store, with the observers told after every change (none by default) and the staging table (60 s by default).</summary>
-    public IngestPipeline(ITripleStore store, TimeProvider? clock = null, IEnumerable<ILiveDescriptionObserver>? observers = null, ILogger<IngestPipeline>? logger = null, StagingTable? staging = null)
+    /// <summary>Creates the pipeline over a store, with the observers told after every change (none by default), the staging table (60 s by default) and the inference rules (the embedded ones by default).</summary>
+    public IngestPipeline(ITripleStore store, TimeProvider? clock = null, IEnumerable<ILiveDescriptionObserver>? observers = null, ILogger<IngestPipeline>? logger = null, StagingTable? staging = null, Inference? inference = null)
     {
         ArgumentNullException.ThrowIfNull(store);
         _store = store;
+        _inference = inference ?? Inference.Default;
         _clock = clock ?? TimeProvider.System;
         _observers = observers?.ToList() ?? [];
         _logger = logger;
@@ -121,14 +121,14 @@ public sealed class IngestPipeline
         var pass = PreprocessingPass.Run(prepared, graph, vocabulary, new PreprocessingOptions { Policy = policy ?? ValidationPolicy.None });
         var split = CoreSplit.Split(graph);
         var report = pass.ToReport(id.Value, vocabulary.Version);
-        return new StagedManifest(id, manifest.ManifestName, hash, json, graph, split, report, Inference.PredicatesOf(vocabulary), vocabulary, policy ?? ValidationPolicy.None);
+        return new StagedManifest(id, manifest.ManifestName, hash, json, graph, split, report, vocabulary, policy ?? ValidationPolicy.None);
     }
 
     /// <summary>
     /// Writes the staged manifest to the live dataset (C.6, C.7). First update: what a previous injection
     /// of the same id left is dropped and the new asserted triples (whole when accepted, core only when
-    /// not) go to the staging graph, where the inference view reasons over them. Then the inferred graph is
-    /// read from the view, and the re-check of the disjointness and the shapes runs on both graphs: a new
+    /// not) go to the staging graph, which the inference rules work from. Then the inferred graph is
+    /// derived (decision D-64), and the re-check of the disjointness and the shapes runs on both graphs: a new
     /// error downgrades the manifest to core-only (the staging graph is rewritten as the core and the
     /// consequences recomputed). Second update: the staging graph becomes the asserted graph and the
     /// inferred and provenance graphs land with it, in one request, so that a reader sees either no
@@ -157,9 +157,9 @@ public sealed class IngestPipeline
         // Step 1: drop the previous injection of this id and stage the new asserted triples.
         await _store.UpdateAsync(Dataset.Live, DropAll(id) + StagingInsert(id, asserted), cancellationToken).ConfigureAwait(false);
 
-        // Step 2: what the reasoner adds about this provider's resources, now that the staged triples are
-        // in the union the view reasons over (C.6 step 2; the view stores nothing, the graph here does).
-        var inferred = await Inference.ConsequencesAsync(_store, Inference.SubjectsOf(asserted), staged.InferencePredicates, cancellationToken).ConfigureAwait(false);
+        // Step 2: what the rules derive about this provider's resources from the staged triples and the closed
+        // schema (C.6 step 2, decision D-64): into the scratch graph, read back here, dropped at publish.
+        var inferred = await _inference.ConsequencesAsync(_store, id, cancellationToken).ConfigureAwait(false);
 
         // Step 3: the re-check on asserted plus inferred. A new error downgrades the manifest to core-only:
         // the core replaces the whole graph and the inferred graph is recomputed for it (R-SEM-5).
@@ -171,7 +171,7 @@ public sealed class IngestPipeline
             accepted = false;
             asserted = staged.Split.Core;
             await _store.UpdateAsync(Dataset.Live, $"DROP SILENT GRAPH <{id.StagingGraph}> ;\n" + StagingInsert(id, asserted), cancellationToken).ConfigureAwait(false);
-            inferred = await Inference.ConsequencesAsync(_store, Inference.SubjectsOf(asserted), staged.InferencePredicates, cancellationToken).ConfigureAwait(false);
+            inferred = await _inference.ConsequencesAsync(_store, id, cancellationToken).ConfigureAwait(false);
         }
 
         var quarantined = accepted ? 0 : staged.Graph.Graph.Triples.Count;
@@ -190,6 +190,7 @@ public sealed class IngestPipeline
         var provenance = Provenance.Build(id, staged.ManifestName, staged.ContentHash, staged.ManifestJson, report, _clock.GetUtcNow(), asserted.Triples.Count, inferred.Triples.Count, quarantined, origin);
         var publish = new StringBuilder()
             .Append("DROP SILENT GRAPH <").Append(id.StagingGraph).Append("> ;\n")
+            .Append("DROP SILENT GRAPH <").Append(id.InferenceScratchGraph).Append("> ;\n")
             .Append("INSERT DATA { GRAPH <").Append(id.AssertedGraph).Append("> {\n").Append(NTriples(asserted)).Append("} } ;\n")
             .Append("INSERT DATA { GRAPH <").Append(id.InferredGraph).Append("> {\n").Append(NTriples(inferred)).Append("} } ;\n")
             .Append("INSERT DATA { GRAPH <").Append(id.ProvenanceGraph).Append("> {\n").Append(NTriples(provenance)).Append("} }\n")
@@ -413,7 +414,7 @@ public sealed class IngestPipeline
     }
 
     private static string DropAll(ManifestId id) =>
-        $"DROP SILENT GRAPH <{id.AssertedGraph}> ;\nDROP SILENT GRAPH <{id.InferredGraph}> ;\nDROP SILENT GRAPH <{id.ProvenanceGraph}> ;\nDROP SILENT GRAPH <{id.StagingGraph}> ;\n";
+        $"DROP SILENT GRAPH <{id.AssertedGraph}> ;\nDROP SILENT GRAPH <{id.InferredGraph}> ;\nDROP SILENT GRAPH <{id.ProvenanceGraph}> ;\nDROP SILENT GRAPH <{id.StagingGraph}> ;\nDROP SILENT GRAPH <{id.InferenceScratchGraph}> ;\n";
 
     private static string StagingInsert(ManifestId id, IGraph asserted) =>
         new StringBuilder().Append("INSERT DATA { GRAPH <").Append(id.StagingGraph).Append("> {\n").Append(NTriples(asserted)).Append("} }\n").ToString();

@@ -11,4 +11,10 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- The inference rules and their answer query (decision D-64), data the configuration can replace. -->
+    <EmbeddedResource Include="inference-rules.sparql" />
+    <EmbeddedResource Include="inference-answer.sparql" />
+  </ItemGroup>
+
 </Project>
