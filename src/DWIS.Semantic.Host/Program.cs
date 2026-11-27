@@ -33,11 +33,14 @@ builder.Services.Configure<VocabularyOptions>(builder.Configuration.GetSection(S
 builder.Services.Configure<ValidationOptions>(builder.Configuration.GetSection(SemanticOptions.ValidationSection));
 builder.Services.Configure<QueryLimits>(builder.Configuration.GetSection(SemanticOptions.QuerySection));
 builder.Services.Configure<StagingOptions>(builder.Configuration.GetSection(SemanticOptions.StagingSection));
+builder.Services.Configure<InferenceOptions>(builder.Configuration.GetSection(SemanticOptions.InferenceSection));
 builder.Services.AddSingleton(builder.Configuration.GetSection(SemanticOptions.StoreSection).Get<FusekiOptions>() ?? new FusekiOptions());
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddHttpClient<ITripleStore, FusekiStore>(http => http.Timeout = TimeSpan.FromMinutes(5));
 builder.Services.AddSingleton(sp => new StagingTable(sp.GetRequiredService<TimeProvider>(), TimeSpan.FromSeconds(sp.GetRequiredService<IOptions<StagingOptions>>().Value.TimeLimitSeconds)));
-builder.Services.AddSingleton<IngestPipeline>();
+// The inference rules of the commit (decision D-64): the embedded SPARQL files, or the ones the configuration names.
+builder.Services.AddSingleton(sp => { var o = sp.GetRequiredService<IOptions<InferenceOptions>>().Value; return Inference.FromFiles(o.RulesFile, o.AnswerFile); });
+builder.Services.AddSingleton(sp => new IngestPipeline(sp.GetRequiredService<ITripleStore>(), sp.GetRequiredService<TimeProvider>(), sp.GetServices<ILiveDescriptionObserver>(), sp.GetService<ILogger<IngestPipeline>>(), sp.GetRequiredService<StagingTable>(), sp.GetRequiredService<Inference>()));
 // The registered queries (specification 3.5): evaluated against the live dataset under the query limits, one
 // round after every change to the live description; the broadcaster fans the diffs out to the WatchQueries
 // streams and the server-sent events (M3.4).

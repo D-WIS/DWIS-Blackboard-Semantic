@@ -42,8 +42,11 @@ public sealed record ManifestId
     /// <summary>The quarantine graph, in the quarantine dataset.</summary>
     public string QuarantineGraph => AssertedGraph + "/quarantine";
 
-    /// <summary>The staging graph: the new asserted triples during a commit, for the inference view to reason over before the manifest's graphs are replaced in one update.</summary>
+    /// <summary>The staging graph: the new asserted triples during a commit, for the inference rules to work from before the manifest's graphs are replaced in one update.</summary>
     public string StagingGraph => AssertedGraph + "/staging";
+
+    /// <summary>The scratch graph of the inference rules during a commit (decision D-64): what they derive, dropped with the staging graph.</summary>
+    public string InferenceScratchGraph => StagingGraph + "/inferred";
 
     /// <summary>The id of a manifest.</summary>
     public static ManifestId Of(Blackboard.Contracts.Manifests.Manifest manifest)

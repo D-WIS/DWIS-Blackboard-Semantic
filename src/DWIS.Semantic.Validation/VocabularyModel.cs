@@ -173,6 +173,12 @@ public sealed class VocabularyModel
         return false;
     }
 
+    /// <summary>
+    /// The domains (ranges) of a property, own and inherited, reduced to the most specific ones: a class
+    /// that is a superclass of another declared one says nothing more, so it is left out. A vocabulary
+    /// loaded closed (decision D-47) declares every superclass of a domain as a domain too; without this
+    /// reduction every mismatch would be reported once per superclass (found in M5.6).
+    /// </summary>
     private HashSet<string> Inherited(string property, Dictionary<string, HashSet<string>> table)
     {
         var result = new HashSet<string>(StringComparer.Ordinal);
@@ -184,6 +190,7 @@ public sealed class VocabularyModel
             }
         }
 
+        result.RemoveWhere(c => result.Any(d => d != c && SuperClassesOf(d).Contains(c)));
         return result;
     }
 

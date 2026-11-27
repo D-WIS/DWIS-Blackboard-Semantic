@@ -27,7 +27,6 @@ public sealed class PipelineTests : IClassFixture<VocabularyFixture>
         staged.Report.VocabularyVersion.Should().Be("2026-10-14");
         staged.ContentHash.Should().MatchRegex("^sha256:[0-9a-f]{64}$");
         staged.Split.Core.Triples.Count.Should().BeLessThan(staged.Graph.Graph.Triples.Count);
-        staged.InferencePredicates.Should().Contain("http://d-wis.org/IsProvidedBy");
     }
 
     [Fact]
@@ -91,12 +90,16 @@ public sealed class PipelineTests : IClassFixture<VocabularyFixture>
         view.Assert(new VDS.RDF.Triple(s, a, view.CreateBlankNode()));
         live.Assert(new VDS.RDF.Triple(s, a, live.CreateUriNode(new Uri("http://d-wis.org/SPP"))));
 
-        var inferred = Inference.Subtract(view, live);
+        var trimmed = Inference.Trim(view);
 
-        inferred.Triples.Should().ContainSingle().Which.Object.ToString().Should().Be("http://d-wis.org/PrototypeData");
-        Inference.SubjectsQuery(["http://d-wis.org/P/x", "http://d-wis.org/P/y"], ["http://d-wis.org/p"]).Should().Contain("VALUES ?s { <http://d-wis.org/P/x> <http://d-wis.org/P/y> } VALUES ?p { <http://d-wis.org/p> }");
-        Inference.AssertedQuery(["http://d-wis.org/P/x"], ["http://d-wis.org/p"]).Should().Contain("GRAPH ?g { ?s ?p ?o } FILTER (!STRENDS(STR(?g), \"/inferred\"))");
-        Inference.PredicatesOf(_fixture.Model).Should().HaveCountGreaterThan(200).And.Contain("http://d-wis.org/HasDynamicValue").And.HaveElementAt(0, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
+        trimmed.Triples.Should().HaveCount(2).And.Contain(t => t.Object.ToString() == "http://d-wis.org/PrototypeData").And.Contain(t => t.Object.ToString() == "http://d-wis.org/SPP");
+        var id = ManifestId.Of("P", "m");
+        var rules = Inference.Default.RulesFor(id);
+        rules.Should().Contain("DROP SILENT GRAPH <" + id.InferenceScratchGraph + ">").And.Contain("GRAPH <" + id.StagingGraph + ">").And.NotContain("{source}").And.NotContain("{scratch}");
+        rules.Should().Contain("dwis:DWISVerb").And.Contain("dwis:DWISNoun", "decision D-64 leaves those out");
+        Inference.Default.AnswerFor(id).Should().StartWith("#").And.Contain("CONSTRUCT").And.Contain("!STRENDS(STR(?g), \"/inferred\")");
+        var act = () => new Inference("no placeholders", Inference.Default.Answer);
+        act.Should().Throw<ArgumentException>();
     }
 
     [Fact]

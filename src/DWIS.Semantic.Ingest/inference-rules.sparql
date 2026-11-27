@@ -1,0 +1,52 @@
+# The inference rules of the commit (Appendix C.6 step 2; decision D-64, 27 November 2026): what the
+# manifest's triples imply, derived in the store by SPARQL updates over the closed schema (the vocabulary
+# and the units graphs shipped closed, decision D-47) and nothing else. One request: the updates run in
+# order, in one transaction, from the staging graph {source} into the scratch graph {scratch}; the answer
+# query of inference-answer.sparql then reads the scratch graph back. Each rule is the instance rule of
+# Jena's owl-fb-micro.rules it is named after; a rule chain never needs a second pass because the schema
+# is closed (one step of rdfs:subClassOf or rdfs:subPropertyOf is the whole chain) and a derived triple
+# never makes a new property value except through a subproperty or an inverse, both read from {scratch}
+# in the rules that follow. Not written: hasValue, symmetric and transitive properties (none in the
+# vocabulary of 2026-10-14; make-closure.py of the Tests repository refuses the first).
+#
+# Left out on purpose (decision D-64): values of dwis:DWISVerb, the root of every verb, and types
+# dwis:DWISNoun, the root of every class; they said nothing and were 60 % of the inferred graph.
+# Nothing else follows from them (the domain and range of DWISVerb are DWISNoun).
+#
+# Inference:RulesFile in the configuration points at another copy of this file.
+
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX dwis: <http://d-wis.org/>
+
+DROP SILENT GRAPH <{scratch}> ;
+
+# rdfs6: a subproperty's value is the superproperty's value.
+INSERT { GRAPH <{scratch}> { ?s ?q ?o } }
+WHERE { GRAPH <{source}> { ?s ?p ?o } ?p rdfs:subPropertyOf ?q FILTER (?p != ?q && ?q != dwis:DWISVerb) } ;
+
+# inverseOf2b: an inverse's value, the other way round.
+INSERT { GRAPH <{scratch}> { ?o ?q ?s } }
+WHERE { { GRAPH <{source}> { ?s ?p ?o } } UNION { GRAPH <{scratch}> { ?s ?p ?o } } ?p owl:inverseOf ?q FILTER (isIRI(?o)) } ;
+
+# rdfs2, rdfs3: a subject is of its properties' domains, an object of their ranges.
+INSERT { GRAPH <{scratch}> { ?s rdf:type ?c } }
+WHERE { { GRAPH <{source}> { ?s ?p ?o } } UNION { GRAPH <{scratch}> { ?s ?p ?o } } ?p rdfs:domain ?c FILTER (?c != dwis:DWISNoun) } ;
+
+INSERT { GRAPH <{scratch}> { ?o rdf:type ?c } }
+WHERE { { GRAPH <{source}> { ?s ?p ?o } } UNION { GRAPH <{scratch}> { ?s ?p ?o } } ?p rdfs:range ?c FILTER (isIRI(?o) && ?c != dwis:DWISNoun) } ;
+
+# someRec2b: a subject with a value of the restriction's class is of the restriction, and of the named
+# classes equivalent to it.
+INSERT { GRAPH <{scratch}> { ?x rdf:type ?r } }
+WHERE { ?r owl:onProperty ?p ; owl:someValuesFrom ?d .
+        { GRAPH <{source}> { ?x ?p ?a } } UNION { GRAPH <{scratch}> { ?x ?p ?a } }
+        { { GRAPH <{source}> { ?a rdf:type ?d } } UNION { GRAPH <{scratch}> { ?a rdf:type ?d } } UNION { ?a rdf:type ?d } } } ;
+
+INSERT { GRAPH <{scratch}> { ?x rdf:type ?n } }
+WHERE { GRAPH <{scratch}> { ?x rdf:type ?r } { ?n owl:equivalentClass ?r } UNION { ?r owl:equivalentClass ?n } FILTER (isIRI(?n)) } ;
+
+# rdfs9: a type's superclasses are types too.
+INSERT { GRAPH <{scratch}> { ?s rdf:type ?d } }
+WHERE { { GRAPH <{source}> { ?s rdf:type ?c } } UNION { GRAPH <{scratch}> { ?s rdf:type ?c } } ?c rdfs:subClassOf ?d FILTER (?c != ?d && ?d != dwis:DWISNoun) }

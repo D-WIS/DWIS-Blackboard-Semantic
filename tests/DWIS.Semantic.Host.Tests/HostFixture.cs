@@ -5,6 +5,7 @@ using DWIS.Semantic.Store.Tests;
 using DWIS.Semantic.Validation;
 using Microsoft.AspNetCore.Mvc.Testing;
 using VDS.RDF;
+using VDS.RDF.Parsing;
 
 namespace DWIS.Semantic.Host.Tests;
 
@@ -84,7 +85,14 @@ public sealed class HostFixture : IAsyncLifetime
         var vocabulary = new Graph();
         vocabulary.Merge(model.Graph);
         vocabulary.Merge(model.ShapesGraph!);
-        return (vocabulary, model.ReferenceData);
+        // The shipped closure of both graphs (decision D-47; the loader appends it with VOCABULARY_CLOSURE=on),
+        // which the inference rules need and the host checks for (decision D-64).
+        var closure = Path.Combine(root, "closure");
+        new NTriplesParser().Load(vocabulary, Path.Combine(closure, "vocabulary.nt"));
+        var units = new Graph();
+        units.Merge(model.ReferenceData);
+        new NTriplesParser().Load(units, Path.Combine(closure, "units.nt"));
+        return (vocabulary, units);
     }
 
     /// <summary>Skips the calling test when no Fuseki is available.</summary>
