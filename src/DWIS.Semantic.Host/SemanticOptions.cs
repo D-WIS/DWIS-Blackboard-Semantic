@@ -78,10 +78,10 @@ public sealed class ValidationOptions
     public string PolicyFile { get; set; } = "";
 }
 
-/// <summary>The inference rules of the commit (Appendix C.6 step 2, decision D-64): the embedded files unless replaced.</summary>
+/// <summary>The reasoning rules of the commit (Appendix C.6 step 2, decisions D-64 and D-65): the embedded files unless replaced.</summary>
 public sealed class InferenceOptions
 {
-    /// <summary>A SPARQL update file in place of the embedded <c>inference-rules.sparql</c>; empty for the embedded one.</summary>
+    /// <summary>A rules file (every rule listed, on or off, with a description and its SPARQL update) in place of the embedded <c>inference-rules.json</c>; empty for the embedded one.</summary>
     public string RulesFile { get; set; } = "";
 
     /// <summary>A SPARQL CONSTRUCT file in place of the embedded <c>inference-answer.sparql</c>; empty for the embedded one.</summary>

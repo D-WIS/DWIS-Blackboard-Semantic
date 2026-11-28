@@ -5,7 +5,7 @@
   "vocabularyVersion": "2026-10-14",
   "counts": {
     "errors": 0,
-    "warnings": 6,
+    "warnings": 4,
     "infos": 1
   },
   "live": {
@@ -13,24 +13,6 @@
     "rest": true
   },
   "findings": [
-    {
-      "stage": "commit",
-      "severity": "warning",
-      "code": "disjoint-classes",
-      "message": "<http://d-wis.org/NORCEDT/DigitalTwinSignalsForMicroStates#01> is asserted to be both a DigitalTwinAdvice and a DrillingDataPoint, which are disjoint.",
-      "focus": "http://d-wis.org/NORCEDT/DigitalTwinSignalsForMicroStates#01",
-      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-      "value": "http://d-wis.org/DigitalTwinAdvice, http://d-wis.org/DrillingDataPoint"
-    },
-    {
-      "stage": "commit",
-      "severity": "warning",
-      "code": "disjoint-classes",
-      "message": "<http://d-wis.org/NORCEDT/MicroStateInterpreter> is asserted to be both a DWISDrillingProcessStateInterpreter and a DataFlowNode, which are disjoint.",
-      "focus": "http://d-wis.org/NORCEDT/MicroStateInterpreter",
-      "path": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-      "value": "http://d-wis.org/DWISDrillingProcessStateInterpreter, http://d-wis.org/DataFlowNode"
-    },
     {
       "stage": "preprocessing",
       "severity": "warning",
